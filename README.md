@@ -196,21 +196,3 @@ Manage the order:
 
 You can drag'n'drop any affected Widget/Static Content to sort them up. Validate by clicking on the picto at the left
 of the Sidebar title.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

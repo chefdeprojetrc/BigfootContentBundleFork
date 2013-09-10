@@ -177,7 +177,7 @@ class WidgetTestType extends AbstractType
         return 'bigfoot_bundle_contentbundle_widgettype';
     }
 }
-``̀
+```
 
 Manage your sidebars
 --------------------

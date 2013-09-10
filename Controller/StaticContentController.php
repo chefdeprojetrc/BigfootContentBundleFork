@@ -29,9 +29,7 @@ class StaticContentController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('BigfootContentBundle:StaticContent')->findAll();
-
         $this->container->get('bigfoot.theme')['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a static content', 'admin_staticcontent_new'));
 
         return array(
@@ -93,7 +91,6 @@ class StaticContentController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
 
         if (!$entity) {
@@ -120,7 +117,6 @@ class StaticContentController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
 
         if (!$entity) {

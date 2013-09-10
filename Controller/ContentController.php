@@ -34,44 +34,30 @@ class ContentController extends Controller
      */
     public function displayDashBoardAction(Request $request)
     {
-
         $em = $this->getDoctrine()->getManager();
-
-        if($request->isXmlHttpRequest()) {
-            $this->saveBlockOrder($request);
-            $this->createDynamicalBlock($request);
-
-            return new Response();
-        }
 
         $widgetList = array();
         $sidebarList = array();
-
         $widgetsConfig = $this->container->getParameter('bigfoot_content.widgets');
 
         foreach ($widgetsConfig as $widgetConf) {
-
             if (class_exists($widgetConf)) {
                 $tmpObject = new $widgetConf;
                 $widgetList[] = array(
                     'label'         => $tmpObject->getLabel(),
                     'name'          => $tmpObject->getName(),
                     'parameters'    => $tmpObject->getDefaultParameters(),
-
                 );
             }
         }
 
         $staticContentList = $em->getRepository('BigfootContentBundle:StaticContent')->findAll();
-
         $sidebarRepo = $em->getRepository('BigfootContentBundle:Sidebar')->findAll();
 
         foreach ($sidebarRepo as $sidebar) {
 
             $tempBlock = $sidebar->getBlock();
-
             $formBlock = array();
-
             $type = '';
 
             foreach ($tempBlock as $block) {
@@ -79,17 +65,11 @@ class ContentController extends Controller
                 $form_name = '';
 
                 if ($block instanceof Widget) {
-
                     $widget_name = $this->container->getParameter('bigfoot_content.widgets')[$block->getName()];
-
                     $widget = new $widget_name;
-
                     $formTypeName = $widget->getParametersType();
-
                     $widgetObject = new $formTypeName($this->container);
-
                     $form_name = $widgetObject->getName();
-
                     $tempForm = $this->createForm($widgetObject, $block);
                     $type = 'widget';
                 }
@@ -122,15 +102,13 @@ class ContentController extends Controller
 
     /**
      * Save the new block order into a sidebar
-     *
-     * @param $request
-     * @return Response
+     * @Route("/content/dashboard/save_block_order", name="admin_dashboard_save_block_order")
+     * @Method("GET")
+     * @Template()
      */
-    protected function saveBlockOrder(Request $request)
+    public function saveBlockOrderAction(Request $request)
     {
-
-        if ($request->get('tabIdBlock') && $request->get('tabPosition') && $request->get('typeBlock')) {
-
+        if ($request->isXmlHttpRequest() && $request->get('tabIdBlock') && $request->get('tabPosition') && $request->get('typeBlock')) {
             $tabIdBlock     = $request->get('tabIdBlock');
             $tabPosition    = $request->get('tabPosition');
             $typeBlock      = $request->get('typeBlock');
@@ -144,42 +122,36 @@ class ContentController extends Controller
                 else if ($typeBlock[$key] == 'staticcontent') {
                     $entity = $em->getRepository('BigfootContentBundle:StaticContent')->findOneBy(array('id' => $tabIdBlock[$key]));
                 }
-
                 $entity->setPosition($tabPosition[$key]);
-
                 $em->persist($entity);
             }
 
             $em->flush();
 
             return new Response();
-
         }
     }
 
+
     /**
      * Create dynamically a Widget block or a Static Content block
-     *
-     * @param $request
-     * @return Response
+     * @Route("/content/dashboard/create_dynamic_block", name="admin_dashboard_create_dynamic_block")
+     * @Method("GET")
+     * @Template()
      */
-    protected function createDynamicalBlock($request)
+    public function createDynamicBlockAction(Request $request)
     {
+        if ($request->isXmlHttpRequest() && $request->get('type_block') && $request->get('id_sidebar') && $request->get('widget_name')) {
 
-        $em = $this->getDoctrine()->getManager();
-
-        if ($request->get('type_block') && $request->get('id_sidebar') && $request->get('widget_name')) {
+            $em = $this->getDoctrine()->getManager();
 
             $type_block = $request->get('type_block');
             $id_sidebar = $request->get('id_sidebar');
             $widget_name = $request->get('widget_name');
 
             if ($type_block == 'widget') {
-
                 $widget_name = $this->container->getParameter('bigfoot_content.widgets')[$widget_name];
-
                 $widgetTemp = new $widget_name;
-
                 $entity = new Widget();
 
                 $entity->setRoute($widgetTemp->getRoute());
@@ -188,34 +160,27 @@ class ContentController extends Controller
                 $entity->setParams($widgetTemp->getDefaultParameters());
 
                 $formTypeName = $widgetTemp->getParametersType();
-
                 $widgetObject = new $formTypeName($this->container);
-
                 $form_name = $widgetObject->getName();
-
                 $form   = $this->createForm($widgetObject, $entity);
-
                 $action_path = $this->container->get('router')->generate('admin_widget_create',array('form_name' => $form_name));
 
             }
             else if ($type_block == 'staticcontent') {
-
                 $id_block = $request->get('id_block');
-
                 $entity = $em->getRepository('BigfootContentBundle:StaticContent')->findOneBy(array('id' => $id_block));
-
                 $form   = $this->createForm(new StaticContentType($this->container), $entity);
-
                 $action_path = $this->container->get('router')->generate('admin_staticcontent_create');
             }
 
-            return $this->render('BigfootContentBundle:Form:dynamicalform.twig.html',array(
+            return $this->render('BigfootContentBundle:Form:dynamicform.html.twig',array(
                 'form'               => $form->createView(),
                 'currentSidebar'     => $id_sidebar,
                 'action_path'        => $action_path,
                 'method'             => 'POST'
             ));
         }
+
     }
 
     /**
@@ -226,9 +191,7 @@ class ContentController extends Controller
      */
     public function displayPageAction($page_id)
     {
-
         $em = $this->getDoctrine()->getManager();
-
         $page = $em->getRepository('BigfootContentBundle:Page')->find($page_id);
 
         if (!$page) {
@@ -250,7 +213,6 @@ class ContentController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-
         $widget = $em->getRepository('BigfootContentBundle:Widget')->find($widget_id);
 
         if (!$widget) {
@@ -258,7 +220,6 @@ class ContentController extends Controller
         }
 
         $parameters = $widget->getWidgetparameter();
-
         $tabParameter = array();
 
         foreach ($parameters as $param) {
@@ -281,7 +242,6 @@ class ContentController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-
         $sidebar = $em->getRepository('BigfootContentBundle:Sidebar')->find($sidebar_id);
 
         if (!$sidebar) {
@@ -293,7 +253,6 @@ class ContentController extends Controller
 
         foreach ($widgets as $widget) {
             $parameters = $widget->getWidgetparameter();
-
             $tabParameter = array();
 
             foreach ($parameters as $param) {
@@ -318,7 +277,6 @@ class ContentController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-
         $staticcontent = $em->getRepository('BigfootContentBundle:StaticContent')->find($staticcontent_id);
 
         if (!$staticcontent) {

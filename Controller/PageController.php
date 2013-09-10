@@ -29,9 +29,7 @@ class PageController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('BigfootContentBundle:Page')->findAll();
-
         $this->container->get('bigfoot.theme')['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a page', 'admin_page_new'));
 
         return array(
@@ -93,7 +91,6 @@ class PageController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BigfootContentBundle:Page')->find($id);
 
         if (!$entity) {

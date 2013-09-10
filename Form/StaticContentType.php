@@ -36,7 +36,6 @@ class StaticContentType extends AbstractType
             ->add('active','checkbox',array('required' => false));
 
         $currentPath = $this->container->get('kernel')->getBundle('BigfootContentBundle')->getPath();
-
         $tabTemplate = $this->container->get('bigfoot_content.template')->listTemplate($currentPath,'StaticContent');
 
         $builder

@@ -39,7 +39,6 @@ class BlockType extends AbstractType
             ));
 
         $currentPath = $this->container->get('kernel')->getBundle('BigfootContentBundle')->getPath();
-
         $tabTemplate = $this->container->get('bigfoot_content.template')->listTemplate($currentPath,'Widget');
 
         $builder

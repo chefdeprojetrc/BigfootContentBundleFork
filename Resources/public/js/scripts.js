@@ -71,7 +71,7 @@ function CreateDynamicForm(widgetName,typeBlock,idBlock,id_sidebar,positionToDra
         idBlock = '';
     }
 
-    path_url = $('#sidebar_container').attr('data-src');
+    path_url = $('#sidebar_container').attr('data-create-block');
 
     $.ajax({
         url: path_url,
@@ -120,7 +120,7 @@ function saveOrderBlock(id_sidebar)
     var tabPosition = new Array();
     var typeBlock   = new Array();
 
-    path_url = $('#sidebar_container').attr('data-src');
+    path_url = $('#sidebar_container').attr('data-save-order');
 
     $('#body_sidebar_' + id_sidebar + ' input.sortable-field').each(function()
     {

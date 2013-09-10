@@ -28,7 +28,6 @@ class SidebarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $currentPath = $this->container->get('kernel')->getBundle('BigfootContentBundle')->getPath();
-
         $tabTemplate = $this->container->get('bigfoot_content.template')->listTemplate($currentPath,'Sidebar');
 
         $builder

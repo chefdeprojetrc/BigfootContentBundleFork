@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div id="sidebar_container" data-src="{{ path('admin_dashboard') }}">
+    <div id="sidebar_container" data-create-block="{{ path('admin_dashboard_create_dynamic_block') }}" data-save-order="{{ path('admin_dashboard_save_block_order') }}">
         <div id="header_sidebar_container">{{ 'Liste des Sidebars disponibles' }}<a href="{{ path('admin_sidebar_new') }}"><span class="glyphicon glyphicon-file"></span></a></span></div>
         <div id="body_sidebar_container">
             {% for sidebar in sidebarList %}
@@ -57,7 +57,7 @@
                             {% endif %}
 
 
-                            {% include 'BigfootContentBundle:Form:dynamicalform.twig.html' with {
+                            {% include 'BigfootContentBundle:Form:dynamicform.html.twig' with {
                             'form': block.form,
                             'currentSidebar': sidebar.id_sidebar,
                             'action_path' : action_path,

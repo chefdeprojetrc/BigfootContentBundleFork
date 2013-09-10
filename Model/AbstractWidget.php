@@ -19,5 +19,4 @@ abstract class AbstractWidget
     abstract protected function getRoute();
 
     abstract protected function getParametersType();
-
 }

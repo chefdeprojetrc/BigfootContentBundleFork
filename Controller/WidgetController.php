@@ -29,9 +29,7 @@ class WidgetController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('BigfootContentBundle:Widget')->findAll();
-
         $this->container->get('bigfoot.theme')['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a widget', 'admin_widget_new'));
 
         return array(
@@ -49,20 +47,14 @@ class WidgetController extends Controller
     {
 
         $entity  = new Widget();
-
         $widget_name = $this->container->getParameter('bigfoot_content.widgets')[$request->get($form_name)['name']];
-
         $widget = new $widget_name;
-
         $formTypeName = $widget->getParametersType();
-
         $form = $this->createForm(new $formTypeName($this->container), $entity);
-
         $form->submit($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
             $em->persist($entity);
             $em->flush();
 
@@ -103,7 +95,6 @@ class WidgetController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {
@@ -130,7 +121,6 @@ class WidgetController extends Controller
     public function updateAction(Request $request, $id, $form_name)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {
@@ -138,15 +128,10 @@ class WidgetController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-
         $widget_name = $this->container->getParameter('bigfoot_content.widgets')[$request->get($form_name)['name']];
-
         $widget = new $widget_name;
-
         $formTypeName = $widget->getParametersType();
-
         $formObject = new $formTypeName($this->container);
-
         $editForm = $this->createForm($formObject, $entity);
         $editForm->submit($request);
 
@@ -175,7 +160,6 @@ class WidgetController extends Controller
         $form = $this->createDeleteForm($id);
         $form->submit($request);
 
-
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
@@ -185,7 +169,6 @@ class WidgetController extends Controller
 
         $em->remove($entity);
         $em->flush();
-
 
         return $this->redirect($this->generateUrl('admin_dashboard'));
     }

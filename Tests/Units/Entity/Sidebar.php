@@ -173,10 +173,8 @@ class Sidebar extends Units\Test
         ;
 
         $sidebar = new \Bigfoot\Bundle\ContentBundle\Entity\Sidebar();
-
         $sidebar->addStaticcontent($staticcontent);
         $sidebar->addWidget($widget);
-
         $blocks = $sidebar->getBlock()->toArray();
 
         $this
@@ -189,7 +187,6 @@ class Sidebar extends Units\Test
         ;
 
         $sidebar->removeWidget($blocks[1]);
-
         $blocks = $sidebar->getBlock()->toArray();
 
         $this

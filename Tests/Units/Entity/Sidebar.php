@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Tests\Units\Entity;
 
 use Symfony\Component\DependencyInjection\Container;
+
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use atoum\AtoumBundle\Test\Units;
 
@@ -72,7 +73,8 @@ class Sidebar extends Units\Test
         $this
             ->if($sidebar = new \Bigfoot\Bundle\ContentBundle\Entity\Sidebar())
             ->and($sidebar->addStaticcontent($staticcontent))
-            ->array($sidebar->getStaticcontent()->toArray())
+            ->boolean($sidebar->getStaticcontent()->contains($staticcontent))
+            ->isEqualTo(true)
         ;
     }
 
@@ -94,7 +96,55 @@ class Sidebar extends Units\Test
         $this
             ->if($sidebar = new \Bigfoot\Bundle\ContentBundle\Entity\Sidebar())
             ->and($sidebar->addWidget($widget))
-            ->array($sidebar->getWidget()->toArray())
+            ->boolean($sidebar->getWidget()->contains($widget))
+            ->isEqualTo(true)
+        ;
+    }
+
+    /**
+     * Test removal Widget
+     */
+    public function testRemoveWidget()
+    {
+        $widget = new \Bigfoot\Bundle\ContentBundle\Entity\Widget();
+
+        $widget
+            ->setLabel('Test label Widget')
+            ->setName('Test name Widget')
+            ->setRoute('route_test')
+            ->setPosition(99)
+            ->setTemplate('default.html.twig')
+        ;
+
+        $this
+            ->if($sidebar = new \Bigfoot\Bundle\ContentBundle\Entity\Sidebar())
+            ->and($sidebar->addWidget($widget))
+            ->and($sidebar->removeWidget($widget))
+            ->boolean($sidebar->getWidget()->contains($widget))
+            ->isEqualTo(false)
+        ;
+    }
+
+    /**
+     * Test removal Static Content
+     */
+    public function testRemoveStaticContent()
+    {
+        $staticcontent = new \Bigfoot\Bundle\ContentBundle\Entity\StaticContent();
+
+        $staticcontent
+            ->setLabel('Test label Static Content')
+            ->setDescription('Test description Static Content')
+            ->setPosition(99)
+            ->setTemplate('default.html.twig')
+        ;
+
+        $this
+            ->if($sidebar = new \Bigfoot\Bundle\ContentBundle\Entity\Sidebar())
+            ->and($sidebar->addStaticcontent($staticcontent))
+            ->and($sidebar->removeStaticcontent($staticcontent))
+            ->boolean($sidebar->getStaticcontent()->contains($staticcontent))
+            ->isEqualTo(false)
         ;
     }
 }

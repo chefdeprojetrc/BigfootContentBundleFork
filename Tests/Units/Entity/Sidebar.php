@@ -147,4 +147,56 @@ class Sidebar extends Units\Test
             ->isEqualTo(false)
         ;
     }
+
+    /**
+     * Test blocks into Sidebar
+     */
+    public function testGetBlock()
+    {
+        $staticcontent = new \Bigfoot\Bundle\ContentBundle\Entity\StaticContent();
+
+        $staticcontent
+            ->setLabel('Test label Static Content')
+            ->setDescription('Test description Static Content')
+            ->setPosition(99)
+            ->setTemplate('default.html.twig')
+        ;
+
+        $widget = new \Bigfoot\Bundle\ContentBundle\Entity\Widget();
+
+        $widget
+            ->setLabel('Test label Widget')
+            ->setName('Test name Widget')
+            ->setRoute('route_test')
+            ->setPosition(99)
+            ->setTemplate('default.html.twig')
+        ;
+
+        $sidebar = new \Bigfoot\Bundle\ContentBundle\Entity\Sidebar();
+
+        $sidebar->addStaticcontent($staticcontent);
+        $sidebar->addWidget($widget);
+
+        $blocks = $sidebar->getBlock()->toArray();
+
+        $this
+            ->array($blocks)
+            ->hasSize(2)
+            ->object($blocks[0])
+            ->isInstanceOf('\Bigfoot\Bundle\ContentBundle\Entity\StaticContent')
+            ->object($blocks[1])
+            ->isInstanceOf('\Bigfoot\Bundle\ContentBundle\Entity\Widget')
+        ;
+
+        $sidebar->removeWidget($blocks[1]);
+
+        $blocks = $sidebar->getBlock()->toArray();
+
+        $this
+            ->array($blocks)
+            ->hasSize(1)
+            ->object($blocks[0])
+            ->isInstanceOf('\Bigfoot\Bundle\ContentBundle\Entity\StaticContent')
+        ;
+    }
 }

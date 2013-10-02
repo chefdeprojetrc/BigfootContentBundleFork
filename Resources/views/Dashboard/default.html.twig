@@ -2,15 +2,14 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets '@BigfootContentBundle/Resources/public/css/*' filter='cssrewrite' %}
+    {% stylesheets '@BigfootContentBundle/Resources/public/css/*' filter='cssrewrite' output='css/compiled/content-bundle.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
-
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@BigfootContentBundle/Resources/public/js/*' %}
+    {% javascripts '@BigfootContentBundle/Resources/public/js/*' output='js/compiled/content-bundle.js' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
@@ -55,7 +54,6 @@
                                 {% set action_path = path('admin_staticcontent_update', { 'id': block.id }) %}
                                 {% set delete_path = path('admin_staticcontent_delete', { 'id': block.id }) %}
                             {% endif %}
-
 
                             {% include 'BigfootContentBundle:Form:dynamicform.html.twig' with {
                             'form': block.form,

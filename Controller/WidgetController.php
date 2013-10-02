@@ -131,7 +131,8 @@ class WidgetController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $widget = $this->container->getParameter('bigfoot_content.widgets');
-        $widget_name = $widget[$request->get($form_name)['name']];
+        $form = $request->get($form_name);
+        $widget_name = $widget[$form['name']];
         $widget = new $widget_name;
         $formTypeName = $widget->getParametersType();
         $formObject = new $formTypeName($this->container);

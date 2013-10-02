@@ -46,10 +46,10 @@ class WidgetController extends Controller
      */
     public function createAction(Request $request,$form_name)
     {
-
         $entity  = new Widget();
         $widget = $this->container->getParameter('bigfoot_content.widgets');
-        $widget_name = $widget[$request->get($form_name)['name']];
+        $form = $request->get($form_name);
+        $widget_name = $widget[$form['name']];
         $widget = new $widget_name;
         $formTypeName = $widget->getParametersType();
         $form = $this->createForm(new $formTypeName($this->container), $entity);

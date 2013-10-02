@@ -30,7 +30,8 @@ class SidebarController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BigfootContentBundle:Sidebar')->findAll();
-        $this->container->get('bigfoot.theme')['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a sidebar', 'admin_sidebar_new'));
+        $theme = $this->container->get('bigfoot.theme');
+        $theme['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a sidebar', 'admin_sidebar_new'));
 
         return array(
             'entities' => $entities,

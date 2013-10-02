@@ -65,7 +65,8 @@ class ContentController extends Controller
                 $form_name = '';
 
                 if ($block instanceof Widget) {
-                    $widget_name = $this->container->getParameter('bigfoot_content.widgets')[$block->getName()];
+                    $widget = $this->container->getParameter('bigfoot_content.widgets');
+                    $widget_name = $widget[$block->getName()];
                     $widget = new $widget_name;
                     $formTypeName = $widget->getParametersType();
                     $widgetObject = new $formTypeName($this->container);
@@ -150,7 +151,8 @@ class ContentController extends Controller
 
             if ($type_block == 'widget') {
                 $widget_name = $request->get('widget_name');
-                $widget_name = $this->container->getParameter('bigfoot_content.widgets')[$widget_name];
+                $widget = $this->container->getParameter('bigfoot_content.widgets');
+                $widget_name = $widget[$widget_name];
                 $widgetTemp = new $widget_name;
                 $entity = new Widget();
 

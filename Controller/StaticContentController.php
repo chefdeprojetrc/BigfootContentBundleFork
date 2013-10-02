@@ -30,7 +30,8 @@ class StaticContentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BigfootContentBundle:StaticContent')->findAll();
-        $this->container->get('bigfoot.theme')['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a static content', 'admin_staticcontent_new'));
+        $theme = $this->container->get('bigfoot.theme');
+        $theme['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a static content', 'admin_staticcontent_new'));
 
         return array(
             'entities' => $entities,

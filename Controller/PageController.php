@@ -30,7 +30,8 @@ class PageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BigfootContentBundle:Page')->findAll();
-        $this->container->get('bigfoot.theme')['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a page', 'admin_page_new'));
+        $theme = $this->container->get('bigfoot.theme');
+        $theme['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a page', 'admin_page_new'));
 
         return array(
             'entities' => $entities,

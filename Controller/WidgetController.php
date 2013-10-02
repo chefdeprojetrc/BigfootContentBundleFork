@@ -30,7 +30,8 @@ class WidgetController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BigfootContentBundle:Widget')->findAll();
-        $this->container->get('bigfoot.theme')['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a widget', 'admin_widget_new'));
+        $theme = $this->container->get('bigfoot.theme');
+        $theme['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a widget', 'admin_widget_new'));
 
         return array(
             'entities' => $entities,
@@ -47,7 +48,8 @@ class WidgetController extends Controller
     {
 
         $entity  = new Widget();
-        $widget_name = $this->container->getParameter('bigfoot_content.widgets')[$request->get($form_name)['name']];
+        $widget = $this->container->getParameter('bigfoot_content.widgets');
+        $widget_name = $widget[$request->get($form_name)['name']];
         $widget = new $widget_name;
         $formTypeName = $widget->getParametersType();
         $form = $this->createForm(new $formTypeName($this->container), $entity);
@@ -128,7 +130,8 @@ class WidgetController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $widget_name = $this->container->getParameter('bigfoot_content.widgets')[$request->get($form_name)['name']];
+        $widget = $this->container->getParameter('bigfoot_content.widgets');
+        $widget_name = $widget[$request->get($form_name)['name']];
         $widget = new $widget_name;
         $formTypeName = $widget->getParametersType();
         $formObject = new $formTypeName($this->container);

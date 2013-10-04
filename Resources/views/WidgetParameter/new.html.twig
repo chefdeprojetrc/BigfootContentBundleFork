@@ -1,6 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends bigfoot_theme_bundle~'::base.html.twig' %}
 
-{% block body -%}
+{% block content -%}
     <h1>WidgetParameter creation</h1>
 
     <form action="{{ path('widgetparameter_create') }}" method="post" {{ form_enctype(form) }}>

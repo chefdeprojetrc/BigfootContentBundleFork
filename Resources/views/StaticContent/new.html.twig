@@ -1,7 +1,7 @@
 {% extends bigfoot_theme_bundle~'::base.html.twig' %}
 
-{% block body %}
-    {% include 'BigfootCoreBundle:crud:form.html.twig' with {
+{% block content %}
+    {% include [bigfoot_theme_bundle~':crud:form.html.twig', 'BigfootCoreBundle:crud:form.html.twig'] with {
     'action_route': path('admin_staticcontent_create'),
     'action_name': 'Create static content',
     'form_title': 'Static content creation',

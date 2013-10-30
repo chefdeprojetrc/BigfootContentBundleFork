@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
+use Bigfoot\Bundle\CoreBundle\Crud\CrudController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -16,38 +17,63 @@ use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
  *
  * @Route("/sidebar")
  */
-class SidebarController extends Controller
+class SidebarController extends CrudController
 {
 
+    protected function getName()
+    {
+        return 'admin_sidebar';
+    }
+
     /**
-     * Lists all Sidebar entities.
+     * Must return the entity full name (eg. BigfootCoreBundle:Tag).
      *
+     * @return string
+     */
+    protected function getEntity()
+    {
+        return 'BigfootContentBundle:Sidebar';
+    }
+
+    /**
+     * Must return an associative array field name => field label.
+     *
+     * @return array
+     */
+    protected function getFields()
+    {
+        return array(
+            'id'    => 'id',
+            'title' => 'title'
+        );
+    }
+
+    protected function getFormType()
+    {
+        return 'bigfoot_bundle_contentbundle_sidebartype';
+    }
+
+    /**
      * @Route("/", name="admin_sidebar")
      * @Method("GET")
-     * @Template()
+     * @Template("BigfootContentBundle:Dashboard:default.html.twig")
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('BigfootContentBundle:Sidebar')->findAll();
-        $theme = $this->container->get('bigfoot.theme');
-        $theme['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a sidebar', 'admin_sidebar_new'));
-
-        return array(
-            'entities' => $entities,
-        );
+        return array();
     }
+
     /**
      * Creates a new Sidebar entity.
      *
      * @Route("/", name="admin_sidebar_create")
      * @Method("POST")
-     * @Template("BigfootContentBundle:Sidebar:new.html.twig")
+     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function createAction(Request $request)
     {
         $entity  = new Sidebar();
-        $form = $this->createForm(new SidebarType($this->container), $entity);
+        $form = $this->createForm($this->getFormType(), $entity);
         $form->submit($request);
 
         if ($form->isValid()) {
@@ -69,43 +95,29 @@ class SidebarController extends Controller
      *
      * @Route("/new", name="admin_sidebar_new")
      * @Method("GET")
-     * @Template()
+     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function newAction()
     {
-        $entity = new Sidebar();
-        $form   = $this->createForm(new SidebarType($this->container), $entity);
+        $arrayNew = $this->doNew();
+        $arrayNew['full_page'] = true;
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $arrayNew;
     }
 
     /**
      * Displays a form to edit an existing Sidebar entity.
      *
-     * @Route("/{id}/edit", name="admin_sidebar_edit")
+     * @Route("/edit/{id}/", name="admin_sidebar_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("BigfootCoreBundle:crud:edit.html.twig")
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:Sidebar')->find($id);
+        $arrayEdit = $this->doEdit($id);
+        $arrayEdit['full_page'] = true;
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sidebar entity.');
-        }
-
-        $editForm = $this->createForm(new SidebarType($this->container), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $arrayEdit;
     }
 
     /**
@@ -113,7 +125,7 @@ class SidebarController extends Controller
      *
      * @Route("/{id}", name="admin_sidebar_update")
      * @Method("PUT")
-     * @Template("BigfootContentBundle:Sidebar:edit.html.twig")
+     * @Template("BigfootCoreBundle:crud:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -125,7 +137,7 @@ class SidebarController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new SidebarType($this->container), $entity);
+        $editForm = $this->createForm($this->getFormType(), $entity);
         $editForm->submit($request);
 
         if ($editForm->isValid()) {
@@ -172,7 +184,7 @@ class SidebarController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    protected function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')

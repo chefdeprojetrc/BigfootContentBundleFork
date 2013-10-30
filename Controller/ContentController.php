@@ -62,9 +62,11 @@ class ContentController extends Controller
 
             foreach ($tempBlock as $block) {
 
-                $form_name = '';
+                $form_name      = '';
+                $widget_name_lbl    = '';
 
                 if ($block instanceof Widget) {
+                    $widget_name_lbl = $block->getName();
                     $widget = $this->container->getParameter('bigfoot_content.widgets');
                     $widget_name = $widget[$block->getName()];
                     $widget = new $widget_name;
@@ -80,10 +82,12 @@ class ContentController extends Controller
                 }
 
                 $formBlock[] = array(
-                    'id' => $block->getId(),
-                    'form' => $tempForm->createView(),
-                    'type' => $type,
-                    'form_name' => $form_name
+                    'id'        => $block->getId(),
+                    'form'      => $tempForm->createView(),
+                    'type'      => $type,
+                    'position'  => $block->getPosition(),
+                    'form_name' => $form_name,
+                    'widget_name' => $widget_name_lbl,
                 );
             }
 
@@ -131,6 +135,8 @@ class ContentController extends Controller
 
             return new Response();
         }
+
+        return new Response();
     }
 
 
@@ -148,6 +154,7 @@ class ContentController extends Controller
 
             $type_block = $request->get('type_block');
             $id_sidebar = $request->get('id_sidebar');
+            $position   = ($request->get('position')) ? $request->get('position') : 0;
 
             if ($type_block == 'widget') {
                 $widget_name = $request->get('widget_name');
@@ -165,19 +172,30 @@ class ContentController extends Controller
                 $widgetObject = new $formTypeName($this->container);
                 $form_name = $widgetObject->getName();
                 $form   = $this->createForm($widgetObject, $entity);
-                $action_path = $this->container->get('router')->generate('admin_widget_create',array('form_name' => $form_name));
+                $action_path = $this->container->get('router')->generate('admin_widget_colorbox_new',array(
+                    'widget_name'   => $request->get('widget_name'),
+                    'mode'          => 'new',
+                    'id_sidebar'    => $id_sidebar,
+                    'position'      => $position
+                ));
 
             }
             else if ($type_block == 'staticcontent') {
                 $id_block = $request->get('id_block');
                 $entity = $em->getRepository('BigfootContentBundle:StaticContent')->findOneBy(array('id' => $id_block));
                 $form   = $this->createForm(new StaticContentType($this->container), $entity);
-                $action_path = $this->container->get('router')->generate('admin_staticcontent_create');
+                $action_path = $this->container->get('router')->generate('admin_staticcontent_colorbox_edit',array(
+                    'id'                    => $id_block,
+                    'mode'                  => 'new',
+                    'id_sidebar'            => $id_sidebar,
+                    'position'              => $position
+                ));
             }
 
             return $this->render('BigfootContentBundle:Form:dynamicform.html.twig',array(
                 'form'               => $form->createView(),
                 'currentSidebar'     => $id_sidebar,
+                'currentPosition'    => $position,
                 'action_path'        => $action_path,
                 'method'             => 'POST'
             ));

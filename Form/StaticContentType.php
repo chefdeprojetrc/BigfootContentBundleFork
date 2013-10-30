@@ -31,7 +31,7 @@ class StaticContentType extends AbstractType
             ->add('sidebar')
             ->add('label')
             ->add('title')
-            ->add('description')
+            ->add('description','bigfoot_richtext')
             ->add('position','hidden')
             ->add('active','checkbox',array('required' => false));
 
@@ -41,7 +41,9 @@ class StaticContentType extends AbstractType
         $builder
             ->add('template','choice',array(
                 'choices' => $tabTemplate
-            ));
+            ))
+            ->add('translation', 'translatable_entity')
+        ;
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * StaticContent
  *
@@ -14,14 +14,14 @@ class StaticContent extends Block
 {
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="description", type="text")
      */
     private $description;

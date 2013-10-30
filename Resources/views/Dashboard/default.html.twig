@@ -14,8 +14,16 @@
     {% endjavascripts %}
 {% endblock %}
 
-{% block body %}
-    {{ parent() }}
+{% block content %}
+    <div id="dashboard_actions">
+        <div class="action_elt">
+            <a href="{{ path('admin_sidebar_new') }}" class="colorbox">{{ 'Add a sidebar' | trans }}</a>
+        </div>
+        <div class="action_elt">
+            <a href="{{ path('admin_staticcontent_colorbox_new') }}" class="colorbox">{{ 'Add a static content' | trans }}</a>
+        </div>
+    </div>
+    <div style="clear:both;"></div>
     <div id="widget_sc_container">
         <div id="header_widget_sc_container">{{ 'Liste des Widgets et des Contenus statiques disponibles' }}</div>
         <div id="body_widget_sc_container">
@@ -34,24 +42,29 @@
     </div>
 
     <div id="sidebar_container" data-create-block="{{ path('admin_dashboard_create_dynamic_block') }}" data-save-order="{{ path('admin_dashboard_save_block_order') }}">
-        <div id="header_sidebar_container">{{ 'Liste des Sidebars disponibles' }}<a href="{{ path('admin_sidebar_new') }}"><span class="glyphicon glyphicon-file"></span></a></span></div>
+        <div id="header_sidebar_container">{{ 'Liste des Sidebars disponibles' }}<a href="{{ path('admin_sidebar_new') }}" class="colorbox"><span class="glyphicon glyphicon-file"></span></a></span></div>
         <div id="body_sidebar_container">
             {% for sidebar in sidebarList %}
                 <div class="sidebar_elt" id="sidebar_{{ sidebar.id_sidebar }}">
                     <div class="header_sidebar_elt">
-                        <a href="#_" onclick="saveOrderBlock('{{ sidebar.id_sidebar }}');return false;"><span class="glyphicon glyphicon-magnet"></span></a>
+                        <a href="#_" onclick="saveOrderBlock('{{ sidebar.id_sidebar }}');return false;" title="{{ 'Save Order' | trans }}"><span class="glyphicon glyphicon-magnet"></span></a>
                         {{ sidebar.name }}
-                        <a href="{{ path('admin_sidebar_edit' , { 'id': sidebar.id_sidebar }) }}"><span class="glyphicon glyphicon-pencil"></span></a>
-                        <a href="{{ path('admin_sidebar_delete' , { 'id': sidebar.id_sidebar }) }}"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a href="{{ path('admin_sidebar_edit' , { 'id': sidebar.id_sidebar }) }}" class="colorbox" title="{{ 'Edit this Sidebar' | trans }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="#_"
+                           data-href="{{ path('admin_sidebar_delete' , { 'id': sidebar.id_sidebar }) }}" title="{{ 'Delete this sidebar' | trans }}" class="delete-form-dashboard"
+                           data-confirm-title="{{ 'Please confirm' | trans }}"
+                           data-confirm-message="{{ 'Are you sure you want to perform this action ? The object will be permanently lost.' | trans }}"
+                           data-confirm-button-cancel="{{ "Cancel" | trans }}"
+                           data-confirm-button-ok="{{ "Confirm" | trans }}">
+                            <span class="glyphicon glyphicon-trash"></span></a>
                     </div>
                     <div class="body_sidebar_elt" id="body_sidebar_{{ sidebar.id_sidebar }}">
                         {% for block in sidebar.formBlock %}
-
                             {% if block.type == 'widget' %}
-                                {% set action_path = path('admin_widget_update', { 'id': block.id, 'form_name' : block.form_name }) %}
+                                {% set action_path = path('admin_widget_colorbox_edit', { 'id': block.id, 'form_name' : block.form_name, 'widget_name' : block.widget_name, 'id_sidebar' : sidebar.id_sidebar, 'position' : block.position }) %}
                                 {% set delete_path = path('admin_widget_delete', { 'id': block.id }) %}
                             {% elseif block.type == 'staticcontent' %}
-                                {% set action_path = path('admin_staticcontent_update', { 'id': block.id }) %}
+                                {% set action_path = path('admin_staticcontent_colorbox_edit', { 'id': block.id, 'mode' : 'edit', 'id_sidebar' : sidebar.id_sidebar, 'position' : block.position }) %}
                                 {% set delete_path = path('admin_staticcontent_delete', { 'id': block.id }) %}
                             {% endif %}
 

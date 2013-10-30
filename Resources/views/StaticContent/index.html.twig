@@ -1,9 +1,0 @@
-{% extends bigfoot_theme_bundle~'::base.html.twig' %}
-
-{% block content %}
-    {% include [bigfoot_theme_bundle~':crud:list.html.twig', 'BigfootCoreBundle:crud:list.html.twig'] with {
-    'action_edit': 'admin_staticcontent_edit',
-    'list_title': 'Static Content list',
-    'fieldsList': {id: 'ID', title: 'Title', description: 'Description', template: 'Template', active : 'Active'}
-    } %}
-{% endblock %}

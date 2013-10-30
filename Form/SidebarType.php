@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Form;
 
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -16,7 +17,7 @@ class SidebarType extends AbstractType
      *
      * @param $container
      */
-    public function __construct($container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

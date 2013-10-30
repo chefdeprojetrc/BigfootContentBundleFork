@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
+use Bigfoot\Bundle\CoreBundle\Crud\CrudController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -16,52 +17,73 @@ use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
  *
  * @Route("/page")
  */
-class PageController extends Controller
+class PageController extends CrudController
 {
+
+    /**
+     * Used to generate route names.
+     * The helper method of this class will use routes named after this name.
+     * This means if you extend this class and use its helper methods, if getName() returns 'my_controller', you must implement a route named 'my_controller'.
+     *
+     * @return string
+     */
+    protected function getName()
+    {
+        return 'admin_page';
+    }
+
+    /**
+     * Must return the entity full name (eg. BigfootCoreBundle:Tag).
+     *
+     * @return string
+     */
+    protected function getEntity()
+    {
+        return 'BigfootContentBundle:Page';
+    }
+
+    /**
+     * Must return an associative array field name => field label.
+     *
+     * @return array
+     */
+    protected function getFields()
+    {
+        return array(
+            'id'        => 'Id',
+            'title'     => 'Title',
+            'template'  => 'Template',
+            'active'    => 'Active',
+        );
+    }
+
+    protected function getFormType()
+    {
+        return 'bigfoot_bundle_contentbundle_pagetype';
+    }
 
     /**
      * Lists all Page entities.
      *
      * @Route("/", name="admin_page")
      * @Method("GET")
-     * @Template()
+     * @Template("BigfootCoreBundle:crud:index.html.twig")
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('BigfootContentBundle:Page')->findAll();
-        $theme = $this->container->get('bigfoot.theme');
-        $theme['page_content']['globalActions']->addItem(new Item('crud_add', 'Add a page', 'admin_page_new'));
-
-        return array(
-            'entities' => $entities,
-        );
+        return $this->doIndex();
     }
+
     /**
      * Creates a new Page entity.
      *
      * @Route("/", name="admin_page_create")
      * @Method("POST")
-     * @Template("BigfootContentBundle:Page:new.html.twig")
+     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new Page();
-        $form = $this->createForm(new PageType(), $entity);
-        $form->submit($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('admin_page'));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $this->doCreate($request);
     }
 
     /**
@@ -69,17 +91,11 @@ class PageController extends Controller
      *
      * @Route("/new", name="admin_page_new")
      * @Method("GET")
-     * @Template()
+     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function newAction()
     {
-        $entity = new Page();
-        $form   = $this->createForm(new PageType(), $entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $this->doNew();
     }
 
     /**
@@ -87,25 +103,11 @@ class PageController extends Controller
      *
      * @Route("/{id}/edit", name="admin_page_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("BigfootCoreBundle:crud:edit.html.twig")
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:Page')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Page entity.');
-        }
-
-        $editForm = $this->createForm(new PageType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->doEdit($id);
     }
 
     /**
@@ -113,34 +115,11 @@ class PageController extends Controller
      *
      * @Route("/{id}", name="admin_page_update")
      * @Method("PUT")
-     * @Template("BigfootContentBundle:Page:edit.html.twig")
+     * @Template("BigfootCoreBundle:crud:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BigfootContentBundle:Page')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Page entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new PageType(), $entity);
-        $editForm->submit($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('admin_page'));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->doUpdate($request,$id);
     }
     /**
      * Deletes a Page entity.
@@ -150,22 +129,7 @@ class PageController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->submit($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BigfootContentBundle:Page')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Page entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('admin_page'));
+        return $this->doDelete($request,$id);
     }
 
     /**
@@ -175,7 +139,7 @@ class PageController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    protected function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')

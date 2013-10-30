@@ -1,26 +1,28 @@
 <div class="form_widget_element">
-    <div class="header_form_widget_element">{{ form.vars.value.label }}</div>
-    <div class="body_form_widget_element" {% if block_id is defined and block_type is defined %}id="{{block_type}}-{{ block_id }}"{% endif %}>
-        <form action="{{ action_path }}" method="post">
+    <div class="header_form_widget_element">
+        {{ form.vars.value.label }}
+        <a href="{{ action_path }}" class="colorbox"><span class="glyphicon glyphicon-pencil"></span></a>
 
-            {% if method is defined %}
-                <input type="hidden" name="_method" value="{{ method }}" />
+        {% if block_id is defined and block_type is defined %}
+            {% if block_type == 'widget' %}
+                {% set action_delete =  path('admin_widget_delete' , { 'id': block_id  }) %}
+            {% elseif  block_type == 'staticcontent' %}
+                {% set action_delete =  path('admin_staticcontent_delete' , { 'id': block_id }) %}
             {% endif %}
 
-            {{ form_widget(form.sidebar, {'attr': {'class': 'sidebar_select'}, value: currentSidebar|number_format}) }}
+            <a href="#_"
+               data-href="{{ action_delete }}" title="{{ 'Delete' | trans }}" class="delete-form-dashboard"
+               data-confirm-title="{{ 'Please confirm' | trans }}"
+               data-confirm-message="{{ 'Are you sure you want to perform this action ? The object will be permanently lost.' | trans }}"
+               data-confirm-button-cancel="{{ "Cancel" | trans }}"
+               data-confirm-button-ok="{{ "Confirm" | trans }}">
+                <span class="glyphicon glyphicon-trash"></span></a>
+        {% endif %}
 
+    </div>
+    <div class="body_form_widget_element" {% if block_id is defined and block_type is defined %}id="{{block_type}}-{{ block_id }}"{% endif %} style="display:none;">
+        <form action="{{ action_path }}" method="post" class="form-horizontal">
             {{ form_widget(form.position, {'attr': {'class': 'sortable-field'}}) }}
-
-            {{ form_rest(form) }}
-            <div class="widget-foot">
-                <button class="btn btn-primary" type="submit">{{ 'Submit' | trans }}</button>
-
-                {% if delete_path is defined %}
-                    <a class="btn btn-primary" href="{{ delete_path }}">{{ 'Delete' | trans }}</a>
-                {% else %}
-                    <a class="btn btn-primary delete_widget_container" href="#_">{{ 'Delete' | trans }}</a>
-                {% endif %}
-            </div>
         </form>
     </div>
 </div>

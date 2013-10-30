@@ -1,6 +1,10 @@
 parameters:
     bigfoot_content.template.class: 'Bigfoot\Bundle\ContentBundle\Services\Template'
     bigfoot_content.widgettype.class: 'Bigfoot\Bundle\ContentBundle\Form\WidgetType'
+    bigfoot_content.widgettesttype.class: 'Bigfoot\Bundle\ContentBundle\Form\WidgetTestType'
+    bigfoot_content.sidebartype.class: 'Bigfoot\Bundle\ContentBundle\Form\SidebarType'
+    bigfoot_content.staticcontenttype.class: 'Bigfoot\Bundle\ContentBundle\Form\StaticContentType'
+    bigfoot_content.pagetype.class: 'Bigfoot\Bundle\ContentBundle\Form\PageType'
 
 services:
     bigfoot_content.template:
@@ -11,7 +15,26 @@ services:
             arguments: [@service_container]
             tags:
                 - { name: form.type, alias: bigfoot_bundle_contentbundle_widgettype}
-
+    bigfoot_bundle_contentbundle_widgettesttype:
+            class: '%bigfoot_content.widgettesttype.class%'
+            arguments: [@service_container]
+            tags:
+                - { name: form.type, alias: bigfoot_bundle_contentbundle_widgettesttype}
+    bigfoot_bundle_contentbundle_sidebartype:
+            class: '%bigfoot_content.sidebartype.class%'
+            arguments: [@service_container]
+            tags:
+                - { name: form.type, alias: bigfoot_bundle_contentbundle_sidebartype}
+    bigfoot_bundle_contentbundle_pagetype:
+            class: '%bigfoot_content.pagetype.class%'
+            arguments: [@service_container]
+            tags:
+                - { name: form.type, alias: bigfoot_bundle_contentbundle_pagetype}
+    bigfoot_bundle_contentbundle_staticcontenttype:
+            class: '%bigfoot_content.staticcontenttype.class%'
+            arguments: [@service_container]
+            tags:
+                - { name: form.type, alias: bigfoot_bundle_contentbundle_staticcontenttype}
     kernel.listener.bigfoot_content_menu_listener:
         class: Bigfoot\Bundle\ContentBundle\Listener\MenuListener
         tags:

@@ -1,12 +1,12 @@
 <?php
-
+/* Form/WidgetTestType.php */
 namespace Bigfoot\Bundle\ContentBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PageType extends AbstractType
+class WidgetTestType extends AbstractType
 {
 
     protected $container;
@@ -28,20 +28,7 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('description','bigfoot_richtext')
-            ->add('image','bigfoot_media', array('required' => false))
-            ->add('active','checkbox',array('required' => false));
-
-        $currentPath = $this->container->get('kernel')->getBundle('BigfootContentBundle')->getPath();
-        $tabTemplate = $this->container->get('bigfoot_content.template')->listTemplate($currentPath,'Page');
-
-        $builder
-            ->add('template','choice',array(
-                'choices' => $tabTemplate
-            ))
-            ->add('translation', 'translatable_entity')
-        ;
+            ->add('page_id');
 
     }
 
@@ -51,7 +38,7 @@ class PageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Page'
+            'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Widget'
         ));
     }
 
@@ -60,6 +47,15 @@ class PageType extends AbstractType
      */
     public function getName()
     {
-        return 'bigfoot_bundle_contentbundle_pagetype';
+        return 'bigfoot_bundle_contentbundle_widgettesttype';
+    }
+
+    /**
+     * This method has to return 'bigfoot_bundle_contentbundle_widgettype'
+     * @return string
+     */
+    public function getParent()
+    {
+        return 'bigfoot_bundle_contentbundle_widgettype';
     }
 }

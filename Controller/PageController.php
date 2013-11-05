@@ -50,7 +50,7 @@ class PageController extends CrudController
     protected function getFields()
     {
         return array(
-            'id'        => 'Id',
+            'id'        => 'ID',
             'title'     => 'Title',
             'template'  => 'Template',
             'active'    => 'Active',

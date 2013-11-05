@@ -68,6 +68,11 @@ class Page
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
     /**
      * Set title
      *

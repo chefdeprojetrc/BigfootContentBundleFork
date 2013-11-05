@@ -269,14 +269,26 @@ class ContentController extends Controller
         }
 
         $widgets             = $sidebar->getWidget();
-        $staticcontents      = $sidebar->getStaticContent();
 
-        foreach ($widgets as $widget) {
-            $parameters = $widget->getWidgetparameter();
-            $tabParameter = array();
+        $queryBuilder = $em->getRepository('BigfootContentBundle:StaticContent')
+            ->createQueryBuilder('c');
+        $staticcontents = $queryBuilder
+            ->where('c.sidebar = :sidebar')
+            ->orderBy('c.position')
+            ->setParameter('sidebar', $sidebar_id)
+            ->getQuery()->getResult()
+        ;
 
-            foreach ($parameters as $param) {
-                $tabParameter[$widget->getId()] = array($param->getField() => $param->getValue());
+        $tabParameter   = array();
+
+        if (sizeof($widgets) > 0) {
+            foreach ($widgets as $widget) {
+                $parameters = $widget->getWidgetparameter();
+                $tabParameter = array();
+
+                foreach ($parameters as $param) {
+                    $tabParameter[$widget->getId()] = array($param->getField() => $param->getValue());
+                }
             }
         }
 

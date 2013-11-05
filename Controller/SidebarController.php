@@ -100,7 +100,7 @@ class SidebarController extends CrudController
     public function newAction()
     {
         $arrayNew = $this->doNew();
-        $arrayNew['full_page'] = true;
+        $arrayNew['isAjax'] = true;
 
         return $arrayNew;
     }
@@ -115,7 +115,7 @@ class SidebarController extends CrudController
     public function editAction($id)
     {
         $arrayEdit = $this->doEdit($id);
-        $arrayEdit['full_page'] = true;
+        $arrayEdit['isAjax'] = true;
 
         return $arrayEdit;
     }

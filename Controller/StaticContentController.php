@@ -120,7 +120,7 @@ class StaticContentController extends CrudController
     public function newColorboxAction()
     {
         $arrayNew = $this->doNew();
-        $arrayNew['full_page'] = true;
+        $arrayNew['isAjax'] = true;
 
         return $arrayNew;
     }
@@ -170,7 +170,7 @@ class StaticContentController extends CrudController
             'form_method'           => $form_method,
             'form_submit'           => $form_submit,
             'form_title'            => $form_title,
-            'full_page'             => true,
+            'isAjax'             => true,
         );
     }
 

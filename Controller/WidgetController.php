@@ -144,7 +144,7 @@ class WidgetController extends CrudController
             'entity'        => $entity,
             'form'          => $form->createView(),
             'form_name'     => $form_name,
-            'full_page'     => true
+            'isAjax'     => true
         );
     }
 
@@ -186,7 +186,7 @@ class WidgetController extends CrudController
             'form_method' => $form_method,
             'form_submit' => $form_submit,
             'form_title'  => $form_title,
-            'full_page'   => true,
+            'isAjax'   => true,
         );
     }
 

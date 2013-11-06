@@ -254,28 +254,28 @@ class ContentController extends Controller
 
     /**
      * Display a Sidebar
-     * @Route("/sidebar/display/{sidebar_id}/", name="content_sidebar")
+     * @Route("/sidebar/display/{sidebar_name}/", name="content_sidebar")
      * @Method("GET")
      * @Template()
      */
-    public function displaySidebarAction($sidebar_id)
+    public function displaySidebarAction($sidebar_name)
     {
 
         $em = $this->getDoctrine()->getManager();
-        $sidebar = $em->getRepository('BigfootContentBundle:Sidebar')->find($sidebar_id);
+        $sidebar = $em->getRepository('BigfootContentBundle:Sidebar')->findOneBy(array('title' => $sidebar_name));
 
         if (!$sidebar) {
-            throw $this->createNotFoundException('Unable to find Sidebar entity.');
+            return new Response();
         }
 
-        $widgets             = $sidebar->getWidget();
+        $widgets = $sidebar->getWidget();
 
         $queryBuilder = $em->getRepository('BigfootContentBundle:StaticContent')
             ->createQueryBuilder('c');
         $staticcontents = $queryBuilder
             ->where('c.sidebar = :sidebar')
             ->orderBy('c.position')
-            ->setParameter('sidebar', $sidebar_id)
+            ->setParameter('sidebar', $sidebar->getId())
             ->getQuery()->getResult()
         ;
 

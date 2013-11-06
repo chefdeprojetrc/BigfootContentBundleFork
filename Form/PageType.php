@@ -28,7 +28,36 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
+            ->add('name', 'text', array(
+                'attr' => array(
+                    'data-placement'    => 'bottom',
+                    'data-popover'      => true,
+                    'data-content'      => 'This is the name of the page in the back office. It will not be displayed to the web user.',
+                    'data-title'        => 'Name',
+                    'data-trigger'      => 'hover',
+                    'data-placement'    => 'right'
+                )
+            ))
+            ->add('slug', 'text', array(
+                'attr' => array(
+                    'data-placement'    => 'bottom',
+                    'data-popover'      => true,
+                    'data-content'      => 'This value is used to generate urls. Should contain only lower case letters and the \'-\' sign.',
+                    'data-title'        => 'Slug',
+                    'data-trigger'      => 'hover',
+                    'data-placement'    => 'right'
+                )
+            ))
+            ->add('title', 'text', array(
+                'attr' => array(
+                    'data-placement'    => 'bottom',
+                    'data-popover'      => true,
+                    'data-content'      => 'This is the title of the page as displayed to the web user.',
+                    'data-title'        => 'Title',
+                    'data-trigger'      => 'hover',
+                    'data-placement'    => 'right'
+                )
+            ))
             ->add('description','bigfoot_richtext')
             ->add('image','bigfoot_media', array('required' => false))
             ->add('active','checkbox',array('required' => false));

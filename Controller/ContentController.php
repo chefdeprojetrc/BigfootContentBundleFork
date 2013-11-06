@@ -208,14 +208,14 @@ class ContentController extends Controller
 
     /**
      * Display a Page
-     * @Route("/page/display/{page_id}/", name="content_page")
+     * @Route("/page/display/{page_slug}/", name="content_page")
      * @Method("GET")
      * @Template()
      */
-    public function displayPageAction($page_id)
+    public function displayPageAction($page_slug)
     {
         $em = $this->getDoctrine()->getManager();
-        $page = $em->getRepository('BigfootContentBundle:Page')->find($page_id);
+        $page = $em->getRepository('BigfootContentBundle:Page')->findOneBy(array('slug' => $page_slug));
 
         if (!$page) {
             throw $this->createNotFoundException('Unable to find Page entity.');

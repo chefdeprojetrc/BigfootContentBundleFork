@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
 use Bigfoot\Bundle\ContentBundle\Form\SidebarType;
 use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
@@ -15,6 +16,7 @@ use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
 /**
  * Sidebar controller.
  *
+ * @Cache(maxage="0", smaxage="0", public="false")
  * @Route("/sidebar")
  */
 class SidebarController extends CrudController

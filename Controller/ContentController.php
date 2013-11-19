@@ -235,6 +235,7 @@ class ContentController extends Controller
     public function displayWidgetAction($widget_id)
     {
 
+
         $em = $this->getDoctrine()->getManager();
         $widget = $em->getRepository('BigfootContentBundle:Widget')->find($widget_id);
 
@@ -242,12 +243,7 @@ class ContentController extends Controller
             throw $this->createNotFoundException('Unable to find Widget entity.');
         }
 
-        $parameters = $widget->getWidgetparameter();
-        $tabParameter = array();
-
-        foreach ($parameters as $param) {
-            $tabParameter[$param->getField()] = $param->getValue();
-        }
+        $tabParameter = $widget->getParams();
 
         return $this->render('BigfootContentBundle:Content\Widget:'.$widget->getTemplate(), array(
             'widget' => $widget,
@@ -286,12 +282,7 @@ class ContentController extends Controller
 
         if (sizeof($widgets) > 0) {
             foreach ($widgets as $widget) {
-                $parameters = $widget->getWidgetparameter();
-                $tabParameter = array();
-
-                foreach ($parameters as $param) {
-                    $tabParameter[$widget->getId()] = array($param->getField() => $param->getValue());
-                }
+                $tabParameter[$widget->getId()] = $widget->getParams();
             }
         }
 

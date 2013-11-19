@@ -31,7 +31,7 @@ class ContentController extends Controller
 
     /**
      * Display Dashboard
-     * @Route("/content/dashboard/", name="admin_dashboard")
+     * @Route("admin/content/dashboard/", name="admin_dashboard")
      * @Method("GET")
      * @Template()
      */
@@ -110,7 +110,7 @@ class ContentController extends Controller
 
     /**
      * Save the new block order into a sidebar
-     * @Route("/content/dashboard/save_block_order", name="admin_dashboard_save_block_order")
+     * @Route("admin/content/dashboard/save_block_order", name="admin_dashboard_save_block_order")
      * @Method("GET")
      * @Template()
      */
@@ -145,7 +145,7 @@ class ContentController extends Controller
 
     /**
      * Create dynamically a Widget block or a Static Content block
-     * @Route("/content/dashboard/create_dynamic_block", name="admin_dashboard_create_dynamic_block")
+     * @Route("admin/content/dashboard/create_dynamic_block", name="admin_dashboard_create_dynamic_block")
      * @Method("GET")
      * @Template()
      */

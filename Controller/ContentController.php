@@ -49,7 +49,7 @@ class ContentController implements ContainerAwareInterface
 
     /**
      * Display Dashboard
-     * @Route("/content/dashboard/", name="admin_dashboard")
+     * @Route("admin/content/dashboard/", name="admin_dashboard")
      * @Method("GET")
      * @Template()
      */
@@ -128,7 +128,7 @@ class ContentController implements ContainerAwareInterface
 
     /**
      * Save the new block order into a sidebar
-     * @Route("/content/dashboard/save_block_order", name="admin_dashboard_save_block_order")
+     * @Route("admin/content/dashboard/save_block_order", name="admin_dashboard_save_block_order")
      * @Method("GET")
      * @Template()
      */
@@ -163,14 +163,13 @@ class ContentController implements ContainerAwareInterface
 
     /**
      * Create dynamically a Widget block or a Static Content block
-     * @Route("/content/dashboard/create_dynamic_block", name="admin_dashboard_create_dynamic_block")
+     * @Route("admin/content/dashboard/create_dynamic_block", name="admin_dashboard_create_dynamic_block")
      * @Method("GET")
      * @Template()
      */
     public function createDynamicBlockAction(Request $request)
     {
         if ($request->isXmlHttpRequest() && $request->get('type_block') && $request->get('id_sidebar')) {
-
             $em = $this->container->get('doctrine')->getManager();
 
             $type_block = $request->get('type_block');
@@ -233,6 +232,7 @@ class ContentController implements ContainerAwareInterface
     public function displayPageAction($page_slug)
     {
         $em = $this->container->get('doctrine')->getManager();
+
         $page = $em->getRepository('BigfootContentBundle:Page')->findOneBy(array('slug' => $page_slug));
 
         if (!$page) {
@@ -252,20 +252,15 @@ class ContentController implements ContainerAwareInterface
      */
     public function displayWidgetAction($widget_id)
     {
-
         $em = $this->container->get('doctrine')->getManager();
+
         $widget = $em->getRepository('BigfootContentBundle:Widget')->find($widget_id);
 
         if (!$widget) {
             throw new NotFoundHttpException('Unable to find Widget entity.');
         }
 
-        $parameters = $widget->getWidgetparameter();
-        $tabParameter = array();
-
-        foreach ($parameters as $param) {
-            $tabParameter[$param->getField()] = $param->getValue();
-        }
+        $tabParameter = $widget->getParams();
 
         return $this->container->get('templating')->renderResponse('BigfootContentBundle:Content\Widget:'.$widget->getTemplate(), array(
             'widget' => $widget,
@@ -281,8 +276,8 @@ class ContentController implements ContainerAwareInterface
      */
     public function displaySidebarAction($sidebar_name)
     {
-
         $em = $this->container->get('doctrine')->getManager();
+
         $sidebar = $em->getRepository('BigfootContentBundle:Sidebar')->findOneBy(array('title' => $sidebar_name));
 
         if (!$sidebar) {
@@ -304,12 +299,7 @@ class ContentController implements ContainerAwareInterface
 
         if (sizeof($widgets) > 0) {
             foreach ($widgets as $widget) {
-                $parameters = $widget->getWidgetparameter();
-                $tabParameter = array();
-
-                foreach ($parameters as $param) {
-                    $tabParameter[$widget->getId()] = array($param->getField() => $param->getValue());
-                }
+                $tabParameter[$widget->getId()] = $widget->getParams();
             }
         }
 
@@ -328,8 +318,8 @@ class ContentController implements ContainerAwareInterface
      */
     public function displayStaticContentAction($staticcontent_id)
     {
-
         $em = $this->container->get('doctrine')->getManager();
+
         $staticcontent = $em->getRepository('BigfootContentBundle:StaticContent')->find($staticcontent_id);
 
         if (!$staticcontent) {

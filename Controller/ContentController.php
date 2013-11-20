@@ -2,9 +2,11 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,8 +28,24 @@ use Exception;
  * @Route("/")
  *
  */
-class ContentController extends Controller
+class ContentController implements ContainerAwareInterface
 {
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * Sets the Container.
+     *
+     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     *
+     * @api
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
 
     /**
      * Display Dashboard
@@ -37,7 +55,7 @@ class ContentController extends Controller
      */
     public function displayDashBoardAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         $widgetList = array();
         $sidebarList = array();
@@ -76,11 +94,11 @@ class ContentController extends Controller
                     $formTypeName = $widget->getParametersType();
                     $widgetObject = new $formTypeName($this->container);
                     $form_name = $widgetObject->getName();
-                    $tempForm = $this->createForm($widgetObject, $block);
+                    $tempForm = $this->container->get('form.factory')->create($widgetObject, $block);
                     $type = 'widget';
                 }
                 else if ($block instanceof StaticContent) {
-                    $tempForm = $this->createForm(new StaticContentType($this->container), $block);
+                    $tempForm = $this->container->get('form.factory')->create(new StaticContentType($this->container), $block);
                     $type = 'staticcontent';
                 }
 
@@ -101,7 +119,7 @@ class ContentController extends Controller
             );
         }
 
-        return $this->render('BigfootContentBundle:Dashboard:default.html.twig', array(
+        return $this->container->get('templating')->renderResponse('BigfootContentBundle:Dashboard:default.html.twig', array(
             'widgetList'    => $widgetList,
             'sidebarList'   => $sidebarList,
             'staticContentList'   => $staticContentList
@@ -121,7 +139,7 @@ class ContentController extends Controller
             $tabPosition    = $request->get('tabPosition');
             $typeBlock      = $request->get('typeBlock');
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->container->get('doctrine')->getManager();
 
             foreach ($tabIdBlock as $key => $value) {
                 if ($typeBlock[$key] == 'widget') {
@@ -153,7 +171,7 @@ class ContentController extends Controller
     {
         if ($request->isXmlHttpRequest() && $request->get('type_block') && $request->get('id_sidebar')) {
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->container->get('doctrine')->getManager();
 
             $type_block = $request->get('type_block');
             $id_sidebar = $request->get('id_sidebar');
@@ -174,7 +192,7 @@ class ContentController extends Controller
                 $formTypeName = $widgetTemp->getParametersType();
                 $widgetObject = new $formTypeName($this->container);
                 $form_name = $widgetObject->getName();
-                $form   = $this->createForm($widgetObject, $entity);
+                $form   = $this->container->get('form.factory')->create($widgetObject, $entity);
                 $action_path = $this->container->get('router')->generate('admin_widget_colorbox_new',array(
                     'widget_name'   => $request->get('widget_name'),
                     'mode'          => 'new',
@@ -186,7 +204,7 @@ class ContentController extends Controller
             else if ($type_block == 'staticcontent') {
                 $id_block = $request->get('id_block');
                 $entity = $em->getRepository('BigfootContentBundle:StaticContent')->findOneBy(array('id' => $id_block));
-                $form   = $this->createForm(new StaticContentType($this->container), $entity);
+                $form   = $this->container->get('form.factory')->create(new StaticContentType($this->container), $entity);
                 $action_path = $this->container->get('router')->generate('admin_staticcontent_colorbox_edit',array(
                     'id'                    => $id_block,
                     'mode'                  => 'new',
@@ -195,7 +213,7 @@ class ContentController extends Controller
                 ));
             }
 
-            return $this->render('BigfootContentBundle:Form:dynamicform.html.twig',array(
+            return $this->container->get('templating')->renderResponse('BigfootContentBundle:Form:dynamicform.html.twig',array(
                 'form'               => $form->createView(),
                 'currentSidebar'     => $id_sidebar,
                 'currentPosition'    => $position,
@@ -214,14 +232,14 @@ class ContentController extends Controller
      */
     public function displayPageAction($page_slug)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $page = $em->getRepository('BigfootContentBundle:Page')->findOneBy(array('slug' => $page_slug));
 
         if (!$page) {
-            throw $this->createNotFoundException('Unable to find Page entity.');
+            throw new NotFoundHttpException('Unable to find Page entity.');
         }
 
-        return $this->render('BigfootContentBundle:Content\Page:'.$page->getTemplate(), array(
+        return $this->container->get('templating')->renderResponse('BigfootContentBundle:Content\Page:'.$page->getTemplate(), array(
             'page' => $page,
         ));
     }
@@ -235,11 +253,11 @@ class ContentController extends Controller
     public function displayWidgetAction($widget_id)
     {
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $widget = $em->getRepository('BigfootContentBundle:Widget')->find($widget_id);
 
         if (!$widget) {
-            throw $this->createNotFoundException('Unable to find Widget entity.');
+            throw new NotFoundHttpException('Unable to find Widget entity.');
         }
 
         $parameters = $widget->getWidgetparameter();
@@ -249,7 +267,7 @@ class ContentController extends Controller
             $tabParameter[$param->getField()] = $param->getValue();
         }
 
-        return $this->render('BigfootContentBundle:Content\Widget:'.$widget->getTemplate(), array(
+        return $this->container->get('templating')->renderResponse('BigfootContentBundle:Content\Widget:'.$widget->getTemplate(), array(
             'widget' => $widget,
             'tabParameter' => $tabParameter,
         ));
@@ -264,7 +282,7 @@ class ContentController extends Controller
     public function displaySidebarAction($sidebar_name)
     {
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $sidebar = $em->getRepository('BigfootContentBundle:Sidebar')->findOneBy(array('title' => $sidebar_name));
 
         if (!$sidebar) {
@@ -295,7 +313,7 @@ class ContentController extends Controller
             }
         }
 
-        return $this->render('BigfootContentBundle:Content\Sidebar:'.$sidebar->getTemplate(), array(
+        return $this->container->get('templating')->renderResponse('BigfootContentBundle:Content\Sidebar:'.$sidebar->getTemplate(), array(
             'widgets'           => $widgets,
             'tabParameter'      => $tabParameter,
             'staticcontents'    => $staticcontents,
@@ -311,14 +329,14 @@ class ContentController extends Controller
     public function displayStaticContentAction($staticcontent_id)
     {
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $staticcontent = $em->getRepository('BigfootContentBundle:StaticContent')->find($staticcontent_id);
 
         if (!$staticcontent) {
-            throw $this->createNotFoundException('Unable to find StaticContent entity.');
+            throw new NotFoundHttpException('Unable to find StaticContent entity.');
         }
 
-        return $this->render('BigfootContentBundle:Content\StaticContent:'.$staticcontent->getTemplate(), array(
+        return $this->container->get('templating')->renderResponse('BigfootContentBundle:Content\StaticContent:'.$staticcontent->getTemplate(), array(
             'staticcontent'           => $staticcontent
         ));
     }

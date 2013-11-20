@@ -143,7 +143,7 @@ class PageController extends CrudController
      */
     protected function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
             ->add('id', 'hidden')
             ->getForm()
         ;

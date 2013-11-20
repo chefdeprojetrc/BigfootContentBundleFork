@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
 use Bigfoot\Bundle\CoreBundle\Crud\CrudController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Bigfoot\Bundle\ContentBundle\Entity\StaticContent;
 use Bigfoot\Bundle\ContentBundle\Form\StaticContentType;
 use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * StaticContent controller.
@@ -83,15 +85,15 @@ class StaticContentController extends CrudController
     public function createAction(Request $request)
     {
         $entity  = new StaticContent();
-        $form = $this->createForm($this->getFormType(), $entity);
+        $form = $this->container->get('form.factory')->create($this->getFormType(), $entity);
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->get('doctrine')->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_dashboard'));
+            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
         }
 
         return array(
@@ -136,14 +138,14 @@ class StaticContentController extends CrudController
      */
     public function editColorboxAction($id, $mode, $id_sidebar, $position)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find StaticContent entity.');
+            throw new NotFoundHttpException('Unable to find StaticContent entity.');
         }
 
-        $editForm = $this->createForm('bigfoot_bundle_contentbundle_staticcontenttype', $entity);
+        $editForm = $this->container->get('form.factory')->create('bigfoot_bundle_contentbundle_staticcontenttype', $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         if ($mode == 'new') {
@@ -185,22 +187,22 @@ class StaticContentController extends CrudController
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find StaticContent entity.');
+            throw new NotFoundHttpException('Unable to find StaticContent entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm('bigfoot_bundle_contentbundle_staticcontenttype', $entity);
+        $editForm = $this->container->get('form.factory')->create('bigfoot_bundle_contentbundle_staticcontenttype', $entity);
         $editForm->submit($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_dashboard'));
+            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
         }
 
         return array(
@@ -220,17 +222,17 @@ class StaticContentController extends CrudController
         $form = $this->createDeleteForm($id);
         $form->submit($request);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find StaticContent entity.');
+            throw new NotFoundHttpException('Unable to find StaticContent entity.');
         }
 
         $em->remove($entity);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('admin_dashboard'));
+        return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
     }
 
     /**
@@ -242,7 +244,7 @@ class StaticContentController extends CrudController
      */
     protected function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
             ->add('id', 'hidden')
             ->getForm()
         ;

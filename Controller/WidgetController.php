@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
 use Bigfoot\Bundle\CoreBundle\Crud\CrudController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Bigfoot\Bundle\ContentBundle\Entity\Widget;
 use Bigfoot\Bundle\ContentBundle\Form\WidgetType;
 use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Widget controller.
@@ -87,15 +89,15 @@ class WidgetController extends CrudController
         $widget_name = $widget[$form['name']];
         $widget = new $widget_name;
         $formTypeName = $widget->getParametersType();
-        $form = $this->createForm(new $formTypeName($this->container), $entity);
+        $form = $this->container->get('form.factory')->create(new $formTypeName($this->container), $entity);
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->get('doctrine')->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_dashboard'));
+            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
         }
 
         return array(
@@ -126,7 +128,7 @@ class WidgetController extends CrudController
         $formTypeName = $widgetTemp->getParametersType();
         $widgetObject = new $formTypeName($this->container);
         $form_name = $widgetObject->getName();
-        $form   = $this->createForm($widgetObject, $entity);
+        $form   = $this->container->get('form.factory')->create($widgetObject, $entity);
 
         $form_action    = $this->container->get('router')->generate('admin_widget_create', array(
             'form_name' => $form_name
@@ -159,14 +161,14 @@ class WidgetController extends CrudController
      */
     public function editColorboxAction($id, $widget_name, $form_name, $id_sidebar, $position)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Widget entity.');
+            throw new NotFoundHttpException('Unable to find Widget entity.');
         }
 
-        $editForm = $this->createForm($form_name, $entity);
+        $editForm = $this->container->get('form.factory')->create($form_name, $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $form_action    = $this->container->get('router')->generate('admin_widget_update', array(
@@ -201,11 +203,11 @@ class WidgetController extends CrudController
      */
     public function updateAction(Request $request, $id, $form_name)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Widget entity.');
+            throw new NotFoundHttpException('Unable to find Widget entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -215,14 +217,14 @@ class WidgetController extends CrudController
         $widget = new $widget_name;
         $formTypeName = $widget->getParametersType();
         $formObject = new $formTypeName($this->container);
-        $editForm = $this->createForm($formObject, $entity);
+        $editForm = $this->container->get('form.factory')->create($formObject, $entity);
         $editForm->submit($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_dashboard'));
+            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
         }
 
         return array(
@@ -243,17 +245,17 @@ class WidgetController extends CrudController
         $form = $this->createDeleteForm($id);
         $form->submit($request);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Widget entity.');
+            throw new NotFoundHttpException('Unable to find Widget entity.');
         }
 
         $em->remove($entity);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('admin_dashboard'));
+        return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
     }
 
     /**
@@ -265,7 +267,7 @@ class WidgetController extends CrudController
      */
     protected function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
             ->add('id', 'hidden')
             ->getForm()
         ;

@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
 use Bigfoot\Bundle\CoreBundle\Crud\CrudController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
 use Bigfoot\Bundle\ContentBundle\Form\SidebarType;
 use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Sidebar controller.
@@ -75,15 +77,15 @@ class SidebarController extends CrudController
     public function createAction(Request $request)
     {
         $entity  = new Sidebar();
-        $form = $this->createForm($this->getFormType(), $entity);
+        $form = $this->container->get('form.factory')->create($this->getFormType(), $entity);
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->get('doctrine')->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_dashboard'));
+            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
         }
 
         return array(
@@ -131,22 +133,22 @@ class SidebarController extends CrudController
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Sidebar')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sidebar entity.');
+            throw new NotFoundHttpException('Unable to find Sidebar entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm($this->getFormType(), $entity);
+        $editForm = $this->container->get('form.factory')->create($this->getFormType(), $entity);
         $editForm->submit($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_dashboard'));
+            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
         }
 
         return array(
@@ -166,17 +168,17 @@ class SidebarController extends CrudController
         $form = $this->createDeleteForm($id);
         $form->submit($request);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Sidebar')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sidebar entity.');
+            throw new NotFoundHttpException('Unable to find Sidebar entity.');
         }
 
         $em->remove($entity);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('admin_dashboard'));
+        return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
     }
 
     /**
@@ -188,7 +190,7 @@ class SidebarController extends CrudController
      */
     protected function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
             ->add('id', 'hidden')
             ->getForm()
         ;

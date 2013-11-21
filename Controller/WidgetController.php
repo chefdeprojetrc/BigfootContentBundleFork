@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * Widget controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/widget")
+ * @Route("admin/widget")
  */
 class WidgetController extends CrudController
 {

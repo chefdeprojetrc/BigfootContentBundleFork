@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * StaticContent controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/staticcontent")
+ * @Route("admin/staticcontent")
  */
 class StaticContentController extends CrudController
 {
@@ -80,7 +80,7 @@ class StaticContentController extends CrudController
      *
      * @Route("/", name="admin_staticcontent_create")
      * @Method("POST")
-     * @Template("BigfootContentBundle:StaticContent:new.html.twig")
+     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function createAction(Request $request)
     {

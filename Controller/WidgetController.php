@@ -93,7 +93,7 @@ class WidgetController extends CrudController
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->get('doctrine')->getManager();
+            $em = $this->container->get('doctrine')->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -161,7 +161,7 @@ class WidgetController extends CrudController
      */
     public function editColorboxAction($id, $widget_name, $form_name, $id_sidebar, $position)
     {
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {
@@ -203,7 +203,7 @@ class WidgetController extends CrudController
      */
     public function updateAction(Request $request, $id, $form_name)
     {
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {
@@ -245,7 +245,7 @@ class WidgetController extends CrudController
         $form = $this->createDeleteForm($id);
         $form->submit($request);
 
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {

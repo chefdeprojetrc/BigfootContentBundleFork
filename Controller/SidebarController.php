@@ -81,7 +81,7 @@ class SidebarController extends CrudController
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->get('doctrine')->getManager();
+            $em = $this->container->get('doctrine')->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -133,7 +133,7 @@ class SidebarController extends CrudController
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Sidebar')->find($id);
 
         if (!$entity) {
@@ -168,7 +168,7 @@ class SidebarController extends CrudController
         $form = $this->createDeleteForm($id);
         $form->submit($request);
 
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Sidebar')->find($id);
 
         if (!$entity) {

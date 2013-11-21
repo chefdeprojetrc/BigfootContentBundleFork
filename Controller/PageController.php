@@ -17,7 +17,7 @@ use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
  * Page controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/page")
+ * @Route("admin/page")
  */
 class PageController extends CrudController
 {

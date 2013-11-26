@@ -4,6 +4,7 @@ namespace Bigfoot\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Widget
@@ -27,6 +28,14 @@ class Widget extends Block
      * @ORM\Column(name="route", type="string", length=255)
      */
     private $route;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"}, updatable=true, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    private $slug;
 
     /**
      * Set name
@@ -73,4 +82,28 @@ class Widget extends Block
     {
         return $this->route;
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Sidebar
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
 }

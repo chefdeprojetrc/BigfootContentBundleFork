@@ -16,14 +16,12 @@ class Block
      */
     protected $id;
 
-
     /**
      * @var string
      *
      * @ORM\Column(name="label", type="string", length=255)
      */
     protected $label;
-
 
     /**
      * @var integer
@@ -41,11 +39,12 @@ class Block
     protected $sidebar;
 
     /**
-     * @var string
+     * @var Template
      *
-     * @ORM\Column(name="template", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Template", inversedBy="blocks")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
-    protected $template;
+    private $template;
 
     /**
      * @var array
@@ -155,10 +154,8 @@ class Block
     }
 
     /**
-     * Set template
-     *
-     * @param string $template
-     * @return Widget
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Template $template
+     * @return Block
      */
     public function setTemplate($template)
     {
@@ -168,9 +165,7 @@ class Block
     }
 
     /**
-     * Get template
-     *
-     * @return string
+     * @return \Bigfoot\Bundle\ContentBundle\Entity\Template
      */
     public function getTemplate()
     {
@@ -218,4 +213,5 @@ class Block
     {
         return $this->params;
     }
+
 }

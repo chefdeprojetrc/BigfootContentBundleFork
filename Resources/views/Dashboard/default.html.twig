@@ -42,12 +42,12 @@
     </div>
 
     <div id="sidebar_container" data-create-block="{{ path('admin_dashboard_create_dynamic_block') }}" data-save-order="{{ path('admin_dashboard_save_block_order') }}">
-        <div id="header_sidebar_container">{{ 'Liste des Sidebars disponibles' }}<a href="{{ path('admin_sidebar_new') }}" class="colorbox"><span class="glyphicon glyphicon-file"></span></a></span></div>
+        <div id="header_sidebar_container">{{ 'Liste des Sidebars disponibles' }}<a href="{{ path('admin_sidebar_new') }}" class="colorbox"><span class="glyphicon glyphicon-file"></span></a></div>
         <div id="body_sidebar_container">
             {% for sidebar in sidebarList %}
                 <div class="sidebar_elt" id="sidebar_{{ sidebar.id_sidebar }}">
                     <div class="header_sidebar_elt">
-                        <a href="#_" onclick="saveOrderBlock('{{ sidebar.id_sidebar }}');return false;" title="{{ 'Save Order' | trans }}"><span class="glyphicon glyphicon-magnet"></span></a>
+                        <a href="#_" onclick="saveOrderBlock('{{ sidebar.id_sidebar }}');return false;" title="{{ 'Save Order' | trans }}"><span class="glyphicon glyphicon-magnet">{{ 'save' | trans }}&nbsp;{{ 'order' | trans }}</span></a>
                         {{ sidebar.name }}
                         <a href="{{ path('admin_sidebar_edit' , { 'id': sidebar.id_sidebar }) }}" class="colorbox" title="{{ 'Edit this Sidebar' | trans }}"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a href="#_"

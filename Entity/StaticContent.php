@@ -27,6 +27,14 @@ class StaticContent extends Block
     private $description;
 
     /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"title"}, updatable=true, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    private $slug;
+
+    /**
      * Set description
      *
      * @param string $description
@@ -70,6 +78,29 @@ class StaticContent extends Block
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Sidebar
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
 }

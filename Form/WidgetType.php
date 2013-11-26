@@ -5,6 +5,7 @@ namespace Bigfoot\Bundle\ContentBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class WidgetType extends AbstractType
 {
@@ -28,18 +29,19 @@ class WidgetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label','hidden')
+            ->add('label')
             ->add('name','hidden')
             ->add('route','hidden')
             ->add('position','hidden')
-            ->add('sidebar');
-
-        $currentPath = $this->container->get('kernel')->getBundle('BigfootContentBundle')->getPath();
-        $tabTemplate = $this->container->get('bigfoot_content.template')->listTemplate($currentPath,'Widget');
-
-        $builder
-            ->add('template','choice',array(
-                'choices' => $tabTemplate
+            ->add('sidebar')
+            ->add('template', 'entity', array(
+                'class' => 'BigfootContentBundle:Template',
+                'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('t')
+                            ->where('t.type = :type')
+                            ->orderBy('t.name')
+                            ->setParameter('type', 'Widget');
+                    },
             ));
     }
 

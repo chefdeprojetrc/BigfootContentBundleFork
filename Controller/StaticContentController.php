@@ -89,7 +89,7 @@ class StaticContentController extends CrudController
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->get('doctrine')->getManager();
+            $em = $this->container->get('doctrine')->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -138,7 +138,7 @@ class StaticContentController extends CrudController
      */
     public function editColorboxAction($id, $mode, $id_sidebar, $position)
     {
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
 
         if (!$entity) {
@@ -187,7 +187,7 @@ class StaticContentController extends CrudController
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
 
         if (!$entity) {
@@ -222,7 +222,7 @@ class StaticContentController extends CrudController
         $form = $this->createDeleteForm($id);
         $form->submit($request);
 
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
 
         if (!$entity) {

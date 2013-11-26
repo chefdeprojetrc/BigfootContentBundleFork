@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class SidebarType extends AbstractType
 {
@@ -28,17 +29,20 @@ class SidebarType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $currentPath = $this->container->get('kernel')->getBundle('BigfootContentBundle')->getPath();
-        $tabTemplate = $this->container->get('bigfoot_content.template')->listTemplate($currentPath,'Sidebar');
-
         $builder
-            ->add('template','choice',array(
-                'choices' => $tabTemplate
-            ));
-
-        $builder
+            ->add('template', 'entity', array(
+                'class' => 'BigfootContentBundle:Template',
+                'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('t')
+                            ->where('t.type = :type')
+                            ->orderBy('t.name')
+                            ->setParameter('type', 'Sidebar');
+                    },
+            ))
             ->add('title')
-            ->add('active','checkbox',array('required' => false));
+            ->add('slug', 'text', array('disabled'   => true))
+            ->add('active','checkbox',array('required' => false))
+            ->add('translation', 'translatable_entity');
     }
 
     /**

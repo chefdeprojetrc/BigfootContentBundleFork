@@ -87,13 +87,13 @@ class WidgetController extends CrudController
         $widget = $this->container->getParameter('bigfoot_content.widgets');
         $form = $request->get($form_name);
         $widget_name = $widget[$form['name']];
-        $widget = new $widget_name;
+        $widget = new $widget_name($this->container);
         $formTypeName = $widget->getParametersType();
         $form = $this->container->get('form.factory')->create(new $formTypeName($this->container), $entity);
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->get('doctrine')->getManager();
+            $em = $this->container->get('doctrine')->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -117,7 +117,7 @@ class WidgetController extends CrudController
     {
         $widget = $this->container->getParameter('bigfoot_content.widgets');
         $widget_name = $widget[$widget_name];
-        $widgetTemp = new $widget_name;
+        $widgetTemp = new $widget_name($this->container);
         $entity = new Widget();
 
         $entity->setRoute($widgetTemp->getRoute());
@@ -161,7 +161,7 @@ class WidgetController extends CrudController
      */
     public function editColorboxAction($id, $widget_name, $form_name, $id_sidebar, $position)
     {
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {
@@ -203,7 +203,7 @@ class WidgetController extends CrudController
      */
     public function updateAction(Request $request, $id, $form_name)
     {
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {
@@ -214,7 +214,7 @@ class WidgetController extends CrudController
         $widget = $this->container->getParameter('bigfoot_content.widgets');
         $form = $request->get($form_name);
         $widget_name = $widget[$form['name']];
-        $widget = new $widget_name;
+        $widget = new $widget_name($this->container);
         $formTypeName = $widget->getParametersType();
         $formObject = new $formTypeName($this->container);
         $editForm = $this->container->get('form.factory')->create($formObject, $entity);
@@ -245,7 +245,7 @@ class WidgetController extends CrudController
         $form = $this->createDeleteForm($id);
         $form->submit($request);
 
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
 
         if (!$entity) {

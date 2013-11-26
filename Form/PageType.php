@@ -5,6 +5,7 @@ namespace Bigfoot\Bundle\ContentBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class PageType extends AbstractType
 {
@@ -28,6 +29,15 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('template', 'entity', array(
+                'class' => 'BigfootContentBundle:Template',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->where('t.type = :type')
+                        ->orderBy('t.name')
+                        ->setParameter('type', 'Page');
+                },
+            ))
             ->add('name', 'text', array(
                 'attr' => array(
                     'data-placement'    => 'bottom',
@@ -46,7 +56,8 @@ class PageType extends AbstractType
                     'data-title'        => 'Slug',
                     'data-trigger'      => 'hover',
                     'data-placement'    => 'right'
-                )
+                ),
+                'disabled'   => true
             ))
             ->add('title', 'text', array(
                 'attr' => array(
@@ -62,13 +73,7 @@ class PageType extends AbstractType
             ->add('image','bigfoot_media', array('required' => false))
             ->add('active','checkbox',array('required' => false));
 
-        $currentPath = $this->container->get('kernel')->getBundle('BigfootContentBundle')->getPath();
-        $tabTemplate = $this->container->get('bigfoot_content.template')->listTemplate($currentPath,'Page');
-
         $builder
-            ->add('template','choice',array(
-                'choices' => $tabTemplate
-            ))
             ->add('translation', 'translatable_entity')
         ;
 

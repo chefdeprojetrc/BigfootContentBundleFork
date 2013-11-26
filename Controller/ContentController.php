@@ -63,7 +63,7 @@ class ContentController implements ContainerAwareInterface
 
         foreach ($widgetsConfig as $widgetConf) {
             if (class_exists($widgetConf)) {
-                $tmpObject = new $widgetConf;
+                $tmpObject = new $widgetConf($this->container);
                 $widgetList[] = array(
                     'label'         => $tmpObject->getLabel(),
                     'name'          => $tmpObject->getName(),
@@ -90,7 +90,7 @@ class ContentController implements ContainerAwareInterface
                     $widget_name_lbl = $block->getName();
                     $widget = $this->container->getParameter('bigfoot_content.widgets');
                     $widget_name = $widget[$block->getName()];
-                    $widget = new $widget_name;
+                    $widget = new $widget_name($this->container);
                     $formTypeName = $widget->getParametersType();
                     $widgetObject = new $formTypeName($this->container);
                     $form_name = $widgetObject->getName();
@@ -180,7 +180,7 @@ class ContentController implements ContainerAwareInterface
                 $widget_name = $request->get('widget_name');
                 $widget = $this->container->getParameter('bigfoot_content.widgets');
                 $widget_name = $widget[$widget_name];
-                $widgetTemp = new $widget_name;
+                $widgetTemp = new $widget_name($this->container);
                 $entity = new Widget();
 
                 $entity->setRoute($widgetTemp->getRoute());
@@ -223,111 +223,4 @@ class ContentController implements ContainerAwareInterface
 
     }
 
-    /**
-     * Display a Page
-     * @Route("/page/display/{page_slug}/", name="content_page")
-     * @Method("GET")
-     * @Template()
-     */
-    public function displayPageAction($page_slug)
-    {
-        $em = $this->container->get('doctrine')->getManager();
-
-        $page = $em->getRepository('BigfootContentBundle:Page')->findOneBy(array('slug' => $page_slug));
-
-        if (!$page) {
-            throw new NotFoundHttpException('Unable to find Page entity.');
-        }
-
-        return $this->container->get('templating')->renderResponse('BigfootContentBundle:Content\Page:'.$page->getTemplate(), array(
-            'page' => $page,
-        ));
-    }
-
-    /**
-     * Display a Widget
-     * @Route("/widget/display/{widget_id}/", name="content_widget")
-     * @Method("GET")
-     * @Template()
-     */
-    public function displayWidgetAction($widget_id)
-    {
-        $em = $this->container->get('doctrine')->getManager();
-
-        $widget = $em->getRepository('BigfootContentBundle:Widget')->find($widget_id);
-
-        if (!$widget) {
-            throw new NotFoundHttpException('Unable to find Widget entity.');
-        }
-
-        $tabParameter = $widget->getParams();
-
-        return $this->container->get('templating')->renderResponse('BigfootContentBundle:Content\Widget:'.$widget->getTemplate(), array(
-            'widget' => $widget,
-            'tabParameter' => $tabParameter,
-        ));
-    }
-
-    /**
-     * Display a Sidebar
-     * @Route("/sidebar/display/{sidebar_name}/", name="content_sidebar")
-     * @Method("GET")
-     * @Template()
-     */
-    public function displaySidebarAction($sidebar_name)
-    {
-        $em = $this->container->get('doctrine')->getManager();
-
-        $sidebar = $em->getRepository('BigfootContentBundle:Sidebar')->findOneBy(array('title' => $sidebar_name));
-
-        if (!$sidebar) {
-            return new Response();
-        }
-
-        $widgets = $sidebar->getWidget();
-
-        $queryBuilder = $em->getRepository('BigfootContentBundle:StaticContent')
-            ->createQueryBuilder('c');
-        $staticcontents = $queryBuilder
-            ->where('c.sidebar = :sidebar')
-            ->orderBy('c.position')
-            ->setParameter('sidebar', $sidebar->getId())
-            ->getQuery()->getResult()
-        ;
-
-        $tabParameter   = array();
-
-        if (sizeof($widgets) > 0) {
-            foreach ($widgets as $widget) {
-                $tabParameter[$widget->getId()] = $widget->getParams();
-            }
-        }
-
-        return $this->container->get('templating')->renderResponse('BigfootContentBundle:Content\Sidebar:'.$sidebar->getTemplate(), array(
-            'widgets'           => $widgets,
-            'tabParameter'      => $tabParameter,
-            'staticcontents'    => $staticcontents,
-        ));
-    }
-
-    /**
-     * Display a Static Content
-     * @Route("/staticcontent/display/{staticcontent_id}/", name="content_staticcontent")
-     * @Method("GET")
-     * @Template()
-     */
-    public function displayStaticContentAction($staticcontent_id)
-    {
-        $em = $this->container->get('doctrine')->getManager();
-
-        $staticcontent = $em->getRepository('BigfootContentBundle:StaticContent')->find($staticcontent_id);
-
-        if (!$staticcontent) {
-            throw new NotFoundHttpException('Unable to find StaticContent entity.');
-        }
-
-        return $this->container->get('templating')->renderResponse('BigfootContentBundle:Content\StaticContent:'.$staticcontent->getTemplate(), array(
-            'staticcontent'           => $staticcontent
-        ));
-    }
 }

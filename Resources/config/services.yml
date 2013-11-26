@@ -5,6 +5,7 @@ parameters:
     bigfoot_content.sidebartype.class: 'Bigfoot\Bundle\ContentBundle\Form\SidebarType'
     bigfoot_content.staticcontenttype.class: 'Bigfoot\Bundle\ContentBundle\Form\StaticContentType'
     bigfoot_content.pagetype.class: 'Bigfoot\Bundle\ContentBundle\Form\PageType'
+    bigfoot_content.display_content.class: 'Bigfoot\Bundle\ContentBundle\Services\DisplayContent'
 
 services:
     bigfoot_content.template:
@@ -35,6 +36,9 @@ services:
             arguments: [@service_container]
             tags:
                 - { name: form.type, alias: bigfoot_bundle_contentbundle_staticcontenttype}
+    bigfoot_content.display_content:
+            class: '%bigfoot_content.display_content.class%'
+            arguments: [@service_container]
     kernel.listener.bigfoot_content_menu_listener:
         class: Bigfoot\Bundle\ContentBundle\Listener\MenuListener
         tags:

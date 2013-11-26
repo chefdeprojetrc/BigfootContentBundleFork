@@ -10,6 +10,9 @@ namespace Bigfoot\Bundle\ContentBundle\Model;
  */
 abstract class AbstractWidget
 {
+    protected $parameters;
+    protected $container;
+
     abstract protected function getLabel();
 
     abstract protected function getName();
@@ -19,4 +22,6 @@ abstract class AbstractWidget
     abstract protected function getRoute();
 
     abstract protected function getParametersType();
+
+    abstract protected function load();
 }

@@ -1,9 +1,7 @@
-{% for widget in widgets %}
-<div id="widget">
-    {% render url(widget.route, tabParameter[widget.id])  %}
-</div>
-{% endfor %}
-
-{% for staticcontent in staticcontents %}
-    {% render url("content_staticcontent",  {'staticcontent_id' : staticcontent.id}) %}
+{% for block in tabFinal %}
+    {% if 'widget' in block.type %}
+        {% include block.template with block.data only %}
+    {% elseif  'static_content' in block.type %}
+        {{ display_content.displayContentAction(block.type, block.slug) | raw }}
+    {% endif %}
 {% endfor %}

@@ -87,7 +87,7 @@ class WidgetController extends CrudController
         $widget = $this->container->getParameter('bigfoot_content.widgets');
         $form = $request->get($form_name);
         $widget_name = $widget[$form['name']];
-        $widget = new $widget_name;
+        $widget = new $widget_name($this->container);
         $formTypeName = $widget->getParametersType();
         $form = $this->container->get('form.factory')->create(new $formTypeName($this->container), $entity);
         $form->submit($request);
@@ -117,7 +117,7 @@ class WidgetController extends CrudController
     {
         $widget = $this->container->getParameter('bigfoot_content.widgets');
         $widget_name = $widget[$widget_name];
-        $widgetTemp = new $widget_name;
+        $widgetTemp = new $widget_name($this->container);
         $entity = new Widget();
 
         $entity->setRoute($widgetTemp->getRoute());
@@ -214,7 +214,7 @@ class WidgetController extends CrudController
         $widget = $this->container->getParameter('bigfoot_content.widgets');
         $form = $request->get($form_name);
         $widget_name = $widget[$form['name']];
-        $widget = new $widget_name;
+        $widget = new $widget_name($this->container);
         $formTypeName = $widget->getParametersType();
         $formObject = new $formTypeName($this->container);
         $editForm = $this->container->get('form.factory')->create($formObject, $entity);

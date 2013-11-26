@@ -36,14 +36,13 @@ class BlockType extends AbstractType
             ->add('params','collection',array(
                 'prototype' => false,
                 'allow_add' => true,
-            ));
-
-        $currentPath = $this->container->get('kernel')->getBundle('BigfootContentBundle')->getPath();
-        $tabTemplate = $this->container->get('bigfoot_content.template')->listTemplate($currentPath,'Widget');
-
-        $builder
-            ->add('template','choice',array(
-                'choices' => $tabTemplate
+            ))
+            ->add('template', 'entity', array(
+                'class' => 'BigfootContentBundle:Template',
+                'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('t')
+                            ->orderBy('t.name');
+                    },
             ));
     }
 

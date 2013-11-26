@@ -4,6 +4,7 @@ namespace Bigfoot\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Sidebar
@@ -25,14 +26,24 @@ class Sidebar
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"title"}, updatable=true, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
-     * @var string
+     * @var Template
      *
-     * @ORM\Column(name="template", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Template", inversedBy="sidebars")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
     private $template;
 
@@ -61,7 +72,6 @@ class Sidebar
         return $this->title;
     }
 
-
     /**
      * Get id
      *
@@ -70,6 +80,29 @@ class Sidebar
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Sidebar
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -93,29 +126,6 @@ class Sidebar
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set template
-     *
-     * @param string $template
-     * @return Sidebar
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-    
-        return $this;
-    }
-
-    /**
-     * Get template
-     *
-     * @return string 
-     */
-    public function getTemplate()
-    {
-        return $this->template;
     }
 
     /**
@@ -248,5 +258,24 @@ class Sidebar
     public function getWidget()
     {
         return $this->widget;
+    }
+
+    /**
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Template $template
+     * @return Sidebar
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * @return \Bigfoot\Bundle\ContentBundle\Entity\Template
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 }

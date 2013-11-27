@@ -100,7 +100,6 @@ class DisplayContent
     private function displayPageAction($slug)
     {
 
-        die($slug);
         $em = $this->container->get('doctrine')->getManager();
 
         $page = $em->getRepository('BigfootContentBundle:Page')->findOneBy(array('slug' => $slug));

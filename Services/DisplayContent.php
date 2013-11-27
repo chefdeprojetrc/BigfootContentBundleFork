@@ -99,6 +99,8 @@ class DisplayContent
      */
     private function displayPageAction($slug)
     {
+
+        die($slug);
         $em = $this->container->get('doctrine')->getManager();
 
         $page = $em->getRepository('BigfootContentBundle:Page')->findOneBy(array('slug' => $slug));
@@ -107,7 +109,7 @@ class DisplayContent
             throw new NotFoundHttpException('Unable to find Page entity.');
         }
 
-        return $this->container->get('templating')->render($page->getTemplate(), array(
+        return $this->container->get('templating')->render($page->getTemplate()->getRoute(), array(
             'page' => $page,
         ));
     }

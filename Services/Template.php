@@ -8,8 +8,6 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Template class
- *
- * @Author S.huot s.huot@c2is.fr
  */
 class Template
 {

@@ -51,9 +51,10 @@ class Page
     private $description;
 
     /**
-     * @var string
+     * @var Template
      *
-     * @ORM\Column(name="template", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Template", inversedBy="pages")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
     private $template;
 
@@ -180,22 +181,18 @@ class Page
     }
 
     /**
-     * Set template
-     *
-     * @param string $template
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Template $template
      * @return Page
      */
     public function setTemplate($template)
     {
         $this->template = $template;
-    
+
         return $this;
     }
 
     /**
-     * Get template
-     *
-     * @return string 
+     * @return \Bigfoot\Bundle\ContentBundle\Entity\Template
      */
     public function getTemplate()
     {

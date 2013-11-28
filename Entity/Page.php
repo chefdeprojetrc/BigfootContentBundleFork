@@ -72,6 +72,10 @@ class Page
      */
     private $active = true;
 
+    /**
+     * @Gedmo\Locale
+     */
+    protected $locale;
 
     /**
      * Get id
@@ -243,5 +247,12 @@ class Page
     public function getActive()
     {
         return $this->active;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 }

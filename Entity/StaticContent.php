@@ -35,6 +35,18 @@ class StaticContent extends Block
     private $slug;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="media", type="string", length=255, nullable=true)
+     */
+    private $media;
+
+    /**
+     * @Gedmo\Locale
+     */
+    protected $locale;
+
+    /**
      * Set description
      *
      * @param string $description
@@ -103,4 +115,28 @@ class StaticContent extends Block
         return $this->slug;
     }
 
+    /**
+     * @param string $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
 }

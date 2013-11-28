@@ -64,7 +64,8 @@ class Template
      */
     protected $pages;
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->name;
     }
 

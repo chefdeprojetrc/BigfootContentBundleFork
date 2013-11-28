@@ -68,7 +68,13 @@ class Sidebar
      */
     private $widget;
 
-    public function __toString() {
+    /**
+     * @Gedmo\Locale
+     */
+    protected $locale;
+
+    public function __toString()
+    {
         return $this->title;
     }
 
@@ -277,5 +283,12 @@ class Sidebar
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 }

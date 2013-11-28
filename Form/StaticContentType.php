@@ -33,6 +33,7 @@ class StaticContentType extends AbstractType
             ->add('label')
             ->add('title')
             ->add('description','bigfoot_richtext')
+            ->add('media', 'bigfoot_media')
             ->add('position','hidden')
             ->add('active','checkbox',array('required' => false))
             ->add('template', 'entity', array(

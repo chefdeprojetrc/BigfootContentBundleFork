@@ -44,7 +44,7 @@ class Page
     private $title;
 
     /**
-     * @var string
+     * @var text
      * @Gedmo\Translatable
      * @ORM\Column(name="description", type="text", nullable=true)
      */

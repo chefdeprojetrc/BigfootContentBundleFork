@@ -38,6 +38,13 @@ class Widget extends Block
     private $slug;
 
     /**
+     * @var text
+     * @Gedmo\Translatable
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
      * Set name
      *
      * @param string $title
@@ -106,4 +113,26 @@ class Widget extends Block
         return $this->slug;
     }
 
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Page
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }

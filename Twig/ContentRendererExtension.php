@@ -20,9 +20,9 @@ class ContentRendererExtension extends \Twig_Extension
         );
     }
 
-    public function displayContent($type, $identifier)
+    public function displayContent($type, $identifier, $parameters = array())
     {
-        return $this->contentRenderer->displayContentAction($type, $identifier);
+        return $this->contentRenderer->displayContentAction($type, $identifier, $parameters);
     }
 
     public function getName()

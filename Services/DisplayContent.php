@@ -37,19 +37,19 @@ class DisplayContent
         $this->container = $container;
     }
 
-    public function displayContentAction($type,$slug)
+    public function displayContentAction($type, $slug, $parameters = array())
     {
         if ($type == 'widget') {
-            $display = $this->displayWidgetAction($slug);
+            $display = $this->displayWidgetAction($slug, $parameters);
         }
         elseif ($type == 'static_content') {
-            $display = $this->displayStaticContentAction($slug);
+            $display = $this->displayStaticContentAction($slug, $parameters);
         }
         elseif ($type == 'page') {
-            $display = $this->displayPageAction($slug);
+            $display = $this->displayPageAction($slug, $parameters);
         }
         else if ($type == 'sidebar') {
-            $display = $this->displaySidebarAction($slug);
+            $display = $this->displaySidebarAction($slug, $parameters);
         }
 
         return $display;
@@ -58,28 +58,36 @@ class DisplayContent
     /**
      * Display a Widget
      */
-    private function displayWidgetAction($slug)
+    private function displayWidgetAction($slug, $parameters = array())
     {
         $em = $this->container->get('doctrine')->getManager();
 
-        $widget = $em->getRepository('BigfootContentBundle:Widget')->findOneBy(array('slug' => $slug));
+        $widgetEntity = $em->getRepository('BigfootContentBundle:Widget')->findOneBy(array('slug' => $slug));
 
-        if (!$widget) {
+        if (!$widgetEntity) {
             throw new NotFoundHttpException('Unable to find Widget entity.');
         }
 
-        $tabParameter = $widget->getParams();
+        $widgetsList = $this->container->getParameter('bigfoot_content.widgets');
 
-        return $this->container->get('templating')->render($widget->getTemplate()->getRoute(), array(
-            'widget' => $widget,
-            'tabParameter' => $tabParameter,
-        ));
+        if (!isset($widgetsList[$widgetEntity->getName()])) {
+            return '';
+        }
+
+        $widgetClassName = $widgetsList[$widgetEntity->getName()];
+        $widget = new $widgetClassName($this->container);
+        $widget->addParameters($parameters);
+        if ($params = $widgetEntity->getParams() and is_array($params)) {
+            $widget->addParameters($widgetEntity->getParams());
+        }
+
+        return $this->container->get('templating')->render($widgetEntity->getTemplate()->getRoute(), $widget->load());
     }
 
     /**
      * Display a Static Content
      */
-    private function displayStaticContentAction($slug)
+    private function displayStaticContentAction($slug, $parameters = array())
     {
         $em = $this->container->get('doctrine')->getManager();
 
@@ -97,7 +105,7 @@ class DisplayContent
     /**
      * Display a Page
      */
-    private function displayPageAction($slug)
+    private function displayPageAction($slug, $parameters = array())
     {
 
         $em = $this->container->get('doctrine')->getManager();
@@ -116,7 +124,7 @@ class DisplayContent
     /**
      * Display a Sidebar
      */
-    public function displaySidebarAction($slug)
+    public function displaySidebarAction($slug, $parameters = array())
     {
 
         $em = $this->container->get('doctrine')->getManager();
@@ -127,34 +135,23 @@ class DisplayContent
         }
 
         $tabBlock = $sidebar->getBlock();
-        $tabFinal = array();
+        $blocks = array();
 
         foreach ($tabBlock as $block) {
-
+            $type = 'static_content';
             if ($block instanceof Widget) {
-
-                $parameters = $block->getParams();
-                $widget = $this->container->getParameter('bigfoot_content.widgets');
-                $widget_name = $widget[$block->getName()];
-                $widget = new $widget_name($this->container);
-                $widget->setParameters($parameters);
-
-                $tabFinal[] = array(
-                    'type' => 'widget',
-                    'template' => $block->getTemplate()->getRoute(),
-                    'data' => $widget->load()
-                );
+                $type = 'widget';
             }
-            else if ($block instanceof StaticContent) {
-                $tabFinal[] = array(
-                    'type' => 'static_content',
-                    'slug' => $block->getSlug(),
-                );
-            }
+
+            $blocks[] = array(
+                'type' => $type,
+                'slug' => $block->getSlug(),
+            );
         }
 
         return $this->container->get('templating')->render($sidebar->getTemplate()->getRoute(), array(
-            'tabFinal' => $tabFinal,
+            'blocks' => $blocks,
+            'parameters' => $parameters,
         ));
     }
 }

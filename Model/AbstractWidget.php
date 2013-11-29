@@ -1,6 +1,8 @@
 <?php
 namespace Bigfoot\Bundle\ContentBundle\Model;
 
+use Symfony\Component\DependencyInjection\Container;
+
 /**
  * Abstract class AbstractWidget
  *
@@ -10,18 +12,56 @@ namespace Bigfoot\Bundle\ContentBundle\Model;
  */
 abstract class AbstractWidget
 {
-    protected $parameters;
+    /**
+     * @var array
+     */
+    protected $parameters = array();
+
+    /**
+     * @var Container
+     */
     protected $container;
 
-    abstract protected function getLabel();
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
 
-    abstract protected function getName();
+    abstract public function getLabel();
 
-    abstract protected function getDefaultParameters();
+    abstract public function getName();
 
-    abstract protected function getRoute();
+    abstract public function getDefaultParameters();
 
-    abstract protected function getParametersType();
+    abstract public function getRoute();
 
-    abstract protected function load();
+    abstract public function getParametersType();
+
+    abstract public function load();
+
+    public function addParameter($key, $value)
+    {
+        $this->parameters[$key] = $value;
+
+        return $this;
+    }
+
+    public function addParameters(array $parameters)
+    {
+        $this->parameters = array_merge($this->parameters, $parameters);
+
+        return $this;
+    }
+
+    public function setParameters(array $parameters)
+    {
+        $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
 }

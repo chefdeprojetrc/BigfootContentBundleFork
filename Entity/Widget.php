@@ -25,7 +25,7 @@ class Widget extends Block
     /**
      * @var string
      *
-     * @ORM\Column(name="route", type="string", length=255)
+     * @ORM\Column(name="route", type="string", length=255, nullable=true)
      */
     private $route;
 

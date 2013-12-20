@@ -19,6 +19,7 @@ use Bigfoot\Bundle\ContentBundle\Form\WidgetType;
 use Bigfoot\Bundle\ContentBundle\Form\StaticContentType;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**

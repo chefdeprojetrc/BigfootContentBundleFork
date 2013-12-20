@@ -57,7 +57,6 @@ class PageType extends AbstractType
                     'data-trigger'      => 'hover',
                     'data-placement'    => 'right'
                 ),
-                'disabled'   => true
             ))
             ->add('title', 'text', array(
                 'attr' => array(

@@ -2,18 +2,18 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
-use Bigfoot\Bundle\CoreBundle\Crud\CrudController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+
+use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
+use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
 use Bigfoot\Bundle\ContentBundle\Entity\Widget;
 use Bigfoot\Bundle\ContentBundle\Form\WidgetType;
-use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Widget controller.

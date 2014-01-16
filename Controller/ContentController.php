@@ -2,9 +2,6 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
+use Bigfoot\Bundle\CoreBundle\Controller\BaseController;
 use Bigfoot\Bundle\ContentBundle\Entity\Widget;
 use Bigfoot\Bundle\ContentBundle\Entity\StaticContent;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
@@ -20,7 +18,6 @@ use Bigfoot\Bundle\ContentBundle\Form\StaticContentType;
 
 use Exception;
 
-
 /**
  * Content controller.
  *
@@ -28,25 +25,8 @@ use Exception;
  * @Route("/")
  *
  */
-class ContentController implements ContainerAwareInterface
+class ContentController extends BaseController
 {
-    /**
-     * @var Container
-     */
-    protected $container;
-
-    /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface|null $container A ContainerInterface instance or null
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
     /**
      * Display Dashboard
      * @Route("admin/content/dashboard/", name="admin_dashboard")

@@ -63,7 +63,6 @@
                     <div class="sidebar_category_header">
                         {{ sidebarCategory }}
                         {% if sidebarElt.category_id != 0 %}
-
                             <a class="green colorbox" href="{{ path('admin_contentbundle_sidebar_category_edit', {'id' : sidebarElt.category_id}) }}">
                                 <span class="icon-pencil bigger-130 glyphicon glyphicon-pencil"></span>
                             </a>
@@ -76,8 +75,6 @@
                                data-confirm-button-ok="{{ "Confirm" | trans }}">
                                 <span class="icon-trash bigger-130 glyphicon glyphicon-trash"></span></a>
                         {% endif %}
-
-
                     </div>
                     <div class="sidebar_category_body">
                         {% for sidebar in sidebarElt.elements %}

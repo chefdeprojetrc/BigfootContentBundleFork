@@ -91,7 +91,7 @@ class Sidebar
      * @var SidebarCategory
      *
      * @ORM\ManyToOne(targetEntity="SidebarCategory", inversedBy="sidebars", cascade={"persist"})
-     * @ORM\JoinColumn(name="sidebar_category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="sidebar_category_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $sidebarCategory;
 

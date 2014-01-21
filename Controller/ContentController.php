@@ -57,17 +57,18 @@ class ContentController implements ContainerAwareInterface
     {
         $em = $this->container->get('doctrine')->getManager();
 
-        $widgetList = array();
-        $sidebarList = array();
-        $widgetsConfig = $this->container->getParameter('bigfoot_content.widgets');
+        $widgetList          = array();
+        $sidebarList         = array();
+        $sidebarCategoryList = array();
+        $widgetsConfig       = $this->container->getParameter('bigfoot_content.widgets');
 
         foreach ($widgetsConfig as $widgetConf) {
             if (class_exists($widgetConf)) {
                 $tmpObject = new $widgetConf($this->container);
                 $widgetList[] = array(
-                    'label'         => $tmpObject->getLabel(),
-                    'name'          => $tmpObject->getName(),
-                    'parameters'    => $tmpObject->getDefaultParameters(),
+                    'label'      => $tmpObject->getLabel(),
+                    'name'       => $tmpObject->getName(),
+                    'parameters' => $tmpObject->getDefaultParameters(),
                 );
             }
         }
@@ -103,26 +104,33 @@ class ContentController implements ContainerAwareInterface
                 }
 
                 $formBlock[] = array(
-                    'id'        => $block->getId(),
-                    'form'      => $tempForm->createView(),
-                    'type'      => $type,
-                    'position'  => $block->getPosition(),
-                    'form_name' => $form_name,
+                    'id'          => $block->getId(),
+                    'form'        => $tempForm->createView(),
+                    'type'        => $type,
+                    'position'    => $block->getPosition(),
+                    'form_name'   => $form_name,
                     'widget_name' => $widget_name_lbl,
                 );
             }
 
-            $sidebarList[] = array(
+            $sidebarCategory   = ($sidebar->getSidebarCategory()) ? $sidebar->getSidebarCategory() : 'Default';
+            $sidebarCategoryId = ($sidebarCategory != 'Default') ? $sidebar->getSidebarCategory()->getId() : '0';
+
+            $sidebarList[(string)$sidebarCategory]['category_id'] = $sidebarCategoryId;
+            $sidebarList[(string)$sidebarCategory]['elements'][] = array(
                 'id_sidebar' => $sidebar->getId(),
-                'name' => $sidebar->getTitle(),
-                'formBlock' => $formBlock,
+                'name'       => $sidebar->getTitle(),
+                'formBlock'  => $formBlock,
             );
+
+            $sidebarCategoryList[$sidebarCategoryId] = (string)$sidebarCategory;
         }
 
         return $this->container->get('templating')->renderResponse('BigfootContentBundle:Dashboard:default.html.twig', array(
-            'widgetList'    => $widgetList,
-            'sidebarList'   => $sidebarList,
-            'staticContentList'   => $staticContentList
+            'widgetList'          => $widgetList,
+            'sidebarList'         => $sidebarList,
+            'staticContentList'   => $staticContentList,
+            'sidebarCategoryList' => $sidebarCategoryList
         ));
     }
 
@@ -222,5 +230,4 @@ class ContentController implements ContainerAwareInterface
         }
 
     }
-
 }

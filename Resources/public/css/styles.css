@@ -132,7 +132,8 @@ div#sidebar_container div.header_sidebar_elt {
 }
 
 div#sidebar_container div.header_sidebar_elt span {position:absolute;top:0;right:0;margin:5px 12px 0 0;}
-div#sidebar_container div.header_sidebar_elt span.glyphicon-pencil {margin:5px 30px 0 0;}
+div#sidebar_container div.header_sidebar_elt span.glyphicon-pencil,
+div#sidebar_container div.header_sidebar_elt span.glyphicon-edit {margin:5px 30px 0 0;}
 div#sidebar_container div.header_sidebar_elt span.glyphicon-magnet {margin:5px 87% 0 0;}
 
 div#sidebar_container div.body_sidebar_elt {background-color: #fff;min-height:50px;height:auto !important;height:50px;}
@@ -163,7 +164,8 @@ div#sidebar_container div.body_sidebar_elt div.form_widget_element div.header_fo
 
 div#sidebar_container div.body_sidebar_elt div.form_widget_element div.header_form_widget_element a {position:absolute;top:0;right:0;}
 div#sidebar_container div.body_sidebar_elt div.form_widget_element div.header_form_widget_element span {position:absolute;top:0;right:0;margin:5px 12px 0 0;}
-div#sidebar_container div.body_sidebar_elt div.form_widget_element div.header_form_widget_element span.glyphicon-pencil {margin:5px 30px 0 0;}
+div#sidebar_container div.body_sidebar_elt div.form_widget_element div.header_form_widget_element span.glyphicon-pencil,
+div#sidebar_container div.body_sidebar_elt div.form_widget_element div.header_form_widget_element span.glyphicon-edit {margin:5px 30px 0 0;}
 
 div#sidebar_container div.body_sidebar_elt div.form_widget_element div.body_form_widget_element {background-color: #fff;display:none;}
 div#sidebar_container div.body_sidebar_elt div.form_widget_element div.body_form_widget_element .sidebar_select {display:none;}
@@ -179,7 +181,7 @@ div#sidebar_container div.body_sidebar_elt div.form_widget_element div.body_form
 }
 div#sidebar_container div.body_sidebar_elt div.form_widget_element div.body_form_widget_element div.form-group label[for="bigfoot_bundle_contentbundle_staticcontenttype_template"] {display:none;}
 
-div#sidebar_container div#sidebar_filter {width:95%;float:left;margin: 10px 0 20px 20px;}
+div#sidebar_container div#sidebar_filter {width:95%;float:left;margin: 10px 0 10px 20px;}
 
 div#sidebar_container div.sidebar_category {
     border: 1px solid #c9c9c9;
@@ -214,6 +216,9 @@ div#sidebar_container div.sidebar_category div.sidebar_category_header {
 }
 
 div#sidebar_container div.sidebar_category div.sidebar_category_header span {position:absolute;top:0;right:0;margin:9px 12px 0 0;}
+
+div#sidebar_container div.sidebar_category div.sidebar_category_header span.glyphicon-pencil,
+div#sidebar_container div.sidebar_category div.sidebar_category_header span.glyphicon-edit {margin:9px 30px 0 0;}
 
 div#sidebar_container div.sidebar_category div.sidebar_category_body {background-color:#e2e0e0;width:100%;min-height:100px;height:auto !important;height:100px;float:left;border-left: 1px solid #ccc;border-bottom: 1px solid #ccc;border-right: 1px solid #ccc;}
 

@@ -157,15 +157,6 @@ class SidebarCategoryController extends CrudController
             throw new NotFoundHttpException('Unable to find Sidebar entity.');
         }
 
-        $sidebars = $em->getRepository('BigfootContentBundle:Sidebar')->findOneBySidebarCategory($id);
-
-        if ($sidebars) {
-            foreach( $sidebars as $sidebar) {
-                $sidebar->setSidebarCategory = null;
-                $em->persist($sidebar);
-            }
-        }
-
         $em->remove($entity);
         $em->flush();
 

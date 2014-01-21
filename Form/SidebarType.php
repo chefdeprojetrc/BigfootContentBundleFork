@@ -19,7 +19,9 @@ class SidebarType extends AbstractType
     {
         $builder
             ->add('sidebarCategory', 'entity', array(
-                'class' => 'BigfootContentBundle:SidebarCategory'
+                'class' => 'BigfootContentBundle:SidebarCategory',
+                'property' => 'title',
+
             ))
             ->add('template', 'entity', array(
                 'class' => 'BigfootContentBundle:Template',

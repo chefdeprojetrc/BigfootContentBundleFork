@@ -28,7 +28,7 @@
     </div>
     <div style="clear:both;"></div>
     <div id="widget_sc_container">
-        <div id="header_widget_sc_container">{{ 'Liste des Widgets et des Contenus statiques disponibles' }}</div>
+        <div id="header_widget_sc_container">{{ 'Available Widgets and Static Content' }}</div>
         <div id="body_widget_sc_container">
             {% for widget in widgetList %}
                 <div class="widget_elt" data-name="{{ widget.name }}" data-type="widget" data-id="">
@@ -45,13 +45,13 @@
     </div>
 
     <div id="sidebar_container" data-create-block="{{ path('admin_dashboard_create_dynamic_block') }}" data-save-order="{{ path('admin_dashboard_save_block_order') }}">
-        <div id="header_sidebar_container">{{ 'Liste des Sidebars disponibles' }}<a href="{{ path('admin_sidebar_new') }}" class="colorbox"><span class="glyphicon glyphicon-file"></span></a></div>
+        <div id="header_sidebar_container">{{ 'Available Sidebars' }}<a href="{{ path('admin_sidebar_new') }}" class="colorbox"><span class="icon-file bigger-130 glyphicon glyphicon-file"></span></a></div>
         <div id="body_sidebar_container">
 
             <div id="sidebar_filter">
-                <label for="filterCategory">{{ 'Filtrer par catégorie' | trans }} : </label>
+                <label for="filterCategory">{{ 'Filter by Category' | trans }} : </label>
                 <select id="filterCategory">
-                    <option value="">{{ 'Toutes' | trans }}</option>
+                    <option value="">{{ 'All' | trans }}</option>
                     {% for category_id, elementCategory in sidebarCategoryList %}
                         <option value="{{ category_id }}">{{ elementCategory }}</option>
                     {% endfor %}
@@ -63,23 +63,36 @@
                     <div class="sidebar_category_header">
                         {{ sidebarCategory }}
                         {% if sidebarElt.category_id != 0 %}
-                            <a href="{{ path('admin_contentbundle_sidebar_category_edit', {'id' : sidebarElt.category_id}) }}" class="colorbox"><span class="glyphicon glyphicon-pencil">&nbsp;</span></a>
+
+                            <a class="green colorbox" href="{{ path('admin_contentbundle_sidebar_category_edit', {'id' : sidebarElt.category_id}) }}">
+                                <span class="icon-pencil bigger-130 glyphicon glyphicon-pencil"></span>
+                            </a>
+
+                            <a href="#_"
+                               data-href="{{ path('admin_contentbundle_sidebar_category_delete' , { 'id': sidebarElt.category_id }) }}" title="{{ 'Delete this sidebar category' | trans }}" class="red delete-form-dashboard"
+                               data-confirm-title="{{ 'Please confirm' | trans }}"
+                               data-confirm-message="{{ 'Are you sure you want to perform this action ? The object will be permanently lost.' | trans }}"
+                               data-confirm-button-cancel="{{ "Cancel" | trans }}"
+                               data-confirm-button-ok="{{ "Confirm" | trans }}">
+                                <span class="icon-trash bigger-130 glyphicon glyphicon-trash"></span></a>
                         {% endif %}
+
+
                     </div>
                     <div class="sidebar_category_body">
                         {% for sidebar in sidebarElt.elements %}
                             <div class="sidebar_elt" id="sidebar_{{ sidebar.id_sidebar }}">
                                 <div class="header_sidebar_elt">
-                                    <a href="#_" onclick="saveOrderBlock('{{ sidebar.id_sidebar }}');return false;" title="{{ 'Save Order' | trans }}"><span class="glyphicon glyphicon-magnet">{{ 'save' | trans }}&nbsp;{{ 'order' | trans }}</span></a>
+                                    <a href="#_" onclick="saveOrderBlock('{{ sidebar.id_sidebar }}');return false;" title="{{ 'Save Order' | trans }}"><span class="glyphicon glyphicon-magnet icon-th-list bigger-130">&nbsp;</span></a>
                                     {{ sidebar.name }}
-                                    <a href="{{ path('admin_sidebar_edit' , { 'id': sidebar.id_sidebar }) }}" class="colorbox" title="{{ 'Edit this Sidebar' | trans }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a href="{{ path('admin_sidebar_edit' , { 'id': sidebar.id_sidebar }) }}" class="colorbox green" title="{{ 'Edit this Sidebar' | trans }}"><span class="icon-pencil bigger-130 glyphicon glyphicon-pencil"></span></a>
                                     <a href="#_"
-                                       data-href="{{ path('admin_sidebar_delete' , { 'id': sidebar.id_sidebar }) }}" title="{{ 'Delete this sidebar' | trans }}" class="delete-form-dashboard"
+                                       data-href="{{ path('admin_sidebar_delete' , { 'id': sidebar.id_sidebar }) }}" title="{{ 'Delete this sidebar' | trans }}" class="delete-form-dashboard red"
                                        data-confirm-title="{{ 'Please confirm' | trans }}"
                                        data-confirm-message="{{ 'Are you sure you want to perform this action ? The object will be permanently lost.' | trans }}"
                                        data-confirm-button-cancel="{{ "Cancel" | trans }}"
                                        data-confirm-button-ok="{{ "Confirm" | trans }}">
-                                        <span class="glyphicon glyphicon-trash"></span></a>
+                                        <span class="icon-trash bigger-130 glyphicon glyphicon-trash"></span></a>
                                 </div>
                                 <div class="body_sidebar_elt" id="body_sidebar_{{ sidebar.id_sidebar }}">
                                     {% for block in sidebar.formBlock %}

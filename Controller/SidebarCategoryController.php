@@ -142,8 +142,8 @@ class SidebarCategoryController extends CrudController
     /**
      * Deletes a SidebarCategory entity.
      *
-     * @Route("/{id}", name="admin_contentbundle_sidebar_category_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="admin_contentbundle_sidebar_category_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -155,6 +155,15 @@ class SidebarCategoryController extends CrudController
 
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find Sidebar entity.');
+        }
+
+        $sidebars = $em->getRepository('BigfootContentBundle:Sidebar')->findOneBySidebarCategory($id);
+
+        if ($sidebars) {
+            foreach( $sidebars as $sidebar) {
+                $sidebar->setSidebarCategory = null;
+                $em->persist($sidebar);
+            }
         }
 
         $em->remove($entity);

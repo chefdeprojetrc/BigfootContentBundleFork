@@ -11,15 +11,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
-use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
-use Bigfoot\Bundle\ContentBundle\Form\SidebarType;
 
 /**
  * Sidebar controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/sidebar")
+ * @Route("/admin/sidebar")
  */
 class SidebarController extends CrudController
 {

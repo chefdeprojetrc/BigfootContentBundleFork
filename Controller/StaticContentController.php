@@ -11,15 +11,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
-use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
 use Bigfoot\Bundle\ContentBundle\Entity\StaticContent;
-use Bigfoot\Bundle\ContentBundle\Form\StaticContentType;
 
 /**
  * StaticContent controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("admin/staticcontent")
+ * @Route("/admin/staticcontent")
  */
 class StaticContentController extends CrudController
 {

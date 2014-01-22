@@ -22,14 +22,14 @@ use Exception;
  * Content controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/")
+ * @Route("/admin/content")
  *
  */
 class ContentController extends BaseController
 {
     /**
      * Display Dashboard
-     * @Route("admin/content/dashboard/", name="admin_dashboard")
+     * @Route("/dashboard/", name="admin_dashboard")
      * @Method("GET")
      * @Template()
      */
@@ -116,7 +116,7 @@ class ContentController extends BaseController
 
     /**
      * Save the new block order into a sidebar
-     * @Route("admin/content/dashboard/save_block_order", name="admin_dashboard_save_block_order")
+     * @Route("/dashboard/save_block_order", name="admin_dashboard_save_block_order")
      * @Method("GET")
      * @Template()
      */
@@ -151,7 +151,7 @@ class ContentController extends BaseController
 
     /**
      * Create dynamically a Widget block or a Static Content block
-     * @Route("admin/content/dashboard/create_dynamic_block", name="admin_dashboard_create_dynamic_block")
+     * @Route("/dashboard/create_dynamic_block", name="admin_dashboard_create_dynamic_block")
      * @Method("GET")
      * @Template()
      */

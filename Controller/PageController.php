@@ -2,16 +2,16 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
-use Bigfoot\Bundle\CoreBundle\Crud\CrudController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+
+use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
+use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
 use Bigfoot\Bundle\ContentBundle\Entity\Page;
 use Bigfoot\Bundle\ContentBundle\Form\PageType;
-use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
 
 /**
  * Page controller.

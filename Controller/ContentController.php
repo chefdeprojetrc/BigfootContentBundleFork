@@ -22,14 +22,14 @@ use Exception;
  * Content controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/")
+ * @Route("/admin/content")
  *
  */
 class ContentController extends BaseController
 {
     /**
      * Display Dashboard
-     * @Route("admin/content/dashboard/", name="admin_dashboard")
+     * @Route("/dashboard/", name="admin_dashboard")
      * @Method("GET")
      * @Template()
      */
@@ -37,17 +37,18 @@ class ContentController extends BaseController
     {
         $em = $this->container->get('doctrine')->getManager();
 
-        $widgetList = array();
-        $sidebarList = array();
-        $widgetsConfig = $this->container->getParameter('bigfoot_content.widgets');
+        $widgetList          = array();
+        $sidebarList         = array();
+        $sidebarCategoryList = array();
+        $widgetsConfig       = $this->container->getParameter('bigfoot_content.widgets');
 
         foreach ($widgetsConfig as $widgetConf) {
             if (class_exists($widgetConf)) {
                 $tmpObject = new $widgetConf($this->container);
                 $widgetList[] = array(
-                    'label'         => $tmpObject->getLabel(),
-                    'name'          => $tmpObject->getName(),
-                    'parameters'    => $tmpObject->getDefaultParameters(),
+                    'label'      => $tmpObject->getLabel(),
+                    'name'       => $tmpObject->getName(),
+                    'parameters' => $tmpObject->getDefaultParameters(),
                 );
             }
         }
@@ -83,32 +84,39 @@ class ContentController extends BaseController
                 }
 
                 $formBlock[] = array(
-                    'id'        => $block->getId(),
-                    'form'      => $tempForm->createView(),
-                    'type'      => $type,
-                    'position'  => $block->getPosition(),
-                    'form_name' => $form_name,
+                    'id'          => $block->getId(),
+                    'form'        => $tempForm->createView(),
+                    'type'        => $type,
+                    'position'    => $block->getPosition(),
+                    'form_name'   => $form_name,
                     'widget_name' => $widget_name_lbl,
                 );
             }
 
-            $sidebarList[] = array(
+            $sidebarCategory   = ($sidebar->getSidebarCategory()) ? $sidebar->getSidebarCategory() : 'Default';
+            $sidebarCategoryId = ($sidebarCategory != 'Default') ? $sidebar->getSidebarCategory()->getId() : '0';
+
+            $sidebarList[(string)$sidebarCategory]['category_id'] = $sidebarCategoryId;
+            $sidebarList[(string)$sidebarCategory]['elements'][] = array(
                 'id_sidebar' => $sidebar->getId(),
-                'name' => $sidebar->getTitle(),
-                'formBlock' => $formBlock,
+                'name'       => $sidebar->getTitle(),
+                'formBlock'  => $formBlock,
             );
+
+            $sidebarCategoryList[$sidebarCategoryId] = (string)$sidebarCategory;
         }
 
         return $this->container->get('templating')->renderResponse('BigfootContentBundle:Dashboard:default.html.twig', array(
-            'widgetList'    => $widgetList,
-            'sidebarList'   => $sidebarList,
-            'staticContentList'   => $staticContentList
+            'widgetList'          => $widgetList,
+            'sidebarList'         => $sidebarList,
+            'staticContentList'   => $staticContentList,
+            'sidebarCategoryList' => $sidebarCategoryList
         ));
     }
 
     /**
      * Save the new block order into a sidebar
-     * @Route("admin/content/dashboard/save_block_order", name="admin_dashboard_save_block_order")
+     * @Route("/dashboard/save_block_order", name="admin_dashboard_save_block_order")
      * @Method("GET")
      * @Template()
      */
@@ -143,7 +151,7 @@ class ContentController extends BaseController
 
     /**
      * Create dynamically a Widget block or a Static Content block
-     * @Route("admin/content/dashboard/create_dynamic_block", name="admin_dashboard_create_dynamic_block")
+     * @Route("/dashboard/create_dynamic_block", name="admin_dashboard_create_dynamic_block")
      * @Method("GET")
      * @Template()
      */
@@ -202,5 +210,4 @@ class ContentController extends BaseController
         }
 
     }
-
 }

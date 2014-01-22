@@ -10,19 +10,6 @@ use Doctrine\ORM\EntityRepository;
 
 class SidebarType extends AbstractType
 {
-
-    protected $container;
-
-    /**
-     * Constructor
-     *
-     * @param $container
-     */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -30,7 +17,12 @@ class SidebarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('template', 'entity', array(
+            ->add('sidebarCategory' , 'entity'      , array(
+                'class' => 'BigfootContentBundle:SidebarCategory',
+                'property' => 'title',
+
+            ))
+            ->add('template'        , 'entity'      , array(
                 'class' => 'BigfootContentBundle:Template',
                 'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('t')
@@ -39,10 +31,12 @@ class SidebarType extends AbstractType
                             ->setParameter('type', 'Sidebar');
                     },
             ))
-            ->add('title')
-            ->add('slug', 'text', array('disabled'   => true))
-            ->add('active','checkbox',array('required' => false))
-            ->add('translation', 'translatable_entity');
+            ->add('title'           , 'text')
+            ->add('slug'            , 'text'        , array('disabled'   => true))
+            ->add('active'          ,'checkbox'     , array('required' => false))
+            ->add('description'     , 'textarea'    , array('required' => false))
+            ->add('translation'     , 'translatable_entity')
+        ;
     }
 
     /**

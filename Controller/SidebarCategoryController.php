@@ -2,79 +2,62 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use Bigfoot\Bundle\ContentBundle\Entity\SidebarCategory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
+use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-
-use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
-use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
 
 /**
- * Sidebar controller.
+ * SidebarCategory controller.
  *
- * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/admin/sidebar")
+ * @Route("/admin/contentbundle_sidebar_category")
  */
-class SidebarController extends CrudController
+class SidebarCategoryController extends CrudController
 {
-
+    /**
+     * @return string
+     */
     protected function getName()
     {
-        return 'admin_sidebar';
+        return 'admin_contentbundle_sidebar_category';
     }
 
     /**
-     * Must return the entity full name (eg. BigfootCoreBundle:Tag).
-     *
      * @return string
      */
     protected function getEntity()
     {
-        return 'BigfootContentBundle:Sidebar';
+        return 'BigfootContentBundle:SidebarCategory';
     }
 
-    /**
-     * Must return an associative array field name => field label.
-     *
-     * @return array
-     */
     protected function getFields()
     {
-        return array(
-            'id'    => 'id',
-            'title' => 'title'
-        );
+        return array('id' => 'ID', 'title' => 'Title');
     }
-
-    protected function getFormType()
-    {
-        return 'bigfoot_bundle_contentbundle_sidebartype';
-    }
-
     /**
-     * @Route("/", name="admin_sidebar")
+     * Lists all SidebarCategory entities.
+     *
+     * @Route("/", name="admin_contentbundle_sidebar_category")
      * @Method("GET")
-     * @Template("BigfootContentBundle:Dashboard:default.html.twig")
+     * @Template("BigfootCoreBundle:crud:index.html.twig")
      */
     public function indexAction()
     {
-        return array();
+        return $this->doIndex();
     }
-
     /**
-     * Creates a new Sidebar entity.
+     * Creates a new SidebarCategory entity.
      *
-     * @Route("/", name="admin_sidebar_create")
+     * @Route("/", name="admin_contentbundle_sidebar_category_create")
      * @Method("POST")
      * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new Sidebar();
+        $entity  = new SidebarCategory();
         $form = $this->container->get('form.factory')->create($this->getFormType(), $entity);
         $form->submit($request);
 
@@ -93,9 +76,9 @@ class SidebarController extends CrudController
     }
 
     /**
-     * Displays a form to create a new Sidebar entity.
+     * Displays a form to create a new SidebarCategory entity.
      *
-     * @Route("/new", name="admin_sidebar_new")
+     * @Route("/new", name="admin_contentbundle_sidebar_category_new")
      * @Method("GET")
      * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
@@ -108,9 +91,9 @@ class SidebarController extends CrudController
     }
 
     /**
-     * Displays a form to edit an existing Sidebar entity.
+     * Displays a form to edit an existing SidebarCategory entity.
      *
-     * @Route("/edit/{id}/", name="admin_sidebar_edit")
+     * @Route("/{id}/edit", name="admin_contentbundle_sidebar_category_edit")
      * @Method("GET")
      * @Template("BigfootCoreBundle:crud:edit.html.twig")
      */
@@ -123,16 +106,16 @@ class SidebarController extends CrudController
     }
 
     /**
-     * Edits an existing Sidebar entity.
+     * Edits an existing SidebarCategory entity.
      *
-     * @Route("/{id}", name="admin_sidebar_update")
+     * @Route("/{id}", name="admin_contentbundle_sidebar_category_update")
      * @Method("PUT")
      * @Template("BigfootCoreBundle:crud:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:Sidebar')->find($id);
+        $entity = $em->getRepository('BigfootContentBundle:SidebarCategory')->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find Sidebar entity.');
@@ -155,10 +138,11 @@ class SidebarController extends CrudController
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
-     * Deletes a Sidebar entity.
+     * Deletes a SidebarCategory entity.
      *
-     * @Route("/delete/{id}", name="admin_sidebar_delete")
+     * @Route("/delete/{id}", name="admin_contentbundle_sidebar_category_delete")
      * @Method("GET")
      */
     public function deleteAction(Request $request, $id)
@@ -167,7 +151,7 @@ class SidebarController extends CrudController
         $form->submit($request);
 
         $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:Sidebar')->find($id);
+        $entity = $em->getRepository('BigfootContentBundle:SidebarCategory')->find($id);
 
         if (!$entity) {
             throw new NotFoundHttpException('Unable to find Sidebar entity.');
@@ -177,20 +161,5 @@ class SidebarController extends CrudController
         $em->flush();
 
         return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
-    }
-
-    /**
-     * Creates a form to delete a Sidebar entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    protected function createDeleteForm($id)
-    {
-        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
     }
 }

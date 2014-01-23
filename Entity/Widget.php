@@ -45,6 +45,20 @@ class Widget extends Block
     private $description;
 
     /**
+     * @var Sidebar
+     *
+     * @ORM\ManyToOne(targetEntity="Sidebar", inversedBy="widget")
+     */
+    private $sidebar;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Locale
+     */
+    private $locale;
+
+    /**
      * Set name
      *
      * @param string $title
@@ -134,5 +148,34 @@ class Widget extends Block
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Sidebar $sidebar
+     */
+    public function setSidebar($sidebar)
+    {
+        $this->sidebar = $sidebar;
+
+        return $this;
+    }
+
+    /**
+     * @return \Bigfoot\Bundle\ContentBundle\Entity\Sidebar
+     */
+    public function getSidebar()
+    {
+        return $this->sidebar;
+    }
+
+    /**
+     * @param string $locale
+     * @return $this
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 }

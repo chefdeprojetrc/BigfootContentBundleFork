@@ -28,15 +28,7 @@ class Block
      *
      * @ORM\Column(name="position", type="integer")
      */
-    public $position = 1;
-
-    /**
-     * @var Sidebar $sidebar
-     *
-     * @ORM\ManyToOne(targetEntity="Sidebar",inversedBy="block", cascade={"persist", "merge"})
-     * @ORM\JoinColumn(name="sidebar_id", referencedColumnName="id")
-     */
-    protected $sidebar;
+    protected $position = 1;
 
     /**
      * @var Template
@@ -53,11 +45,19 @@ class Block
      */
     protected $params;
 
+    /**
+     * @param $name string
+     * @param $value
+     */
     public function __set($name, $value)
     {
         $this->params[$name] = $value;
     }
 
+    /**
+     * @param $name string
+     * @return null
+     */
     public function __get($name)
     {
         if (sizeof($this->params) > 0 && array_key_exists($name, $this->params)) {
@@ -128,29 +128,6 @@ class Block
     public function getPosition()
     {
         return $this->position;
-    }
-
-    /**
-     * Set sidebar
-     *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Sidebar $sidebar
-     * @return Widget
-     */
-    public function setSidebar(\Bigfoot\Bundle\ContentBundle\Entity\Sidebar $sidebar = null)
-    {
-        $this->sidebar = $sidebar;
-
-        return $this;
-    }
-
-    /**
-     * Get sidebar
-     *
-     * @return \Bigfoot\Bundle\ContentBundle\Entity\Sidebar
-     */
-    public function getSidebar()
-    {
-        return $this->sidebar;
     }
 
     /**

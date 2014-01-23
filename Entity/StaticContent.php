@@ -42,6 +42,13 @@ class StaticContent extends Block
     private $media;
 
     /**
+     * @var Sidebar
+     *
+     * @ORM\ManyToOne(targetEntity="Sidebar", inversedBy="staticcontent")
+     */
+    private $sidebar;
+
+    /**
      * @Gedmo\Locale
      */
     protected $locale;
@@ -133,6 +140,28 @@ class StaticContent extends Block
         return $this->media;
     }
 
+    /**
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Sidebar $sidebar
+     */
+    public function setSidebar($sidebar)
+    {
+        $this->sidebar = $sidebar;
+
+        return $this;
+    }
+
+    /**
+     * @return \Bigfoot\Bundle\ContentBundle\Entity\Sidebar
+     */
+    public function getSidebar()
+    {
+        return $this->sidebar;
+    }
+
+    /**
+     * @param string $locale
+     * @return $this
+     */
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;

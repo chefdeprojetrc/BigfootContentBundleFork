@@ -181,7 +181,7 @@ div#sidebar_container div.body_sidebar_elt div.form_widget_element div.body_form
 }
 div#sidebar_container div.body_sidebar_elt div.form_widget_element div.body_form_widget_element div.form-group label[for="bigfoot_bundle_contentbundle_staticcontenttype_template"] {display:none;}
 
-div#sidebar_container div#sidebar_filter {width:95%;float:left;margin: 10px 0 10px 20px;}
+div#sidebar_container div#sidebar_filter {width:95%;float:left;margin: 10px 0 20px 20px;}
 
 div#sidebar_container div.sidebar_category {
     border: 1px solid #c9c9c9;

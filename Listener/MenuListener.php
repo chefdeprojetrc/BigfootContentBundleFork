@@ -2,25 +2,69 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Listener;
 
-use Bigfoot\Bundle\CoreBundle\Event\MenuEvent;
-use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Doctrine\ORM\EntityManager;
 
-class MenuListener
+use Bigfoot\Bundle\CoreBundle\Event\MenuEvent;
+
+/**
+ * Menu Listener
+ */
+class MenuListener implements EventSubscriberInterface
 {
     /**
-     * Add entry to the sidebar menu
+     * Get subscribed events
      *
-     * @param MenuEvent $event
+     * @return array
      */
-    function onMenuGenerate(MenuEvent $event)
+    public static function getSubscribedEvents()
     {
-        $menu = $event->getMenu();
+        return array(
+            MenuEvent::GENERATE_MAIN => 'onGenerateMain',
+        );
+    }
 
-        if ($menu->getName() == 'sidebar_menu') {
-            $menu->addItem(new Item('content_settings', 'Content', 'admin_content_widget'));
-            $menu->addOnItem('content_settings',new Item('content_sidebar_settings', 'Dashboard', 'admin_dashboard'));
-            $menu->addOnItem('content_settings',new Item('content_sidebar_settings', 'Templates', 'admin_contentbundle_template'));
-            $menu->addOnItem('content_settings',new Item('content_sidebar_settings', 'Page', 'admin_page'));
-        }
+    /**
+     * @param GenericEvent $event
+     */
+    public function onGenerateMain(GenericEvent $event)
+    {
+        $menu        = $event->getSubject();
+        $contentMenu = $menu->getChild('content');
+
+        $contentMenu->addChild(
+            'template',
+            array(
+                'label'  => 'Template',
+                'route'  => 'admin_contentbundle_template',
+                'extras' => array(
+                    'routes' => array(
+                        'admin_contentbundle_template_new',
+                        'admin_contentbundle_template_edit'
+                    )
+                ),
+                'linkAttributes' => array(
+                    'icon'  => 'list-alt',
+                )
+            )
+        );
+
+        $contentMenu->addChild(
+            'page',
+            array(
+                'label'  => 'Page',
+                'route'  => 'admin_page',
+                'extras' => array(
+                    'routes' => array(
+                        'admin_page_new',
+                        'admin_page_new'
+                    )
+                ),
+                'linkAttributes' => array(
+                    'icon'  => 'list-alt',
+                )
+            )
+        );
     }
 }

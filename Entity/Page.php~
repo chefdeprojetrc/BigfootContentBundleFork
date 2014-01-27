@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Page
@@ -23,29 +24,44 @@ class Page
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     */
+    private $name;
+
+    /**
+     * @var string
+     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     * @Gedmo\Translatable
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text")
+     * @var text
+     * @Gedmo\Translatable
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @var string
+     * @var Template
      *
-     * @ORM\Column(name="template", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Template", inversedBy="pages")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
     private $template;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255)
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
     private $image;
 
@@ -54,17 +70,100 @@ class Page
      *
      * @ORM\Column(name="active", type="boolean")
      */
-    private $active;
+    private $active = true;
 
+    /**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var datetime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+    /**
+     * @Gedmo\Blameable(on="create")
+     * @ORM\Column(type="string")
+     */
+    private $createdBy;
+
+    /**
+     * @Gedmo\Blameable(on="update")
+     * @ORM\Column(type="string")
+     */
+    private $updatedBy;
+
+    /**
+     * @Gedmo\Locale
+     */
+    protected $locale;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Page
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Page
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -76,14 +175,14 @@ class Page
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -99,14 +198,14 @@ class Page
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -114,22 +213,18 @@ class Page
     }
 
     /**
-     * Set template
-     *
-     * @param string $template
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Template $template
      * @return Page
      */
     public function setTemplate($template)
     {
         $this->template = $template;
-    
+
         return $this;
     }
 
     /**
-     * Get template
-     *
-     * @return string 
+     * @return \Bigfoot\Bundle\ContentBundle\Entity\Template
      */
     public function getTemplate()
     {
@@ -145,14 +240,14 @@ class Page
     public function setImage($image)
     {
         $this->image = $image;
-    
+
         return $this;
     }
 
     /**
      * Get image
      *
-     * @return string 
+     * @return string
      */
     public function getImage()
     {
@@ -168,17 +263,24 @@ class Page
     public function setActive($active)
     {
         $this->active = $active;
-    
+
         return $this;
     }
 
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
         return $this->active;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 }

@@ -33,12 +33,14 @@ services:
     bigfoot_content.display_content:
             class: '%bigfoot_content.display_content.class%'
             arguments: [@service_container]
-    kernel.listener.bigfoot_content_menu_listener:
-        class: Bigfoot\Bundle\ContentBundle\Listener\MenuListener
-        tags:
-            - { name: kernel.event_listener, event: bigfoot.menu.generate, method: onMenuGenerate }
     bigfoot_content.twig.content_renderer_extension:
         class: Bigfoot\Bundle\ContentBundle\Twig\ContentRendererExtension
         arguments: [@bigfoot_content.display_content]
         tags:
             - { name: twig.extension }
+
+    # Menu Listener
+    bigfoot_content.listener.menu:
+        class: Bigfoot\Bundle\ContentBundle\Listener\MenuListener
+        tags:
+            - { name: kernel.event_subscriber }

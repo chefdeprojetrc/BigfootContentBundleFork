@@ -66,5 +66,18 @@ class MenuListener implements EventSubscriberInterface
                 )
             )
         );
+
+        $structureMenu = $menu->getChild('structure');
+
+        $structureMenu->addChild(
+            'widget',
+            array(
+                'label'          => 'Widget',
+                'route'          => 'admin_dashboard',
+                'linkAttributes' => array(
+                    'icon'  => 'list-alt',
+                )
+            )
+        );
     }
 }

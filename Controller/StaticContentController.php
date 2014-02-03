@@ -62,12 +62,17 @@ class StaticContentController extends CrudController
         return 'bigfoot_bundle_contentbundle_staticcontenttype';
     }
 
+    public function getFormTemplate()
+    {
+        return $this->getEntity().':edit.html.twig';
+    }
+
     /**
      * Lists all StaticContent entities.
      *
      * @Route("/", name="admin_staticcontent")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:index.html.twig")
+     * @Template("BigfootCoreBundle:Crud:index.html.twig")
      */
     public function indexAction()
     {
@@ -78,26 +83,10 @@ class StaticContentController extends CrudController
      *
      * @Route("/", name="admin_staticcontent_create")
      * @Method("POST")
-     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new StaticContent();
-        $form = $this->container->get('form.factory')->create($this->getFormType(), $entity);
-        $form->submit($request);
-
-        if ($form->isValid()) {
-            $em = $this->container->get('doctrine')->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $this->doCreate($request);
     }
 
     /**
@@ -105,7 +94,6 @@ class StaticContentController extends CrudController
      *
      * @Route("/new", name="admin_staticcontent_new")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function newAction()
     {
@@ -117,7 +105,6 @@ class StaticContentController extends CrudController
      *
      * @Route("/colorbox-new", name="admin_staticcontent_colorbox_new")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function newColorboxAction()
     {
@@ -162,17 +149,17 @@ class StaticContentController extends CrudController
         }
 
         return array(
-            'entity'                => $entity,
-            'id'                    => $id,
-            'position'              => $position,
-            'id_sidebar'            => $id_sidebar,
-            'form'                  => $editForm->createView(),
-            'delete_form'           => $deleteForm->createView(),
-            'form_action'           => $form_action,
-            'form_method'           => $form_method,
-            'form_submit'           => $form_submit,
-            'form_title'            => $form_title,
-            'isAjax'             => true,
+            'entity'      => $entity,
+            'id'          => $id,
+            'position'    => $position,
+            'id_sidebar'  => $id_sidebar,
+            'form'        => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'form_action' => $form_action,
+            'form_method' => $form_method,
+            'form_submit' => $form_submit,
+            'form_title'  => $form_title,
+            'isAjax'      => true,
         );
     }
 
@@ -181,70 +168,20 @@ class StaticContentController extends CrudController
      *
      * @Route("/{id}", name="admin_staticcontent_update")
      * @Method("PUT")
-     * @Template("BigfootContentBundle:StaticContent:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('Unable to find StaticContent entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->container->get('form.factory')->create('bigfoot_bundle_contentbundle_staticcontenttype', $entity);
-        $editForm->submit($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->doUpdate($request, $id);
     }
+
     /**
      * Deletes a StaticContent entity.
      *
-     * @Route("/delete/{id}", name="admin_staticcontent_delete")
-     * @Method("GET")
+     * @Route("/delete/{id}/delete", name="admin_staticcontent_delete")
+     * @Method("GET|DELETE")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->submit($request);
-
-        $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:StaticContent')->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('Unable to find StaticContent entity.');
-        }
-
-        $em->remove($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
-    }
-
-    /**
-     * Creates a form to delete a StaticContent entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    protected function createDeleteForm($id)
-    {
-        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->doDelete($request, $id);
     }
 }

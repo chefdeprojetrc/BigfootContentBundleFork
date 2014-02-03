@@ -45,8 +45,8 @@ class SidebarController extends CrudController
     protected function getFields()
     {
         return array(
-            'id'    => 'id',
-            'title' => 'title'
+            'id'    => 'ID',
+            'title' => 'Title'
         );
     }
 
@@ -70,7 +70,7 @@ class SidebarController extends CrudController
      *
      * @Route("/", name="admin_sidebar_create")
      * @Method("POST")
-     * @Template("BigfootCoreBundle:crud:new.html.twig")
+     * @Template("BigfootCoreBundle:Crud:form.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -97,7 +97,7 @@ class SidebarController extends CrudController
      *
      * @Route("/new", name="admin_sidebar_new")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:new.html.twig")
+     * @Template("BigfootCoreBundle:Crud:form.html.twig")
      */
     public function newAction()
     {
@@ -112,7 +112,7 @@ class SidebarController extends CrudController
      *
      * @Route("/edit/{id}/", name="admin_sidebar_edit")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:edit.html.twig")
+     * @Template("BigfootCoreBundle:Crud:form.html.twig")
      */
     public function editAction($id)
     {
@@ -127,7 +127,7 @@ class SidebarController extends CrudController
      *
      * @Route("/{id}", name="admin_sidebar_update")
      * @Method("PUT")
-     * @Template("BigfootCoreBundle:crud:edit.html.twig")
+     * @Template("BigfootCoreBundle:Crud:form.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -155,6 +155,7 @@ class SidebarController extends CrudController
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Sidebar entity.
      *

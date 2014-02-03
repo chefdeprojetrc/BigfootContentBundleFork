@@ -58,11 +58,10 @@ class SidebarController extends CrudController
     /**
      * @Route("/", name="admin_sidebar")
      * @Method("GET")
-     * @Template("BigfootContentBundle:Dashboard:default.html.twig")
      */
     public function indexAction()
     {
-        return array();
+        return $this->render('BigfootContentBundle:Dashboard:default.html.twig');
     }
 
     /**
@@ -70,26 +69,10 @@ class SidebarController extends CrudController
      *
      * @Route("/", name="admin_sidebar_create")
      * @Method("POST")
-     * @Template("BigfootCoreBundle:Crud:form.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new Sidebar();
-        $form = $this->container->get('form.factory')->create($this->getFormType(), $entity);
-        $form->submit($request);
-
-        if ($form->isValid()) {
-            $em = $this->container->get('doctrine')->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $this->doCreate($request);
     }
 
     /**
@@ -97,7 +80,6 @@ class SidebarController extends CrudController
      *
      * @Route("/new", name="admin_sidebar_new")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:Crud:form.html.twig")
      */
     public function newAction()
     {
@@ -112,7 +94,6 @@ class SidebarController extends CrudController
      *
      * @Route("/edit/{id}/", name="admin_sidebar_edit")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:Crud:form.html.twig")
      */
     public function editAction($id)
     {
@@ -127,33 +108,10 @@ class SidebarController extends CrudController
      *
      * @Route("/{id}", name="admin_sidebar_update")
      * @Method("PUT")
-     * @Template("BigfootCoreBundle:Crud:form.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:Sidebar')->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('Unable to find Sidebar entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->container->get('form.factory')->create($this->getFormType(), $entity);
-        $editForm->submit($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->doUpdate($request, $id);
     }
 
     /**
@@ -164,34 +122,6 @@ class SidebarController extends CrudController
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->submit($request);
-
-        $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:Sidebar')->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('Unable to find Sidebar entity.');
-        }
-
-        $em->remove($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
-    }
-
-    /**
-     * Creates a form to delete a Sidebar entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    protected function createDeleteForm($id)
-    {
-        return $this->container->get('form.factory')->createBuilder('form', array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->doDelete($request, $id);
     }
 }

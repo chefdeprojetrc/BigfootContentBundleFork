@@ -54,7 +54,7 @@ class ContentController extends BaseController
         }
 
         $staticContentList = $em->getRepository('BigfootContentBundle:StaticContent')->findAll();
-        $sidebarRepo = $em->getRepository('BigfootContentBundle:Sidebar')->findAll();
+        $sidebarRepo       = $em->getRepository('BigfootContentBundle:Sidebar')->findAll();
 
         foreach ($sidebarRepo as $sidebar) {
 
@@ -166,10 +166,10 @@ class ContentController extends BaseController
 
             if ($type_block == 'widget') {
                 $widget_name = $request->get('widget_name');
-                $widget = $this->container->getParameter('bigfoot_content.widgets');
+                $widget      = $this->container->getParameter('bigfoot_content.widgets');
                 $widget_name = $widget[$widget_name];
-                $widgetTemp = new $widget_name($this->container);
-                $entity = new Widget();
+                $widgetTemp  = new $widget_name($this->container);
+                $entity      = new Widget();
 
                 $entity->setRoute($widgetTemp->getRoute());
                 $entity->setLabel($widgetTemp->getLabel());
@@ -178,34 +178,34 @@ class ContentController extends BaseController
 
                 $formTypeName = $widgetTemp->getParametersType();
                 $widgetObject = new $formTypeName($this->container);
-                $form_name = $widgetObject->getName();
-                $form   = $this->container->get('form.factory')->create($widgetObject, $entity);
-                $action_path = $this->container->get('router')->generate('admin_widget_colorbox_new',array(
-                    'widget_name'   => $request->get('widget_name'),
-                    'mode'          => 'new',
-                    'id_sidebar'    => $id_sidebar,
-                    'position'      => $position
+                $form_name    = $widgetObject->getName();
+                $form         = $this->container->get('form.factory')->create($widgetObject, $entity);
+                $action_path  = $this->container->get('router')->generate('admin_widget_colorbox_new',array(
+                    'widget_name' => $request->get('widget_name'),
+                    'mode'        => 'new',
+                    'id_sidebar'  => $id_sidebar,
+                    'position'    => $position
                 ));
 
             }
             else if ($type_block == 'staticcontent') {
-                $id_block = $request->get('id_block');
-                $entity = $em->getRepository('BigfootContentBundle:StaticContent')->findOneBy(array('id' => $id_block));
-                $form   = $this->container->get('form.factory')->create(new StaticContentType($this->container), $entity);
+                $id_block    = $request->get('id_block');
+                $entity      = $em->getRepository('BigfootContentBundle:StaticContent')->findOneBy(array('id' => $id_block));
+                $form        = $this->container->get('form.factory')->create(new StaticContentType($this->container), $entity);
                 $action_path = $this->container->get('router')->generate('admin_staticcontent_colorbox_edit',array(
-                    'id'                    => $id_block,
-                    'mode'                  => 'new',
-                    'id_sidebar'            => $id_sidebar,
-                    'position'              => $position
+                    'id'         => $id_block,
+                    'mode'       => 'new',
+                    'id_sidebar' => $id_sidebar,
+                    'position'   => $position
                 ));
             }
 
             return $this->container->get('templating')->renderResponse('BigfootContentBundle:Form:dynamicform.html.twig',array(
-                'form'               => $form->createView(),
-                'currentSidebar'     => $id_sidebar,
-                'currentPosition'    => $position,
-                'action_path'        => $action_path,
-                'method'             => 'POST'
+                'form'            => $form->createView(),
+                'currentSidebar'  => $id_sidebar,
+                'currentPosition' => $position,
+                'action_path'     => $action_path,
+                'method'          => 'POST'
             ));
         }
 

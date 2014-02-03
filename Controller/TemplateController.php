@@ -47,7 +47,6 @@ class TemplateController extends CrudController
      *
      * @Route("/", name="admin_contentbundle_template")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:Crud:index.html.twig")
      */
     public function indexAction()
     {

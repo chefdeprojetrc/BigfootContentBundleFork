@@ -72,7 +72,6 @@ class StaticContentController extends CrudController
      *
      * @Route("/", name="admin_staticcontent")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:Crud:index.html.twig")
      */
     public function indexAction()
     {

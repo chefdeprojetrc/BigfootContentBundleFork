@@ -35,7 +35,10 @@ class SidebarCategoryController extends CrudController
 
     protected function getFields()
     {
-        return array('id' => 'ID', 'title' => 'Title');
+        return array(
+            'id'    => 'ID',
+            'title' => 'Title'
+        );
     }
     /**
      * Lists all SidebarCategory entities.
@@ -55,22 +58,7 @@ class SidebarCategoryController extends CrudController
      */
     public function createAction(Request $request)
     {
-        $entity  = new SidebarCategory();
-        $form = $this->container->get('form.factory')->create($this->getFormType(), $entity);
-        $form->submit($request);
-
-        if ($form->isValid()) {
-            $em = $this->container->get('doctrine')->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $this->doCreate($request);
     }
 
     /**
@@ -109,29 +97,7 @@ class SidebarCategoryController extends CrudController
      */
     public function updateAction(Request $request, $id)
     {
-        $em     = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:SidebarCategory')->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('Unable to find Sidebar entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm   = $this->container->get('form.factory')->create($this->getFormType(), $entity);
-        $editForm->submit($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->doUpdate($request, $id);
     }
 
     /**

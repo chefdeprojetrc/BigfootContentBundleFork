@@ -1,4 +1,4 @@
-{% extends 'BigfootAceThemeBundle::base.form.html.twig' %}
+{% extends bigfoot_theme_bundle ~ ':admin:form.html.twig' %}
 
 {%- block form %}
     {{ form_row(form.sidebar, {'attr': {'class': 'sidebar_select'}, value: id_sidebar|number_format, 'label' : 'Sidebar'}) }}

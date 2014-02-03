@@ -42,7 +42,6 @@ class SidebarCategoryController extends CrudController
      *
      * @Route("/", name="admin_contentbundle_sidebar_category")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:index.html.twig")
      */
     public function indexAction()
     {
@@ -53,7 +52,6 @@ class SidebarCategoryController extends CrudController
      *
      * @Route("/", name="admin_contentbundle_sidebar_category_create")
      * @Method("POST")
-     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -80,7 +78,6 @@ class SidebarCategoryController extends CrudController
      *
      * @Route("/new", name="admin_contentbundle_sidebar_category_new")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function newAction()
     {
@@ -95,7 +92,6 @@ class SidebarCategoryController extends CrudController
      *
      * @Route("/{id}/edit", name="admin_contentbundle_sidebar_category_edit")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:edit.html.twig")
      */
     public function editAction($id)
     {
@@ -110,11 +106,10 @@ class SidebarCategoryController extends CrudController
      *
      * @Route("/{id}", name="admin_contentbundle_sidebar_category_update")
      * @Method("PUT")
-     * @Template("BigfootCoreBundle:crud:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->container->get('doctrine')->getManager();
+        $em     = $this->container->get('doctrine')->getManager();
         $entity = $em->getRepository('BigfootContentBundle:SidebarCategory')->find($id);
 
         if (!$entity) {
@@ -122,7 +117,7 @@ class SidebarCategoryController extends CrudController
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->container->get('form.factory')->create($this->getFormType(), $entity);
+        $editForm   = $this->container->get('form.factory')->create($this->getFormType(), $entity);
         $editForm->submit($request);
 
         if ($editForm->isValid()) {
@@ -143,23 +138,10 @@ class SidebarCategoryController extends CrudController
      * Deletes a SidebarCategory entity.
      *
      * @Route("/delete/{id}", name="admin_contentbundle_sidebar_category_delete")
-     * @Method("GET")
+     * @Method("GET|DELETE")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->submit($request);
-
-        $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:SidebarCategory')->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('Unable to find Sidebar entity.');
-        }
-
-        $em->remove($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
+        return $this->doDelete($request, $id);
     }
 }

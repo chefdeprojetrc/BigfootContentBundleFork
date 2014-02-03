@@ -58,7 +58,7 @@ class MenuListener implements EventSubscriberInterface
                 'extras' => array(
                     'routes' => array(
                         'admin_page_new',
-                        'admin_page_new'
+                        'admin_page_edit'
                     )
                 ),
                 'linkAttributes' => array(

@@ -34,25 +34,31 @@ class TemplateController extends CrudController
 
     protected function getFields()
     {
-        return array('id' => 'ID', 'type' => 'Type', 'name' => 'Name', 'route' => 'Route');
+        return array(
+            'id'    => 'ID',
+            'type'  => 'Type',
+            'name'  => 'Name',
+            'route' => 'Route'
+        );
     }
+
     /**
      * Lists all Template entities.
      *
      * @Route("/", name="admin_contentbundle_template")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:index.html.twig")
+     * @Template("BigfootCoreBundle:Crud:index.html.twig")
      */
     public function indexAction()
     {
         return $this->doIndex();
     }
+
     /**
      * Creates a new Template entity.
      *
      * @Route("/", name="admin_contentbundle_template_create")
      * @Method("POST")
-     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -64,7 +70,6 @@ class TemplateController extends CrudController
      *
      * @Route("/new", name="admin_contentbundle_template_new")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:new.html.twig")
      */
     public function newAction()
     {
@@ -76,7 +81,6 @@ class TemplateController extends CrudController
      *
      * @Route("/{id}/edit", name="admin_contentbundle_template_edit")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:edit.html.twig")
      */
     public function editAction($id)
     {
@@ -87,8 +91,7 @@ class TemplateController extends CrudController
      * Edits an existing Template entity.
      *
      * @Route("/{id}", name="admin_contentbundle_template_update")
-     * @Method("PUT")
-     * @Template("BigfootCoreBundle:crud:edit.html.twig")
+     * @Method("GET|POST|PUT")
      */
     public function updateAction(Request $request, $id)
     {
@@ -98,7 +101,7 @@ class TemplateController extends CrudController
      * Deletes a Template entity.
      *
      * @Route("/{id}", name="admin_contentbundle_template_delete")
-     * @Method("DELETE")
+     * @Method("GET|DELETE")
      */
     public function deleteAction(Request $request, $id)
     {

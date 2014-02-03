@@ -21,7 +21,6 @@ use Bigfoot\Bundle\ContentBundle\Entity\Widget;
  */
 class WidgetController extends CrudController
 {
-
     /**
      * Used to generate route names.
      * The helper method of this class will use routes named after this name.
@@ -52,7 +51,7 @@ class WidgetController extends CrudController
     protected function getFields()
     {
         return array(
-            'id' => 'id'
+            'id' => 'ID'
         );
     }
 
@@ -66,7 +65,7 @@ class WidgetController extends CrudController
      *
      * @Route("/", name="admin_widget")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:crud:index.html.twig")
+     * @Template("BigfootCoreBundle:Crud:index.html.twig")
      */
     public function indexAction()
     {
@@ -81,13 +80,13 @@ class WidgetController extends CrudController
      */
     public function createAction(Request $request,$form_name)
     {
-        $entity  = new Widget();
-        $widget = $this->container->getParameter('bigfoot_content.widgets');
-        $form = $request->get($form_name);
-        $widget_name = $widget[$form['name']];
-        $widget = new $widget_name($this->container);
+        $entity       = new Widget();
+        $widget       = $this->container->getParameter('bigfoot_content.widgets');
+        $form         = $request->get($form_name);
+        $widget_name  = $widget[$form['name']];
+        $widget       = new $widget_name($this->container);
         $formTypeName = $widget->getParametersType();
-        $form = $this->container->get('form.factory')->create(new $formTypeName($this->container), $entity);
+        $form         = $this->container->get('form.factory')->create(new $formTypeName($this->container), $entity);
         $form->submit($request);
 
         if ($form->isValid()) {
@@ -111,12 +110,12 @@ class WidgetController extends CrudController
      * @Method("GET")
      * @Template("BigfootContentBundle:Widget:new-colorbox.html.twig")
      */
-    public function newColorboxAction($widget_name,$mode, $id_sidebar, $position)
+    public function newColorboxAction($widget_name, $mode, $id_sidebar, $position)
     {
-        $widget = $this->container->getParameter('bigfoot_content.widgets');
+        $widget      = $this->container->getParameter('bigfoot_content.widgets');
         $widget_name = $widget[$widget_name];
-        $widgetTemp = new $widget_name($this->container);
-        $entity = new Widget();
+        $widgetTemp  = new $widget_name($this->container);
+        $entity      = new Widget();
 
         $entity->setRoute($widgetTemp->getRoute());
         $entity->setLabel($widgetTemp->getLabel());
@@ -125,8 +124,8 @@ class WidgetController extends CrudController
 
         $formTypeName = $widgetTemp->getParametersType();
         $widgetObject = new $formTypeName($this->container);
-        $form_name = $widgetObject->getName();
-        $form   = $this->container->get('form.factory')->create($widgetObject, $entity);
+        $form_name    = $widgetObject->getName();
+        $form         = $this->container->get('form.factory')->create($widgetObject, $entity);
 
         $form_action    = $this->container->get('router')->generate('admin_widget_create', array(
             'form_name' => $form_name
@@ -136,17 +135,17 @@ class WidgetController extends CrudController
         $form_title     = 'New Widget';
 
         return array(
-            'form_action'   => $form_action,
-            'form_method'   => $form_method,
-            'form_submit'   => $form_submit,
-            'form_title'    => $form_title,
-            'id_sidebar'    => $id_sidebar,
-            'position'      => $position,
-            'mode'          => $mode,
-            'entity'        => $entity,
-            'form'          => $form->createView(),
-            'form_name'     => $form_name,
-            'isAjax'     => true
+            'form_action' => $form_action,
+            'form_method' => $form_method,
+            'form_submit' => $form_submit,
+            'form_title'  => $form_title,
+            'id_sidebar'  => $id_sidebar,
+            'position'    => $position,
+            'mode'        => $mode,
+            'entity'      => $entity,
+            'form'        => $form->createView(),
+            'form_name'   => $form_name,
+            'isAjax'      => true
         );
     }
 
@@ -166,16 +165,17 @@ class WidgetController extends CrudController
             throw new NotFoundHttpException('Unable to find Widget entity.');
         }
 
-        $editForm = $this->container->get('form.factory')->create($form_name, $entity);
+        $editForm   = $this->container->get('form.factory')->create($form_name, $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        $form_action    = $this->container->get('router')->generate('admin_widget_update', array(
-            'id'            => $id,
-            'form_name'     => $form_name
+        $form_action = $this->container->get('router')->generate('admin_widget_update', array(
+            'id'        => $id,
+            'form_name' => $form_name
         ));
-        $form_method    = 'PUT';
-        $form_submit    = 'Edit';
-        $form_title     = 'Edit Widget';
+
+        $form_method = 'PUT';
+        $form_submit = 'Edit';
+        $form_title  = 'Edit Widget';
 
         return array(
             'entity'      => $entity,
@@ -188,7 +188,7 @@ class WidgetController extends CrudController
             'form_method' => $form_method,
             'form_submit' => $form_submit,
             'form_title'  => $form_title,
-            'isAjax'   => true,
+            'isAjax'      => true,
         );
     }
 
@@ -208,14 +208,14 @@ class WidgetController extends CrudController
             throw new NotFoundHttpException('Unable to find Widget entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $widget = $this->container->getParameter('bigfoot_content.widgets');
-        $form = $request->get($form_name);
-        $widget_name = $widget[$form['name']];
-        $widget = new $widget_name($this->container);
+        $deleteForm   = $this->createDeleteForm($id);
+        $widget       = $this->container->getParameter('bigfoot_content.widgets');
+        $form         = $request->get($form_name);
+        $widget_name  = $widget[$form['name']];
+        $widget       = new $widget_name($this->container);
         $formTypeName = $widget->getParametersType();
-        $formObject = new $formTypeName($this->container);
-        $editForm = $this->container->get('form.factory')->create($formObject, $entity);
+        $formObject   = new $formTypeName($this->container);
+        $editForm     = $this->container->get('form.factory')->create($formObject, $entity);
         $editForm->submit($request);
 
         if ($editForm->isValid()) {
@@ -236,24 +236,11 @@ class WidgetController extends CrudController
      * Deletes a Widget entity.
      *
      * @Route("/delete/{id}", name="admin_widget_delete")
-     * @Method("GET")
+     * @Method("GET|DELETE")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->submit($request);
-
-        $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('BigfootContentBundle:Widget')->find($id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('Unable to find Widget entity.');
-        }
-
-        $em->remove($entity);
-        $em->flush();
-
-        return new RedirectResponse($this->container->get('router')->generate('admin_dashboard'));
+        $this->doDelete($request, $id);
     }
 
     /**

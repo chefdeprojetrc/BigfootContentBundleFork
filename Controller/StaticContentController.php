@@ -17,7 +17,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\StaticContent;
  * StaticContent controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/admin/staticcontent")
+ * @Route("/staticcontent")
  */
 class StaticContentController extends CrudController
 {

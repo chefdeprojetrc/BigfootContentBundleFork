@@ -17,7 +17,7 @@ use Bigfoot\Bundle\ContentBundle\Form\PageType;
  * Page controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/admin/page")
+ * @Route("/page")
  */
 class PageController extends CrudController
 {

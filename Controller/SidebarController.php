@@ -17,7 +17,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
  * Sidebar controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/admin/sidebar")
+ * @Route("/sidebar")
  */
 class SidebarController extends CrudController
 {

@@ -22,14 +22,14 @@ use Exception;
  * Content controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/content")
+ * @Route("/admin/content")
  *
  */
 class ContentController extends BaseController
 {
     /**
      * Display Dashboard
-     * @Route("/dashboard/", name="admin_dashboard")
+     * @Route("/dashboard", name="admin_dashboard")
      * @Method("GET")
      * @Template()
      */

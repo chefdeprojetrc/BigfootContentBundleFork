@@ -12,7 +12,7 @@ use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
 /**
  * Template controller.
  *
- * @Route("/contentbundle_template")
+ * @Route("/admin/contentbundle_template")
  */
 class TemplateController extends CrudController
 {
@@ -54,48 +54,26 @@ class TemplateController extends CrudController
     }
 
     /**
-     * Creates a new Template entity.
-     *
-     * @Route("/", name="admin_contentbundle_template_create")
-     * @Method("POST")
-     */
-    public function createAction(Request $request)
-    {
-        return $this->doCreate($request);
-    }
-
-    /**
      * Displays a form to create a new Template entity.
      *
      * @Route("/new", name="admin_contentbundle_template_new")
      * @Method("GET")
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        return $this->doNew();
+        return $this->doNew($request);
     }
 
     /**
      * Displays a form to edit an existing Template entity.
      *
-     * @Route("/{id}/edit", name="admin_contentbundle_template_edit")
-     * @Method("GET")
+     * @Route("/edit/{id}", name="admin_contentbundle_template_edit")
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
-        return $this->doEdit($id);
+        return $this->doEdit($request, $id);
     }
 
-    /**
-     * Edits an existing Template entity.
-     *
-     * @Route("/{id}", name="admin_contentbundle_template_update")
-     * @Method("GET|POST|PUT")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        return $this->doUpdate($request, $id);
-    }
     /**
      * Deletes a Template entity.
      *

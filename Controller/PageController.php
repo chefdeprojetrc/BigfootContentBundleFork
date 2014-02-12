@@ -17,7 +17,7 @@ use Bigfoot\Bundle\ContentBundle\Form\PageType;
  * Page controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/page")
+ * @Route("/admin/page")
  */
 class PageController extends CrudController
 {
@@ -76,48 +76,25 @@ class PageController extends CrudController
     }
 
     /**
-     * Creates a new Page entity.
-     *
-     * @Route("/", name="admin_page_create")
-     * @Method("POST")
-     */
-    public function createAction(Request $request)
-    {
-        return $this->doCreate($request);
-    }
-
-    /**
      * Displays a form to create a new Page entity.
      *
      * @Route("/new", name="admin_page_new")
-     * @Method("GET")
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        return $this->doNew();
+        return $this->doNew($request);
     }
 
     /**
      * Displays a form to edit an existing Page entity.
      *
      * @Route("/{id}/edit", name="admin_page_edit")
-     * @Method("GET")
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
-        return $this->doEdit($id);
+        return $this->doEdit($request, $id);
     }
 
-    /**
-     * Edits an existing Page entity.
-     *
-     * @Route("/{id}", name="admin_page_update")
-     * @Method("GET|POST|PUT")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        return $this->doUpdate($request,$id);
-    }
     /**
      * Deletes a Page entity.
      *

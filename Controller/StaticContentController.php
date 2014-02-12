@@ -17,7 +17,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\StaticContent;
  * StaticContent controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/staticcontent")
+ * @Route("/admin/staticcontent")
  */
 class StaticContentController extends CrudController
 {
@@ -94,9 +94,9 @@ class StaticContentController extends CrudController
      * @Route("/new", name="admin_staticcontent_new")
      * @Method("GET")
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        return $this->doNew();
+        return $this->doNew($request);
     }
 
     /**
@@ -105,9 +105,9 @@ class StaticContentController extends CrudController
      * @Route("/colorbox-new", name="admin_staticcontent_colorbox_new")
      * @Method("GET")
      */
-    public function newColorboxAction()
+    public function newColorboxAction(Request $request)
     {
-        $arrayNew = $this->doNew();
+        $arrayNew = $this->doNew($request);
         $arrayNew['isAjax'] = true;
 
         return $arrayNew;
@@ -130,7 +130,6 @@ class StaticContentController extends CrudController
         }
 
         $editForm = $this->container->get('form.factory')->create('bigfoot_bundle_contentbundle_staticcontenttype', $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         if ($mode == 'new') {
             $form_action    = $this->container->get('router')->generate('admin_staticcontent_create');
@@ -153,7 +152,6 @@ class StaticContentController extends CrudController
             'position'    => $position,
             'id_sidebar'  => $id_sidebar,
             'form'        => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
             'form_action' => $form_action,
             'form_method' => $form_method,
             'form_submit' => $form_submit,

@@ -12,7 +12,7 @@ use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
 /**
  * Template controller.
  *
- * @Route("/admin/contentbundle_template")
+ * @Route("/contentbundle_template")
  */
 class TemplateController extends CrudController
 {

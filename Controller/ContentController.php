@@ -22,7 +22,7 @@ use Exception;
  * Content controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/admin/content")
+ * @Route("/content")
  *
  */
 class ContentController extends BaseController

@@ -17,7 +17,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\Widget;
  * Widget controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/admin/widget")
+ * @Route("/widget")
  */
 class WidgetController extends CrudController
 {
@@ -65,7 +65,7 @@ class WidgetController extends CrudController
      *
      * @Route("/", name="admin_widget")
      * @Method("GET")
-     * @Template("BigfootCoreBundle:Crud:index.html.twig")
+     * @Template("BigfootCoreBundle:crud:index.html.twig")
      */
     public function indexAction()
     {

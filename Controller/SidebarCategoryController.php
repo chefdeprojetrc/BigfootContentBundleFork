@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * SidebarCategory controller.
  *
- * @Route("/admin/contentbundle_sidebar_category")
+ * @Route("/contentbundle_sidebar_category")
  */
 class SidebarCategoryController extends CrudController
 {

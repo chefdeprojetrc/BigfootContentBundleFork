@@ -94,7 +94,7 @@ class DisplayContent
 
         $staticcontent = $em->getRepository('BigfootContentBundle:StaticContent')->findOneBy(array('slug' => $slug));
 
-        if (!$staticcontent) {
+        if (!$staticcontent) {return '';
             throw new NotFoundHttpException('Unable to find StaticContent entity.');
         }
 
@@ -144,11 +144,13 @@ class DisplayContent
                 $type = 'widget';
             }
 
-            $blocks[] = array(
+            $blocks[$block->getPosition()] = array(
                 'type' => $type,
                 'slug' => $block->getSlug(),
             );
         }
+
+        ksort($blocks);
 
         return $this->container->get('templating')->render($sidebar->getTemplate()->getRoute(), array(
             'blocks' => $blocks,

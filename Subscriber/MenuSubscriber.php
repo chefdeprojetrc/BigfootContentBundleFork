@@ -1,6 +1,6 @@
 <?php
 
-namespace Bigfoot\Bundle\ContentBundle\Listener;
+namespace Bigfoot\Bundle\ContentBundle\Subscriber;
 
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -10,9 +10,9 @@ use Bigfoot\Bundle\CoreBundle\Event\MenuEvent;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
- * Menu Listener
+ * Menu Subscriber
  */
-class MenuListener implements EventSubscriberInterface
+class MenuSubscriber implements EventSubscriberInterface
 {
     /**
      * @var \Symfony\Component\Security\Core\SecurityContextInterface
@@ -49,23 +49,6 @@ class MenuListener implements EventSubscriberInterface
 
         if ($this->security->isGranted('ROLE_ADMIN')) {
             $contentMenu->addChild(
-                'template',
-                array(
-                    'label'  => 'Template',
-                    'route'  => 'admin_contentbundle_template',
-                    'extras' => array(
-                        'routes' => array(
-                            'admin_contentbundle_template_new',
-                            'admin_contentbundle_template_edit'
-                        )
-                    ),
-                    'linkAttributes' => array(
-                        'icon'  => 'list-alt',
-                    )
-                )
-            );
-
-            $contentMenu->addChild(
                 'page',
                 array(
                     'label'  => 'Page',
@@ -73,24 +56,48 @@ class MenuListener implements EventSubscriberInterface
                     'extras' => array(
                         'routes' => array(
                             'admin_page_new',
-                            'admin_page_edit'
+                            'admin_page_edit',
+                            'admin_page_template_choose',
                         )
                     ),
                     'linkAttributes' => array(
-                        'icon'  => 'list-alt',
+                        'icon' => 'list-alt',
                     )
                 )
             );
 
-            $structureMenu = $menu->getChild('structure');
-
-            $structureMenu->addChild(
-                'widget',
+            $contentMenu->addChild(
+                'sidebar',
                 array(
-                    'label'          => 'Widget',
-                    'route'          => 'admin_dashboard',
+                    'label'  => 'Sidebar',
+                    'route'  => 'admin_sidebar',
+                    'extras' => array(
+                        'routes' => array(
+                            'admin_sidebar_new',
+                            'admin_sidebar_edit',
+                            'admin_sidebar_template_choose',
+                        )
+                    ),
                     'linkAttributes' => array(
-                        'icon'  => 'list-alt',
+                        'icon' => 'list-alt',
+                    )
+                )
+            );
+
+            $contentMenu->addChild(
+                'block',
+                array(
+                    'label'  => 'Block',
+                    'route'  => 'admin_block',
+                    'extras' => array(
+                        'routes' => array(
+                            'admin_block_new',
+                            'admin_block_edit',
+                            'admin_block_template_choose',
+                        )
+                    ),
+                    'linkAttributes' => array(
+                        'icon' => 'list-alt',
                     )
                 )
             );

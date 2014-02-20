@@ -11,19 +11,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
 
 /**
- * Sidebar controller.
+ * Block controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/sidebar")
+ * @Route("/block")
  */
-class SidebarController extends CrudController
+class BlockController extends CrudController
 {
     /**
      * @return string
      */
     protected function getName()
     {
-        return 'admin_sidebar';
+        return 'admin_block';
     }
 
     /**
@@ -31,7 +31,7 @@ class SidebarController extends CrudController
      */
     protected function getEntity()
     {
-        return 'BigfootContentBundle:Sidebar';
+        return 'BigfootContentBundle:Block';
     }
 
     protected function getFields()
@@ -58,9 +58,9 @@ class SidebarController extends CrudController
     }
 
     /**
-     * Lists Sidebar entities.
+     * Lists Block entities.
      *
-     * @Route("/", name="admin_sidebar")
+     * @Route("/", name="admin_block")
      */
     public function indexAction()
     {
@@ -68,64 +68,64 @@ class SidebarController extends CrudController
     }
 
     /**
-     * New Sidebar entity.
+     * New Block entity.
      *
-     * @Route("/new/{template}", name="admin_sidebar_new")
+     * @Route("/new/{template}", name="admin_block_new")
      */
     public function newAction(Request $request, $template)
     {
-        $templates = $this->container->getParameter('bigfoot_content.templates')['sidebar'];
-        $sidebar      = $templates[$template];
-        $sidebar      = new $sidebar();
-        $form      = $this->createForm('admin_sidebar_'.$template, $sidebar);
-        $action    = $this->generateUrl('admin_sidebar_new', array('template' => $template));
+        $templates = $this->container->getParameter('bigfoot_content.templates')['block'];
+        $block      = $templates[$template];
+        $block      = new $block();
+        $form      = $this->createForm('admin_block_'.$template, $block);
+        $action    = $this->generateUrl('admin_block_new', array('template' => $template));
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $this->persistAndFlush($sidebar);
+                $this->persistAndFlush($block);
 
-                return $this->redirect($this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId())));
+                return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
             }
         }
 
-        return $this->renderForm($form, $action, $sidebar);
+        return $this->renderForm($form, $action, $block);
     }
 
     /**
-     * Edit Sidebar entity.
+     * Edit Block entity.
      *
-     * @Route("/edit/{id}", name="admin_sidebar_edit")
+     * @Route("/edit/{id}", name="admin_block_edit")
      */
     public function editAction(Request $request, $id)
     {
-        $sidebar = $this->getRepository($this->getEntity())->find($id);
+        $block = $this->getRepository($this->getEntity())->find($id);
 
-        if (!$sidebar) {
-            throw new NotFoundHttpException('Unable to find Sidebar entity.');
+        if (!$block) {
+            throw new NotFoundHttpException('Unable to find block entity.');
         }
 
-        $form   = $this->createForm('admin_sidebar_'.$sidebar->getSlugTemplate(), $sidebar);
-        $action = $this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId()));
+        $form   = $this->createForm('admin_block_'.$block->getSlugTemplate(), $block);
+        $action = $this->generateUrl('admin_block_edit', array('id' => $block->getId()));
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $this->persistAndFlush($sidebar);
+                $this->persistAndFlush($block);
 
-                return $this->redirect($this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId())));
+                return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
             }
         }
 
-        return $this->renderForm($form, $action, $sidebar);
+        return $this->renderForm($form, $action, $block);
     }
 
     /**
-     * Delete Sidebar entity.
+     * Delete Block entity.
      *
-     * @Route("/delete/{id}", name="admin_sidebar_delete")
+     * @Route("/delete/{id}", name="admin_block_delete")
      */
     public function deleteAction(Request $request, $id)
     {

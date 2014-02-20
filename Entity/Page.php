@@ -5,13 +5,17 @@ namespace Bigfoot\Bundle\ContentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+use Bigfoot\Bundle\ContentBundle\Model\Content;
+
 /**
  * Page
  *
- * @ORM\Table()
+ * @ORM\Table(name="bigfoot_content_page")
  * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\PageRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string")
  */
-class Page
+class Page extends Content
 {
     /**
      * @var integer
@@ -20,90 +24,51 @@ class Page
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
+     *
      * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
+     *
      * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
-    private $slug;
-
-    /**
-     * @var string
-     * @Gedmo\Translatable
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @var text
-     * @Gedmo\Translatable
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @var Template
-     *
-     * @ORM\ManyToOne(targetEntity="Template", inversedBy="pages")
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
-     */
-    private $template;
+    protected $slug;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @ORM\Column(name="template", type="string", length=255)
      */
-    private $image;
+    protected $template;
 
     /**
-     * @var boolean
+     * @var ArrayCollection
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\ManyToMany(targetEntity="Block", inversedBy="pages")
+     * @ORM\JoinTable(name="bigfoot_content_page_block")
      */
-    private $active = true;
+    private $blocks;
 
     /**
-     * @var datetime $created
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * Construct Page
      */
-    private $created;
+    public function __construct()
+    {
+        $this->blocks = new ArrayCollection();
+    }
 
-    /**
-     * @var datetime $updated
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
-    private $updated;
-
-    /**
-     * @Gedmo\Blameable(on="create")
-     * @ORM\Column(name="created_by", type="string", nullable=true)
-     */
-    private $createdBy;
-
-    /**
-     * @Gedmo\Blameable(on="update")
-     * @ORM\Column(name="updated_by", type="string", nullable=true)
-     */
-    private $updatedBy;
-
-    /**
-     * @Gedmo\Locale
-     */
-    protected $locale;
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Get id
@@ -113,11 +78,6 @@ class Page
     public function getId()
     {
         return $this->id;
-    }
-
-    public function __toString()
-    {
-        return $this->getTitle();
     }
 
     /**
@@ -167,53 +127,9 @@ class Page
     }
 
     /**
-     * Set title
+     * Set template
      *
-     * @param string $title
-     * @return Page
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Page
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Template $template
+     * @param string $template
      * @return Page
      */
     public function setTemplate($template)
@@ -224,129 +140,38 @@ class Page
     }
 
     /**
-     * @return \Bigfoot\Bundle\ContentBundle\Entity\Template
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
-     * Set image
+     * Add block
      *
-     * @param string $image
+     * @param Block $block
      * @return Page
      */
-    public function setImage($image)
+    public function addBlock(Block $block)
     {
-        $this->image = $image;
+        $this->blocks->add($block);
 
         return $this;
     }
 
     /**
-     * Get image
+     * Remove block
      *
-     * @return string
+     * @param Block $block
      */
-    public function getImage()
+    public function removeBlock(Block $block)
     {
-        return $this->image;
-    }
-
-    /**
-     * Set active
-     *
-     * @param boolean $active
-     * @return Page
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
+        $this->blocks->removeElement($block);
+        $block->removeSidebar($this);
 
         return $this;
     }
 
     /**
-     * Get active
+     * Get blocks
      *
-     * @return boolean
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getActive()
+    public function getBlocks()
     {
-        return $this->active;
-    }
-
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Page
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Page
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Get createdBy
-     *
-     * @return string
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
-     * Get updatedBy
-     *
-     * @return string
-     */
-    public function getUpdatedBy()
-    {
-        return $this->updatedBy;
+        return $this->blocks;
     }
 }

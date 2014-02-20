@@ -25,6 +25,7 @@ class BigfootContentExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        $container->setParameter('bigfoot_content.templates', $config['templates']);
         $container->setParameter('bigfoot_content.widgets', $config['widgets']);
     }
 }

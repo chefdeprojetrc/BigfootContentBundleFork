@@ -9,24 +9,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
-use Bigfoot\Bundle\CoreBundle\Theme\Menu\Item;
-use Bigfoot\Bundle\ContentBundle\Entity\Page;
-use Bigfoot\Bundle\ContentBundle\Form\PageType;
 
 /**
  * Page controller.
  *
  * @Cache(maxage="0", smaxage="0", public="false")
- * @Route("/admin/page")
+ * @Route("/page")
  */
 class PageController extends CrudController
 {
-
     /**
-     * Used to generate route names.
-     * The helper method of this class will use routes named after this name.
-     * This means if you extend this class and use its helper methods, if getName() returns 'my_controller', you must implement a route named 'my_controller'.
-     *
      * @return string
      */
     protected function getName()
@@ -35,8 +27,6 @@ class PageController extends CrudController
     }
 
     /**
-     * Must return the entity full name (eg. BigfootCoreBundle:Tag).
-     *
      * @return string
      */
     protected function getEntity()
@@ -44,31 +34,33 @@ class PageController extends CrudController
         return 'BigfootContentBundle:Page';
     }
 
-    /**
-     * Must return an associative array field name => field label.
-     *
-     * @return array
-     */
     protected function getFields()
     {
         return array(
-            'id'        => 'ID',
-            'title'     => 'Title',
-            'template'  => 'Template',
-            'active'    => 'Active',
+            'id'       => 'ID',
+            'template' => 'Template',
+            'name'     => 'Name',
         );
     }
 
-    protected function getFormType()
+    /**
+     * @return string
+     */
+    public function getRouteNameForAction($action)
     {
-        return 'bigfoot_bundle_contentbundle_pagetype';
+        if (!$action or $action == 'index') {
+            return $this->getName();
+        } elseif ($action == 'new') {
+            return 'admin_content_template_choose';
+        }
+
+        return sprintf('%s_%s', $this->getName(), $action);
     }
 
     /**
-     * Lists all Page entities.
+     * Lists Page entities.
      *
      * @Route("/", name="admin_page")
-     * @Method("GET")
      */
     public function indexAction()
     {
@@ -76,33 +68,67 @@ class PageController extends CrudController
     }
 
     /**
-     * Displays a form to create a new Page entity.
+     * New Page entity.
      *
-     * @Route("/new", name="admin_page_new")
+     * @Route("/new/{template}", name="admin_page_new")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, $template)
     {
-        return $this->doNew($request);
+        $templates = $this->container->getParameter('bigfoot_content.templates')['page'];
+        $page      = $templates[$template];
+        $page      = new $page();
+        $form      = $this->createForm('admin_page_'.$template, $page);
+        $action    = $this->generateUrl('admin_page_new', array('template' => $template));
+
+        if ('POST' === $request->getMethod()) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $this->persistAndFlush($page);
+
+                return $this->redirect($this->generateUrl('admin_page_edit', array('id' => $page->getId())));
+            }
+        }
+
+        return $this->renderForm($form, $action, $page);
     }
 
     /**
-     * Displays a form to edit an existing Page entity.
+     * Edit Page entity.
      *
-     * @Route("/{id}/edit", name="admin_page_edit")
+     * @Route("/edit/{id}", name="admin_page_edit")
      */
     public function editAction(Request $request, $id)
     {
-        return $this->doEdit($request, $id);
+        $page = $this->getRepository($this->getEntity())->find($id);
+
+        if (!$page) {
+            throw new NotFoundHttpException('Unable to find Page entity.');
+        }
+
+        $form   = $this->createForm('admin_page_'.$page->getSlugTemplate(), $page);
+        $action = $this->generateUrl('admin_page_edit', array('id' => $page->getId()));
+
+        if ('POST' === $request->getMethod()) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $this->persistAndFlush($page);
+
+                return $this->redirect($this->generateUrl('admin_page_edit', array('id' => $page->getId())));
+            }
+        }
+
+        return $this->renderForm($form, $action, $page);
     }
 
     /**
-     * Deletes a Page entity.
+     * Delete Page entity.
      *
-     * @Route("/{id}/delete", name="admin_page_delete")
-     * @Method("GET|DELETE")
+     * @Route("/delete/{id}", name="admin_page_delete")
      */
     public function deleteAction(Request $request, $id)
     {
-        return $this->doDelete($request,$id);
+        return $this->doDelete($request, $id);
     }
 }

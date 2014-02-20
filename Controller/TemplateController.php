@@ -3,85 +3,77 @@
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
-use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
+use Bigfoot\Bundle\CoreBundle\Controller\BaseController;
 
 /**
  * Template controller.
  *
- * @Route("/admin/contentbundle_template")
+ * @Cache(maxage="0", smaxage="0", public="false")
+ * @Route("/content/template")
  */
-class TemplateController extends CrudController
+class TemplateController extends BaseController
 {
     /**
-     * @return string
+     * Choose template.
+     *
+     * @Route("/choose", name="admin_content_template_choose")
      */
-    protected function getName()
+    public function chooseAction(Request $request)
     {
-        return 'admin_contentbundle_template';
-    }
+        $contentType = $this->getSession()->get('contentType');
 
-    /**
-     * @return string
-     */
-    protected function getEntity()
-    {
-        return 'BigfootContentBundle:Template';
-    }
+        if (!$contentType) {
+            $contentType = $this->getContentType($request);
+            $this->getSession()->set('contentType', $contentType);
+        }
 
-    protected function getFields()
-    {
-        return array(
-            'id'    => 'ID',
-            'type'  => 'Type',
-            'name'  => 'Name',
-            'route' => 'Route'
+        $templates     = $this->container->getParameter('bigfoot_content.templates');
+        $typeTemplates = $templates[$contentType];
+        $form          = $this->createForm('admin_template', null, array('data' => $typeTemplates));
+
+        if ('POST' === $request->getMethod()) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $template = $form['template']->getData();
+
+                if ($template && isset($typeTemplates[$template])) {
+                    $this->getSession()->set('contentType', null);
+
+                    return $this->redirect($this->generateUrl('admin_'.$contentType.'_new', array('template' => $template)));
+                }
+            }
+        }
+
+        return $this->render(
+            $this->getThemeBundle().':crud:form.html.twig',
+            array(
+                'form'        => $form->createView(),
+                'form_method' => 'POST',
+                'form_title'  => $this->getTranslator()->trans('%entity% creation', array('%entity%' => ucfirst($contentType))),
+                'form_action' => $this->generateUrl('admin_content_template_choose'),
+                'form_submit' => 'Submit',
+                'form_cancel' => 'admin_'.$contentType,
+            )
         );
     }
 
-    /**
-     * Lists all Template entities.
-     *
-     * @Route("/", name="admin_contentbundle_template")
-     * @Method("GET")
-     */
-    public function indexAction()
+    public function getContentType(Request $request)
     {
-        return $this->doIndex();
-    }
-
-    /**
-     * Displays a form to create a new Template entity.
-     *
-     * @Route("/new", name="admin_contentbundle_template_new")
-     * @Method("GET")
-     */
-    public function newAction(Request $request)
-    {
-        return $this->doNew($request);
-    }
-
-    /**
-     * Displays a form to edit an existing Template entity.
-     *
-     * @Route("/edit/{id}", name="admin_contentbundle_template_edit")
-     */
-    public function editAction(Request $request, $id)
-    {
-        return $this->doEdit($request, $id);
-    }
-
-    /**
-     * Deletes a Template entity.
-     *
-     * @Route("/{id}", name="admin_contentbundle_template_delete")
-     * @Method("GET|DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        return $this->doDelete($request, $id);
+        if (preg_match('/page/', $request->headers->get('referer'))) {
+            return 'page';
+        } elseif (preg_match('/sidebar/', $request->headers->get('referer'))) {
+            return 'sidebar';
+        } elseif (preg_match('/block/', $request->headers->get('referer'))) {
+            return 'block';
+        } else {
+            throw new NotFoundHttpException('Unable to find template.');
+        }
     }
 }

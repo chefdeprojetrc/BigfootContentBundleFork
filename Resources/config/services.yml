@@ -1,46 +1,47 @@
-parameters:
-    bigfoot_content.template.class: 'Bigfoot\Bundle\ContentBundle\Services\Template'
-    bigfoot_content.widgettype.class: 'Bigfoot\Bundle\ContentBundle\Form\WidgetType'
-    bigfoot_content.widgettesttype.class: 'Bigfoot\Bundle\ContentBundle\Form\WidgetTestType'
-    bigfoot_content.sidebartype.class: 'Bigfoot\Bundle\ContentBundle\Form\SidebarType'
-    bigfoot_content.staticcontenttype.class: 'Bigfoot\Bundle\ContentBundle\Form\StaticContentType'
-    bigfoot_content.pagetype.class: 'Bigfoot\Bundle\ContentBundle\Form\PageType'
-    bigfoot_content.display_content.class: 'Bigfoot\Bundle\ContentBundle\Services\DisplayContent'
-
 services:
-    bigfoot_content.template:
-            class: '%bigfoot_content.template.class%'
-    bigfoot_bundle_contentbundle_widgettype:
-            class: '%bigfoot_content.widgettype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_widgettype}
-    bigfoot_bundle_contentbundle_widgettesttype:
-            class: '%bigfoot_content.widgettesttype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_widgettesttype}
-    bigfoot_bundle_contentbundle_sidebartype:
-            class: '%bigfoot_content.sidebartype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_sidebartype}
-    bigfoot_bundle_contentbundle_pagetype:
-            class: '%bigfoot_content.pagetype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_pagetype}
-    bigfoot_bundle_contentbundle_staticcontenttype:
-            class: '%bigfoot_content.staticcontenttype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_staticcontenttype}
-    bigfoot_content.display_content:
-            class: '%bigfoot_content.display_content.class%'
-            arguments: [@service_container]
-    bigfoot_content.twig.content_renderer_extension:
-        class: Bigfoot\Bundle\ContentBundle\Twig\ContentRendererExtension
-        arguments: [@bigfoot_content.display_content]
+    # Content Extension
+    bigfoot_content.twig.extension.content:
+        class: Bigfoot\Bundle\ContentBundle\Twig\Extension\ContentExtension
+        arguments:
+            - @twig
+            - @router
+            - @doctrine.orm.entity_manager
+            - %bigfoot_theme%
         tags:
             - { name: twig.extension }
 
-    # Menu Listener
-    bigfoot_content.listener.menu:
-        class: Bigfoot\Bundle\ContentBundle\Listener\MenuListener
+    # Menu Subscriber
+    bigfoot_content.subscriber.menu:
+        class: Bigfoot\Bundle\ContentBundle\Subscriber\MenuSubscriber
         tags:
             - { name: kernel.event_subscriber }
+
+    # Template Type
+    bigfoot_content.form.type.template:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\TemplateType
+        tags:
+            - { name: form.type, alias: admin_template }
+
+    # Page Simple Type
+    bigfoot_content.form.type.page_simple:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\SimpleType
+        tags:
+            - { name: form.type, alias: admin_page_simple }
+
+    # Page TwoColumns Type
+    bigfoot_content.form.type.page_two_columns:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\TwoColumnsType
+        tags:
+            - { name: form.type, alias: admin_page_two_columns }
+
+    # Sidebar Simple Type
+    bigfoot_content.form.type.sidebar_simple:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\SimpleType
+        tags:
+            - { name: form.type, alias: admin_sidebar_simple }
+
+    # Block Simple Type
+    bigfoot_content.form.type.block_simple:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\SimpleType
+        tags:
+            - { name: form.type, alias: admin_block_simple }

@@ -42,5 +42,6 @@ services:
     # Menu Listener
     bigfoot_content.listener.menu:
         class: Bigfoot\Bundle\ContentBundle\Listener\MenuListener
+        arguments: [@security.context]
         tags:
             - { name: kernel.event_subscriber }

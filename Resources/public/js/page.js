@@ -83,7 +83,7 @@ $(function() {
      * Handle sidebars
      */
     var
-        containerSidebar = $('.widget-sidebars'),
+        containerSidebar = $('.widget-sidebars');
         prototypeSidebar = containerSidebar.attr('data-prototype'),
         sidebars         = containerSidebar.find('.admin_sidebar_select');
 
@@ -118,7 +118,7 @@ $(function() {
     });
 
     $('body').on('change', '.admin_sidebar_select', function (event) {
-        handleTemplate($(this));
+        handleSidebarTemplate($(this));
     });
 
     function handleSidebarTemplates(sidebars)

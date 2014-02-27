@@ -6,7 +6,6 @@ services:
             - @twig
             - @router
             - @doctrine.orm.entity_manager
-            - %bigfoot_theme%
         tags:
             - { name: twig.extension }
 
@@ -22,26 +21,80 @@ services:
         tags:
             - { name: form.type, alias: admin_template }
 
-    # Page Simple Type
-    bigfoot_content.form.type.page_simple:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\SimpleType
+    # Page Sidebar Type
+    bigfoot_content.form.type.page_sidebar:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\SidebarType
+        arguments:
+            - %bigfoot_content.templates.sidebar%
         tags:
-            - { name: form.type, alias: admin_page_simple }
+            - { name: form.type, alias: admin_page_sidebar }
 
-    # Page TwoColumns Type
-    bigfoot_content.form.type.page_two_columns:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\TwoColumnsType
+    # Page Block Type
+    bigfoot_content.form.type.page_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\BlockType
+        arguments:
+            - %bigfoot_content.templates.block%
         tags:
-            - { name: form.type, alias: admin_page_two_columns }
+            - { name: form.type, alias: admin_page_block }
 
-    # Sidebar Simple Type
-    bigfoot_content.form.type.sidebar_simple:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\SimpleType
+    # Sidebar Block Type
+    bigfoot_content.form.type.sidebar_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\BlockType
+        arguments:
+            - %bigfoot_content.templates.block%
         tags:
-            - { name: form.type, alias: admin_sidebar_simple }
+            - { name: form.type, alias: admin_sidebar_block }
 
-    # Block Simple Type
-    bigfoot_content.form.type.block_simple:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\SimpleType
+    # Page Simple Simple1 Type
+    bigfoot_content.form.type.page_simple_simple_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Simple\Simple1Type
         tags:
-            - { name: form.type, alias: admin_block_simple }
+            - { name: form.type, alias: admin_page_simple_simple_1 }
+
+    # Page Sidebar Sidebar1 Type
+    bigfoot_content.form.type.page_sidebar_sidebar_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Sidebar\Sidebar1Type
+        tags:
+            - { name: form.type, alias: admin_page_sidebar_sidebar_1 }
+
+    # Page Sidebar Sidebar2 Type
+    bigfoot_content.form.type.page_sidebar_sidebar_2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Sidebar\Sidebar2Type
+        tags:
+            - { name: form.type, alias: admin_page_sidebar_sidebar_2 }
+
+    # Sidebar Vertical Vertical1 Type
+    bigfoot_content.form.type.sidebar_vertical_vertical_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Vertical\Vertical1Type
+        tags:
+            - { name: form.type, alias: admin_sidebar_vertical_vertical_1 }
+
+    # Sidebar Vertical Vertical2 Type
+    bigfoot_content.form.type.sidebar_vertical_vertical_2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Vertical\Vertical2Type
+        tags:
+            - { name: form.type, alias: admin_sidebar_vertical_vertical_2 }
+
+    # Sidebar Vertical Vertical3 Type
+    bigfoot_content.form.type.sidebar_vertical_vertical_3:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Vertical\Vertical3Type
+        tags:
+            - { name: form.type, alias: admin_sidebar_vertical_vertical_3 }
+
+    # Block Simple Simple1 Type
+    bigfoot_content.form.type.block_simple_simple_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Simple\Simple1Type
+        tags:
+            - { name: form.type, alias: admin_block_simple_simple_1 }
+
+    # Block Simple Simple2 Type
+    bigfoot_content.form.type.block_simple_simple_2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Simple\Simple2Type
+        tags:
+            - { name: form.type, alias: admin_block_simple_simple_2 }
+
+    # Block Simple Simple3 Type
+    bigfoot_content.form.type.block_simple_simple_3:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Simple\Simple3Type
+        tags:
+            - { name: form.type, alias: admin_block_simple_simple_3 }

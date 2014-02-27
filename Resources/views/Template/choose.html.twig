@@ -1,0 +1,41 @@
+{% extends bigfoot_theme_bundle ~ ':crud:form.html.twig' %}
+
+{% form_theme form bigfoot_theme_bundle ~ ':content:form/template/choose.html.twig' %}
+
+{% block form %}
+    <ul class="templates-type">
+        {% for template in form.template %}
+            <li class="template-row inline">
+                <label>
+                    {{ form_widget(template) }}
+                    <img src="{{ asset('images/template/' ~ form.vars.contentType ~ '/' ~ template.vars.value ~ '.svg') }}">
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {{ form_rest(form) }}
+{% endblock %}
+
+{% block form_actions %}
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-5 col-md-7">
+            {% if form_cancel is defined %}
+                <a href="{{ path(form_cancel) }}" class="btn btn-link">
+                    {{ 'Cancel'|trans }}
+                </a>
+            {% endif %}
+
+            <button class="btn btn-success" type="submit">
+                <i class="icon-ok bigger-110"></i>
+                {{ form_submit|default('Submit')|trans }}
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/bigfootcontent/js/template.js') }}"></script>
+{% endblock %}

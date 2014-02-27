@@ -1,0 +1,13 @@
+{% extends bigfoot_theme_bundle ~ ':crud:form.html.twig' %}
+
+{% form_theme form bigfoot_theme_bundle ~ ':content:form/sidebar/blocks.html.twig' %}
+
+{% block form %}
+    {{ form_rest(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/bigfootcontent/js/sidebar.js') }}"></script>
+{% endblock %}

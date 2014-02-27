@@ -1,0 +1,15 @@
+<h4>
+    {{ sidebar.title }}
+</h4>
+
+<p>
+    {{ sidebar.description|raw }}
+</p>
+
+{% for sBlock in sidebar.blocks %}
+    <hr />
+
+    <div class="block">
+        {{ display_block(sBlock.block, null, sidebar) }}
+    </div>
+{% endfor %}

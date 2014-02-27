@@ -42,7 +42,6 @@ class MenuSubscriber implements EventSubscriberInterface
                     'routes' => array(
                         'admin_page_new',
                         'admin_page_edit',
-                        'admin_page_template_choose',
                     )
                 ),
                 'linkAttributes' => array(
@@ -60,7 +59,6 @@ class MenuSubscriber implements EventSubscriberInterface
                     'routes' => array(
                         'admin_sidebar_new',
                         'admin_sidebar_edit',
-                        'admin_sidebar_template_choose',
                     )
                 ),
                 'linkAttributes' => array(
@@ -78,7 +76,6 @@ class MenuSubscriber implements EventSubscriberInterface
                     'routes' => array(
                         'admin_block_new',
                         'admin_block_edit',
-                        'admin_block_template_choose',
                     )
                 ),
                 'linkAttributes' => array(

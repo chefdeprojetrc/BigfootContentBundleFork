@@ -26,6 +26,8 @@ class BigfootContentExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('bigfoot_content.templates', $config['templates']);
-        $container->setParameter('bigfoot_content.widgets', $config['widgets']);
+        $container->setParameter('bigfoot_content.templates.page', $config['templates']['page']);
+        $container->setParameter('bigfoot_content.templates.sidebar', $config['templates']['sidebar']);
+        $container->setParameter('bigfoot_content.templates.block', $config['templates']['block']);
     }
 }

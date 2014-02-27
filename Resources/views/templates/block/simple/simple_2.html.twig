@@ -1,0 +1,17 @@
+<div class="pull-left block-img-left">
+    <img src="http://placehold.it/150x150">
+</div>
+
+<div class="pull-right block-text-right">
+    <h5>
+        {{ block.title }}
+    </h5>
+
+    <p>
+        {{ block.description|raw }}
+    </p>
+
+    {% if block.action is not null %}
+        {{ render(url(block.action, null)) }}
+    {% endif %}
+</div>

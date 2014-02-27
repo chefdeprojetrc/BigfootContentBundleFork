@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Bigfoot\Bundle\ContentBundle\Model\Content;
+use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
 
 /**
  * Block
@@ -45,7 +46,7 @@ class Block extends Content
     /**
      * @var string
      *
-     * @ORM\Column(name="action", type="string", length=255)
+     * @ORM\Column(name="action", type="string", length=255, nullable=true)
      */
     protected $action;
 
@@ -59,14 +60,14 @@ class Block extends Content
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Page", mappedBy="blocks")
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="block", cascade={"persist"})
      */
     private $pages;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Sidebar", mappedBy="blocks")
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block", mappedBy="block", cascade={"persist"})
      */
     private $sidebars;
 
@@ -81,7 +82,7 @@ class Block extends Content
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName().' - '.$this->getParentTemplate();
     }
 
     /**
@@ -179,10 +180,10 @@ class Block extends Content
     /**
      * Add page
      *
-     * @param Page $page
+     * @param PageBlock $page
      * @return Block
      */
-    public function addPage(Page $page)
+    public function addPage(PageBlock $page)
     {
         $this->pages->add($page);
 
@@ -192,12 +193,11 @@ class Block extends Content
     /**
      * Remove page
      *
-     * @param Page $page
+     * @param PageBlock $page
      */
-    public function removePage(Page $page)
+    public function removePage(PageBlock $page)
     {
         $this->pages->removeElement($page);
-        $page->removeSidebar($this);
 
         return $this;
     }
@@ -215,10 +215,10 @@ class Block extends Content
     /**
      * Add sidebar
      *
-     * @param Sidebar $sidebar
+     * @param SidebarBlock $sidebar
      * @return Block
      */
-    public function addSidebar(Sidebar $sidebar)
+    public function addSidebar(SidebarBlock $sidebar)
     {
         $this->sidebars->add($sidebar);
 
@@ -228,12 +228,11 @@ class Block extends Content
     /**
      * Remove sidebar
      *
-     * @param Sidebar $sidebar
+     * @param SidebarBlock $sidebar
      */
-    public function removeSidebar(Sidebar $sidebar)
+    public function removeSidebar(SidebarBlock $sidebar)
     {
         $this->sidebars->removeElement($sidebar);
-        $sidebar->removeSidebar($this);
 
         return $this;
     }

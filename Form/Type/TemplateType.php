@@ -4,6 +4,8 @@ namespace Bigfoot\Bundle\ContentBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TemplateType extends AbstractType
@@ -21,20 +23,42 @@ class TemplateType extends AbstractType
                 'template',
                 'choice',
                 array(
-                    'choices' => $this->toStringTemplates($templates)
+                    'required' => true,
+                    'expanded' => true,
+                    'multiple' => false,
+                    'choices'  => $this->toStringTemplates($templates)
                 )
             );
     }
 
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['contentType'] = $options['contentType'];
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'contentType' => ''
+            )
+        );
+    }
+
     public function toStringTemplates($templates)
     {
-        $typeTemplates = array();
+        $nTemplates = array();
 
         foreach ($templates as $key => $template) {
-            $typeTemplates[$key] = substr($template, strrpos($template, '\\') + 1);
+            foreach ($template['sub_templates'] as $subTemplates) {
+                $nTemplates[$key.'.'.strtolower($subTemplates)] = $subTemplates;
+            }
         }
 
-        return $typeTemplates;
+        return $nTemplates;
     }
 
     /**

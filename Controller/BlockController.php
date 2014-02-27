@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
+use Bigfoot\Bundle\CoreBundle\Util\StringManager;
 
 /**
  * Block controller.
@@ -44,17 +45,54 @@ class BlockController extends CrudController
     }
 
     /**
-     * @return string
+     * Add sucess flash
      */
-    public function getRouteNameForAction($action)
+    protected function addSuccessFlash($message)
     {
-        if (!$action or $action == 'index') {
-            return $this->getName();
-        } elseif ($action == 'new') {
-            return 'admin_content_template_choose';
+        $this->addFlash(
+            'success',
+            $this->renderView(
+                $this->getThemeBundle().':admin:flash.html.twig',
+                array(
+                    'icon'    => 'ok',
+                    'heading' => 'Success!',
+                    'message' => $this->getTranslator()->trans($message, array('%entity%' => $this->getEntityName())),
+                    'actions' => array(
+                        array(
+                            'route' => $this->generateUrl($this->getRouteNameForAction('index')),
+                            'label' => 'Back to the listing',
+                            'type'  => 'success',
+                        ),
+                        array(
+                            'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'block')),
+                            'label' => $this->getTranslator()->trans('Add a new %entity%', array('%entity%' => $this->getEntityName())),
+                            'type'  => 'success',
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    /**
+     * Return array of allowed global actions
+     *
+     * @return array
+     */
+    protected function getGlobalActions()
+    {
+        $globalActions = array();
+
+        if (method_exists($this, 'newAction')) {
+            $globalActions['new'] = array(
+                'label'      => 'Add',
+                'route'      => 'admin_content_template_choose',
+                'parameters' => array('contentType' => 'block'),
+                'icon'       => 'pencil',
+            );
         }
 
-        return sprintf('%s_%s', $this->getName(), $action);
+        return $globalActions;
     }
 
     /**
@@ -74,11 +112,14 @@ class BlockController extends CrudController
      */
     public function newAction(Request $request, $template)
     {
-        $templates = $this->container->getParameter('bigfoot_content.templates')['block'];
-        $block      = $templates[$template];
-        $block      = new $block();
-        $form      = $this->createForm('admin_block_'.$template, $block);
-        $action    = $this->generateUrl('admin_block_new', array('template' => $template));
+        $templates    = $this->container->getParameter('bigfoot_content.templates.block');
+        $values       = explode('.', $template);
+        $templateName = StringManager::camelize($values[1]);
+        $block        = $templates[$values[0]]['class'].'\\'.$templateName;
+        $block        = new $block();
+        $templateType = implode('_', $values);
+        $form         = $this->createForm('admin_block_'.$templateType, $block);
+        $action       = $this->generateUrl('admin_block_new', array('template' => implode('.', $values)));
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
@@ -106,7 +147,7 @@ class BlockController extends CrudController
             throw new NotFoundHttpException('Unable to find block entity.');
         }
 
-        $form   = $this->createForm('admin_block_'.$block->getSlugTemplate(), $block);
+        $form   = $this->createForm('admin_block_'.$block->getParentTemplate().'_'.$block->getSlugTemplate(), $block);
         $action = $this->generateUrl('admin_block_edit', array('id' => $block->getId()));
 
         if ('POST' === $request->getMethod()) {

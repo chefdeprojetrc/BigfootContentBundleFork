@@ -49,8 +49,10 @@ class ContentExtension extends Twig_Extension
     {
         $template = $tpl ? $tpl : $page->getParentTemplate().'/'.$page->getSlugTemplate();
 
+        // var_dump($tpl);die();
+
         return $this->twig->render(
-            'BigfootContentBundle:templates/page:'.$template.'.html.twig',
+            'BigfootContentBundle:templates:page/'.$template.'.html.twig',
             array(
                 'page'       => $page,
                 'parameters' => $parameters,
@@ -79,7 +81,7 @@ class ContentExtension extends Twig_Extension
         }
 
         return $this->twig->render(
-            'BigfootContentBundle:templates/sidebar:'.$template.'.html.twig',
+            'BigfootContentBundle:templates:sidebar/'.$template.'.html.twig',
             array(
                 'sidebar'    => $sidebar,
                 'parameters' => $parameters,
@@ -115,7 +117,7 @@ class ContentExtension extends Twig_Extension
         }
 
         return $this->twig->render(
-            'BigfootContentBundle:templates/block:'.$template.'.html.twig',
+            'BigfootContentBundle:templates:block/'.$template.'.html.twig',
             array(
                 'block'      => $block,
                 'parameters' => $parameters,

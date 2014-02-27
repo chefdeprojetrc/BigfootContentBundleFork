@@ -45,56 +45,62 @@ services:
         tags:
             - { name: form.type, alias: admin_sidebar_block }
 
-    # Page Simple Simple1 Type
-    bigfoot_content.form.type.page_simple_simple_1:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Simple\Simple1Type
+    # Page TitleDesc TitleDesc1 Type
+    bigfoot_content.form.type.page_title_desc_title_desc_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\TitleDesc\TitleDesc1Type
         tags:
-            - { name: form.type, alias: admin_page_simple_simple_1 }
+            - { name: form.type, alias: admin_page_title_desc_title_desc_1 }
 
-    # Page Sidebar Sidebar1 Type
-    bigfoot_content.form.type.page_sidebar_sidebar_1:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Sidebar\Sidebar1Type
+    # Page TitleDescImgSidebar TitleDescImgSidebar1 Type
+    bigfoot_content.form.type.page_title_desc_img_sidebar_title_desc_img_sidebar_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\TitleDescImgSidebar\TitleDescImgSidebar1Type
         tags:
-            - { name: form.type, alias: admin_page_sidebar_sidebar_1 }
+            - { name: form.type, alias: admin_page_title_desc_img_sidebar_title_desc_img_sidebar_1 }
 
-    # Page Sidebar Sidebar2 Type
-    bigfoot_content.form.type.page_sidebar_sidebar_2:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Sidebar\Sidebar2Type
+    # Page TitleDescSidebar TitleDescSidebar1 Type
+    bigfoot_content.form.type.page_title_desc_sidebar_title_desc_sidebar_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\TitleDescSidebar\TitleDescSidebar1Type
         tags:
-            - { name: form.type, alias: admin_page_sidebar_sidebar_2 }
+            - { name: form.type, alias: admin_page_title_desc_sidebar_title_desc_sidebar_1 }
 
-    # Sidebar Vertical Vertical1 Type
-    bigfoot_content.form.type.sidebar_vertical_vertical_1:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Vertical\Vertical1Type
+    # Page TitleDescSidebar TitleDescSidebar2 Type
+    bigfoot_content.form.type.page_title_desc_sidebar_title_desc_sidebar_2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\TitleDescSidebar\TitleDescSidebar2Type
         tags:
-            - { name: form.type, alias: admin_sidebar_vertical_vertical_1 }
+            - { name: form.type, alias: admin_page_title_desc_sidebar_title_desc_sidebar_2 }
 
-    # Sidebar Vertical Vertical2 Type
-    bigfoot_content.form.type.sidebar_vertical_vertical_2:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Vertical\Vertical2Type
+    # Sidebar TitleBlock TitleBlock1 Type
+    bigfoot_content.form.type.sidebar_title_block_title_block_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\TitleBlock\TitleBlock1Type
         tags:
-            - { name: form.type, alias: admin_sidebar_vertical_vertical_2 }
+            - { name: form.type, alias: admin_sidebar_title_block_title_block_1 }
 
-    # Sidebar Vertical Vertical3 Type
-    bigfoot_content.form.type.sidebar_vertical_vertical_3:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Vertical\Vertical3Type
+    # Sidebar TitleDescBlock TitleDescBlock1 Type
+    bigfoot_content.form.type.admin_sidebar_title_desc_block_title_desc_block_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\TitleDescBlock\TitleDescBlock1Type
         tags:
-            - { name: form.type, alias: admin_sidebar_vertical_vertical_3 }
+            - { name: form.type, alias: admin_sidebar_title_desc_block_title_desc_block_1 }
 
-    # Block Simple Simple1 Type
-    bigfoot_content.form.type.block_simple_simple_1:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Simple\Simple1Type
+    # Sidebar TitleDescImgBlock TitleDescImgBlock1 Type
+    bigfoot_content.form.type.sidebar_title_desc_img_block_title_desc_img_block_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\TitleDescImgBlock\TitleDescImgBlock1Type
         tags:
-            - { name: form.type, alias: admin_block_simple_simple_1 }
+            - { name: form.type, alias: admin_sidebar_title_desc_img_block_title_desc_img_block_1 }
 
-    # Block Simple Simple2 Type
-    bigfoot_content.form.type.block_simple_simple_2:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Simple\Simple2Type
+    # Block TitleDescImg TitleDescImg1 Type
+    bigfoot_content.form.type.block_title_desc_img_title_desc_img_1:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\TitleDescImg\TitleDescImg1Type
         tags:
-            - { name: form.type, alias: admin_block_simple_simple_2 }
+            - { name: form.type, alias: admin_block_title_desc_img_title_desc_img_1 }
 
-    # Block Simple Simple3 Type
-    bigfoot_content.form.type.block_simple_simple_3:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Simple\Simple3Type
+    # Block TitleDescImg TitleDescImg2 Type
+    bigfoot_content.form.type.block_title_desc_img_title_desc_img_2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\TitleDescImg\TitleDescImg2Type
         tags:
-            - { name: form.type, alias: admin_block_simple_simple_3 }
+            - { name: form.type, alias: admin_block_title_desc_img_title_desc_img_2 }
+
+    # Block TitleDescImg TitleDescImg3 Type
+    bigfoot_content.form.type.block_title_desc_img_title_desc_img_3:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\TitleDescImg\TitleDescImg3Type
+        tags:
+            - { name: form.type, alias: admin_block_title_desc_img_title_desc_img_3 }

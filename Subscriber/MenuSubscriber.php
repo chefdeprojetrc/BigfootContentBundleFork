@@ -83,7 +83,5 @@ class MenuSubscriber implements EventSubscriberInterface
                 )
             )
         );
-
-        $structureMenu = $menu->getChild('structure');
     }
 }

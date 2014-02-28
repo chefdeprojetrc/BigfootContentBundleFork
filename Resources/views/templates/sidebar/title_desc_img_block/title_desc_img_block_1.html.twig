@@ -8,7 +8,7 @@
 
 <img src="http://placehold.it/300x150">
 
-{% for sBlock in sidebar.blocks %}
+{% for sBlock in sidebar.getOrderedBlocks() %}
     <hr />
 
     <div class="block">

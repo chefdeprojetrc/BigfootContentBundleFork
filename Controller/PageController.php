@@ -153,12 +153,17 @@ class PageController extends CrudController
             throw new NotFoundHttpException('Unable to find Page entity.');
         }
 
-        $form     = $this->createForm('admin_page_'.$page->getParentTemplate().'_'.$page->getSlugTemplate(), $page);
-        $action   = $this->generateUrl('admin_page_edit', array('id' => $page->getId()));
-        $dbBlocks = new ArrayCollection();
+        $form       = $this->createForm('admin_page_'.$page->getParentTemplate().'_'.$page->getSlugTemplate(), $page);
+        $action     = $this->generateUrl('admin_page_edit', array('id' => $page->getId()));
+        $dbBlocks   = new ArrayCollection();
+        $dbSidebars = new ArrayCollection();
 
         foreach ($page->getBlocks() as $block) {
             $dbBlocks->add($block);
+        }
+
+        foreach ($page->getSidebars() as $sidebar) {
+            $dbSidebars->add($sidebar);
         }
 
         if ('POST' === $request->getMethod()) {
@@ -169,6 +174,13 @@ class PageController extends CrudController
                     if ($page->getBlocks()->contains($block) === false) {
                         $page->getBlocks()->removeElement($block);
                         $this->getEntityManager()->remove($block);
+                    }
+                }
+
+                foreach ($dbSidebars as $sidebar) {
+                    if ($page->getSidebars()->contains($sidebar) === false) {
+                        $page->getSidebars()->removeElement($sidebar);
+                        $this->getEntityManager()->remove($sidebar);
                     }
                 }
 

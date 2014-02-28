@@ -218,4 +218,20 @@ class Sidebar extends Content
     {
         return $this->blocks;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getOrderedBlocks()
+    {
+        $blocks = array();
+
+        foreach ($this->blocks as $block) {
+            $blocks[$block->getPosition()] = $block;
+        }
+
+        ksort($blocks);
+
+        return $blocks;
+    }
 }

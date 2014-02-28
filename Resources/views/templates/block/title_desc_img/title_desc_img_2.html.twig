@@ -12,6 +12,6 @@
     </p>
 
     {% if block.action is not null %}
-        {{ render(url(block.action, null)) }}
+        {{ render(url(block.action)) }}
     {% endif %}
 </div>

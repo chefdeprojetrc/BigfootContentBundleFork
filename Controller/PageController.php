@@ -80,6 +80,41 @@ class PageController extends CrudController
         );
     }
 
+    public function getFormTemplate()
+    {
+        return $this->getEntity().':edit.html.twig';
+    }
+
+    /**
+     * Add sucess flash
+     */
+    protected function addSuccessFlash($message)
+    {
+        $this->addFlash(
+            'success',
+            $this->renderView(
+                $this->getThemeBundle().':admin:flash.html.twig',
+                array(
+                    'icon'    => 'ok',
+                    'heading' => 'Success!',
+                    'message' => $this->getTranslator()->trans($message, array('%entity%' => $this->getEntityName())),
+                    'actions' => array(
+                        array(
+                            'route' => $this->generateUrl($this->getRouteNameForAction('index')),
+                            'label' => 'Back to the listing',
+                            'type'  => 'success',
+                        ),
+                        array(
+                            'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'page')),
+                            'label' => $this->getTranslator()->trans('Add a new %entity%', array('%entity%' => $this->getEntityName())),
+                            'type'  => 'success',
+                        )
+                    )
+                )
+            )
+        );
+    }
+
     /**
      * Return array of allowed global actions
      *

@@ -1,13 +1,13 @@
 <?php
 
-namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page\TitleDescSidebar;
+namespace Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class TitleDescSidebar2Type extends AbstractType
+class TitleDescImgType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,13 +17,24 @@ class TitleDescSidebar2Type extends AbstractType
     {
         $builder
             ->add(
+                'template',
+                'choice',
+                array(
+                    'required' => true,
+                    'expanded' => true,
+                    'multiple' => false,
+                    'data'     => $options['template'],
+                    'choices'  => $this->toStringTemplates($options['templates'])
+                )
+            )
+            ->add(
                 'name',
                 'text',
                 array(
                     'attr' => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
-                        'data-content'   => 'This is the name of the page in the back office. It will not be displayed to the web user.',
+                        'data-content'   => 'This is the name of the block in the back office. It will not be displayed to the web user.',
                         'data-title'     => 'Name',
                         'data-trigger'   => 'hover',
                         'data-placement' => 'right'
@@ -51,7 +62,7 @@ class TitleDescSidebar2Type extends AbstractType
                     'attr' => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
-                        'data-content'   => 'This is the title of the page as displayed to the web user.',
+                        'data-content'   => 'This is the title of the block as displayed to the web user.',
                         'data-title'     => 'Title',
                         'data-trigger'   => 'hover',
                         'data-placement' => 'right'
@@ -59,24 +70,8 @@ class TitleDescSidebar2Type extends AbstractType
                 )
             )
             ->add('description', 'bigfoot_richtext')
+            ->add('action', 'text', array('required' => false))
             ->add('active', 'checkbox', array('required' => false))
-            ->add(
-                'sidebars',
-                'collection',
-                array(
-                    'prototype'    => true,
-                    'allow_add'    => true,
-                    'allow_delete' => true,
-                    'type'         => 'admin_page_sidebar',
-                    'options'      => array(
-                        'page' => $options['data'],
-                    ),
-                    'attr' => array(
-                        'class' => 'widget-sidebars',
-                    )
-                )
-            )
-
             ->add('translation', 'translatable_entity');
     }
 
@@ -87,9 +82,22 @@ class TitleDescSidebar2Type extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Page\TitleDescSidebar\TitleDescSidebar2'
+                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block\Template\TitleDescImg',
+                'template'   => '',
+                'templates'  => ''
             )
         );
+    }
+
+    public function toStringTemplates($templates)
+    {
+        $nTemplates = array();
+
+        foreach ($templates['sub_templates'] as $subTemplates) {
+            $nTemplates[$subTemplates] = $subTemplates;
+        }
+
+        return $nTemplates;
     }
 
     /**
@@ -97,6 +105,6 @@ class TitleDescSidebar2Type extends AbstractType
      */
     public function getName()
     {
-        return 'admin_page_title_desc_sidebar_title_desc_sidebar_2';
+        return 'admin_block_template_title_desc_img';
     }
 }

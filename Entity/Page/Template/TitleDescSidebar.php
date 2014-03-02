@@ -1,6 +1,6 @@
 <?php
 
-namespace Bigfoot\Bundle\ContentBundle\Entity\Page\TitleDescImgSidebar;
+namespace Bigfoot\Bundle\ContentBundle\Entity\Page\Template;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -8,11 +8,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Bigfoot\Bundle\ContentBundle\Entity\Page;
 
 /**
- * TitleDescImgSidebar1
+ * TitleDescSidebar
  *
  * @ORM\Entity()
  */
-class TitleDescImgSidebar1 extends Page
+class TitleDescSidebar extends Page
 {
     /**
      * @var string
@@ -31,7 +31,7 @@ class TitleDescImgSidebar1 extends Page
     private $description;
 
     /**
-     * Construct TitleDescImgSidebar1
+     * Construct TitleDescSidebar
      */
     public function __construct()
     {
@@ -45,7 +45,7 @@ class TitleDescImgSidebar1 extends Page
      */
     public function getParentTemplate()
     {
-        return 'title_desc_img_sidebar';
+        return 'title_desc_sidebar';
     }
 
     /**
@@ -55,7 +55,7 @@ class TitleDescImgSidebar1 extends Page
      */
     public function getTemplate()
     {
-        return 'TitleDescImgSidebar1';
+        return 'TitleDescSidebar';
     }
 
     /**
@@ -65,14 +65,14 @@ class TitleDescImgSidebar1 extends Page
      */
     public function getSlugTemplate()
     {
-        return 'title_desc_img_sidebar_1';
+        return $this->template;
     }
 
     /**
      * Set title
      *
      * @param string $title
-     * @return TitleDescImgSidebar1
+     * @return TitleDescSidebar
      */
     public function setTitle($title)
     {
@@ -95,7 +95,7 @@ class TitleDescImgSidebar1 extends Page
      * Set description
      *
      * @param string $description
-     * @return TitleDescImgSidebar1
+     * @return TitleDescSidebar
      */
     public function setDescription($description)
     {

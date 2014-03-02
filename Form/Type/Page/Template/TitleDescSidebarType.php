@@ -1,13 +1,13 @@
 <?php
 
-namespace Bigfoot\Bundle\ContentBundle\Form\Type\Block\TitleDescImg;
+namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class TitleDescImg2Type extends AbstractType
+class TitleDescSidebarType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -23,7 +23,7 @@ class TitleDescImg2Type extends AbstractType
                     'attr' => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
-                        'data-content'   => 'This is the name of the block in the back office. It will not be displayed to the web user.',
+                        'data-content'   => 'This is the name of the page in the back office. It will not be displayed to the web user.',
                         'data-title'     => 'Name',
                         'data-trigger'   => 'hover',
                         'data-placement' => 'right'
@@ -51,7 +51,7 @@ class TitleDescImg2Type extends AbstractType
                     'attr' => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
-                        'data-content'   => 'This is the title of the block as displayed to the web user.',
+                        'data-content'   => 'This is the title of the page as displayed to the web user.',
                         'data-title'     => 'Title',
                         'data-trigger'   => 'hover',
                         'data-placement' => 'right'
@@ -59,8 +59,24 @@ class TitleDescImg2Type extends AbstractType
                 )
             )
             ->add('description', 'bigfoot_richtext')
-            ->add('action', 'text', array('required' => false))
             ->add('active', 'checkbox', array('required' => false))
+            ->add(
+                'sidebars',
+                'collection',
+                array(
+                    'prototype'    => true,
+                    'allow_add'    => true,
+                    'allow_delete' => true,
+                    'type'         => 'admin_page_sidebar',
+                    'options'      => array(
+                        'page' => $options['data'],
+                    ),
+                    'attr' => array(
+                        'class' => 'widget-sidebars',
+                    )
+                )
+            )
+
             ->add('translation', 'translatable_entity');
     }
 
@@ -71,7 +87,9 @@ class TitleDescImg2Type extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block\TitleDescImg\TitleDescImg2'
+                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Page\Template\TitleDescSidebar',
+                'template'   => '',
+                'templates'  => ''
             )
         );
     }
@@ -81,6 +99,6 @@ class TitleDescImg2Type extends AbstractType
      */
     public function getName()
     {
-        return 'admin_block_title_desc_img_title_desc_img_2';
+        return 'admin_page_template_title_desc_sidebar';
     }
 }

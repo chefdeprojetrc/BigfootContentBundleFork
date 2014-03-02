@@ -1,0 +1,26 @@
+{% extends bigfoot_theme_bundle ~ ':crud:form.html.twig' %}
+
+{% form_theme form bigfoot_theme_bundle ~ ':content:form/page/blocks.html.twig' bigfoot_theme_bundle ~ ':content:form/page/sidebars.html.twig' %}
+
+{% block form %}
+    {{ form_label(form.template) }}
+
+    <ul>
+        {% for template in form.template %}
+            <li class="template-row inline">
+                <label>
+                    {{ form_widget(template) }}
+                    <img src="{{ asset('images/template/block/' ~ template.vars.value ~ '.svg') }}">
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {{ form_rest(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/bigfootcontent/js/block.js') }}"></script>
+{% endblock %}

@@ -80,41 +80,6 @@ class PageController extends CrudController
         );
     }
 
-    public function getFormTemplate()
-    {
-        return $this->getEntity().':edit.html.twig';
-    }
-
-    /**
-     * Add sucess flash
-     */
-    protected function addSuccessFlash($message)
-    {
-        $this->addFlash(
-            'success',
-            $this->renderView(
-                $this->getThemeBundle().':admin:flash.html.twig',
-                array(
-                    'icon'    => 'ok',
-                    'heading' => 'Success!',
-                    'message' => $this->getTranslator()->trans($message, array('%entity%' => $this->getEntityName())),
-                    'actions' => array(
-                        array(
-                            'route' => $this->generateUrl($this->getRouteNameForAction('index')),
-                            'label' => 'Back to the listing',
-                            'type'  => 'success',
-                        ),
-                        array(
-                            'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'page')),
-                            'label' => $this->getTranslator()->trans('Add a new %entity%', array('%entity%' => $this->getEntityName())),
-                            'type'  => 'success',
-                        )
-                    )
-                )
-            )
-        );
-    }
-
     /**
      * Return array of allowed global actions
      *
@@ -153,14 +118,21 @@ class PageController extends CrudController
      */
     public function newAction(Request $request, $template)
     {
-        $templates    = $this->container->getParameter('bigfoot_content.templates.page');
-        $values       = explode('.', $template);
-        $templateName = StringManager::camelize($values[1]);
-        $page         = $templates[$values[0]]['class'].'\\'.$templateName;
-        $page         = new $page();
-        $templateType = implode('_', $values);
-        $form         = $this->createForm('admin_page_'.$templateType, $page);
-        $action       = $this->generateUrl('admin_page_new', array('template' => implode('.', $values)));
+        $pTemplate = $this->getParentTemplate($template);
+        $templates = $this->getTemplates($pTemplate);
+        $page      = $templates['class'];
+        $page      = new $page();
+        $page->setTemplate($template);
+
+        $action = $this->generateUrl('admin_page_new', array('template' => $template));
+        $form   = $this->createForm(
+            'admin_page_template_'.$pTemplate,
+            $page,
+            array(
+                'template'  => $template,
+                'templates' => $templates
+            )
+        );
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
@@ -236,5 +208,20 @@ class PageController extends CrudController
     public function deleteAction(Request $request, $id)
     {
         return $this->doDelete($request, $id);
+    }
+
+    public function getParentTemplate($template)
+    {
+        $values = explode('_', $template);
+        $end    = call_user_func('end', array_values($values));
+
+        return str_replace('_'.$end, '', $template);
+    }
+
+    public function getTemplates($parent)
+    {
+        $templates = $this->container->getParameter('bigfoot_content.templates.page');
+
+        return $templates[$parent];
     }
 }

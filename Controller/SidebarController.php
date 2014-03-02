@@ -118,14 +118,21 @@ class SidebarController extends CrudController
      */
     public function newAction(Request $request, $template)
     {
-        $templates    = $this->container->getParameter('bigfoot_content.templates.sidebar');
-        $values       = explode('.', $template);
-        $templateName = StringManager::camelize($values[1]);
-        $sidebar      = $templates[$values[0]]['class'].'\\'.$templateName;
-        $sidebar      = new $sidebar();
-        $templateType = implode('_', $values);
-        $form         = $this->createForm('admin_sidebar_'.$templateType, $sidebar);
-        $action       = $this->generateUrl('admin_sidebar_new', array('template' => implode('.', $values)));
+        $pTemplate = $this->getParentTemplate($template);
+        $templates = $this->getTemplates($pTemplate);
+        $sidebar   = $templates['class'];
+        $sidebar   = new $sidebar();
+        $sidebar->setTemplate($template);
+
+        $action = $this->generateUrl('admin_sidebar_new', array('template' => $template));
+        $form   = $this->createForm(
+            'admin_sidebar_template_'.$pTemplate,
+            $sidebar,
+            array(
+                'template'  => $template,
+                'templates' => $templates
+            )
+        );
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
@@ -153,7 +160,15 @@ class SidebarController extends CrudController
             throw new NotFoundHttpException('Unable to find Sidebar entity.');
         }
 
-        $form     = $this->createForm('admin_sidebar_'.$sidebar->getParentTemplate().'_'.$sidebar->getSlugTemplate(), $sidebar);
+        $form = $this->createForm(
+            'admin_sidebar_template_'.$sidebar->getParentTemplate(),
+            $sidebar,
+            array(
+                'template'  => $template,
+                'templates' => $templates
+            )
+        );
+
         $action   = $this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId()));
         $dbBlocks = new ArrayCollection();
 
@@ -189,5 +204,20 @@ class SidebarController extends CrudController
     public function deleteAction(Request $request, $id)
     {
         return $this->doDelete($request, $id);
+    }
+
+    public function getParentTemplate($template)
+    {
+        $values = explode('_', $template);
+        $end    = call_user_func('end', array_values($values));
+
+        return str_replace('_'.$end, '', $template);
+    }
+
+    public function getTemplates($parent)
+    {
+        $templates = $this->container->getParameter('bigfoot_content.templates.sidebar');
+
+        return $templates[$parent];
     }
 }

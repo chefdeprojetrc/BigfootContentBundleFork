@@ -1,18 +1,18 @@
 <?php
 
-namespace Bigfoot\Bundle\ContentBundle\Entity\Sidebar\TitleBlock;
+namespace Bigfoot\Bundle\ContentBundle\Entity\Page\Template;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
+use Bigfoot\Bundle\ContentBundle\Entity\Page;
 
 /**
- * TitleBlock1
+ * TitleDesc
  *
- * @ORM\Entity()
+ * @ORM\Entity
  */
-class TitleBlock1 extends Sidebar
+class TitleDesc extends Page
 {
     /**
      * @var string
@@ -23,7 +23,15 @@ class TitleBlock1 extends Sidebar
     private $title;
 
     /**
-     * Construct TitleBlock1
+     * @var text
+     *
+     * @Gedmo\Translatable
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * Construct SidebarBlock
      */
     public function __construct()
     {
@@ -37,7 +45,7 @@ class TitleBlock1 extends Sidebar
      */
     public function getParentTemplate()
     {
-        return 'title_block';
+        return 'title_desc';
     }
 
     /**
@@ -47,7 +55,7 @@ class TitleBlock1 extends Sidebar
      */
     public function getTemplate()
     {
-        return 'TitleBlock1';
+        return 'TitleDesc';
     }
 
     /**
@@ -57,14 +65,14 @@ class TitleBlock1 extends Sidebar
      */
     public function getSlugTemplate()
     {
-        return 'title_block_1';
+        return $this->template;
     }
 
     /**
      * Set title
      *
      * @param string $title
-     * @return TitleBlock1
+     * @return TitleDesc
      */
     public function setTitle($title)
     {
@@ -81,5 +89,28 @@ class TitleBlock1 extends Sidebar
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return TitleDesc
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

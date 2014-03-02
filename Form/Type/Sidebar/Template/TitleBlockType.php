@@ -1,13 +1,13 @@
 <?php
 
-namespace Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\TitleDescImgBlock;
+namespace Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class TitleDescImgBlock1Type extends AbstractType
+class TitleBlockType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -58,7 +58,6 @@ class TitleDescImgBlock1Type extends AbstractType
                     )
                 )
             )
-            ->add('description', 'bigfoot_richtext')
             ->add('active', 'checkbox', array('required' => false))
             ->add(
                 'blocks',
@@ -86,7 +85,9 @@ class TitleDescImgBlock1Type extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar\TitleDescImgBlock\TitleDescImgBlock1'
+                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Template\TitleBlock',
+                'template'   => '',
+                'templates'  => ''
             )
         );
     }
@@ -96,6 +97,6 @@ class TitleDescImgBlock1Type extends AbstractType
      */
     public function getName()
     {
-        return 'admin_sidebar_title_desc_img_block_title_desc_img_block_1';
+        return 'admin_sidebar_template_title_block';
     }
 }

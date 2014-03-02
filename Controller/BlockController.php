@@ -44,6 +44,11 @@ class BlockController extends CrudController
         );
     }
 
+    public function getFormTemplate()
+    {
+        return $this->getEntity().':edit.html.twig';
+    }
+
     /**
      * Add sucess flash
      */
@@ -112,14 +117,21 @@ class BlockController extends CrudController
      */
     public function newAction(Request $request, $template)
     {
-        $templates    = $this->container->getParameter('bigfoot_content.templates.block');
-        $values       = explode('.', $template);
-        $templateName = StringManager::camelize($values[1]);
-        $block        = $templates[$values[0]]['class'].'\\'.$templateName;
-        $block        = new $block();
-        $templateType = implode('_', $values);
-        $form         = $this->createForm('admin_block_'.$templateType, $block);
-        $action       = $this->generateUrl('admin_block_new', array('template' => implode('.', $values)));
+        $pTemplate = $this->getParentTemplate($template);
+        $templates = $this->getTemplates($pTemplate);
+        $block     = $templates['class'];
+        $block     = new $block();
+        $block->setTemplate($template);
+
+        $action = $this->generateUrl('admin_block_new', array('template' => $template));
+        $form   = $this->createForm(
+            'admin_block_template_'.$pTemplate,
+            $block,
+            array(
+                'template'  => $template,
+                'templates' => $templates
+            )
+        );
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
@@ -147,8 +159,16 @@ class BlockController extends CrudController
             throw new NotFoundHttpException('Unable to find block entity.');
         }
 
-        $form   = $this->createForm('admin_block_'.$block->getParentTemplate().'_'.$block->getSlugTemplate(), $block);
-        $action = $this->generateUrl('admin_block_edit', array('id' => $block->getId()));
+        $templates = $this->getTemplates($block->getParentTemplate());
+        $action    = $this->generateUrl('admin_block_edit', array('id' => $block->getId()));
+        $form      = $this->createForm(
+            'admin_block_template_'.$block->getParentTemplate(),
+            $block,
+            array(
+                'template'  => $block->getSlugTemplate(),
+                'templates' => $templates
+            )
+        );
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
@@ -171,5 +191,20 @@ class BlockController extends CrudController
     public function deleteAction(Request $request, $id)
     {
         return $this->doDelete($request, $id);
+    }
+
+    public function getParentTemplate($template)
+    {
+        $values = explode('_', $template);
+        $end    = call_user_func('end', array_values($values));
+
+        return str_replace('_'.$end, '', $template);
+    }
+
+    public function getTemplates($parent)
+    {
+        $templates = $this->container->getParameter('bigfoot_content.templates.block');
+
+        return $templates[$parent];
     }
 }

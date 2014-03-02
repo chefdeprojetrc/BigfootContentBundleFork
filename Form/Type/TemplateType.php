@@ -54,9 +54,11 @@ class TemplateType extends AbstractType
 
         foreach ($templates as $key => $template) {
             foreach ($template['sub_templates'] as $subTemplates) {
-                $nTemplates[$key.'.'.strtolower($subTemplates)] = $subTemplates;
+                $nTemplates[$subTemplates] = $subTemplates;
             }
         }
+
+        // var_dump($nTemplates);die();
 
         return $nTemplates;
     }

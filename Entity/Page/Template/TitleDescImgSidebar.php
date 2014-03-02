@@ -1,18 +1,18 @@
 <?php
 
-namespace Bigfoot\Bundle\ContentBundle\Entity\Block\TitleDescImg;
+namespace Bigfoot\Bundle\ContentBundle\Entity\Page\Template;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-use Bigfoot\Bundle\ContentBundle\Entity\Block;
+use Bigfoot\Bundle\ContentBundle\Entity\Page;
 
 /**
- * TitleDescImg2
+ * TitleDescImgSidebar
  *
  * @ORM\Entity()
  */
-class TitleDescImg2 extends Block
+class TitleDescImgSidebar extends Page
 {
     /**
      * @var string
@@ -31,7 +31,7 @@ class TitleDescImg2 extends Block
     private $description;
 
     /**
-     * Construct TitleDescImg2
+     * Construct TitleDescImgSidebar
      */
     public function __construct()
     {
@@ -45,7 +45,7 @@ class TitleDescImg2 extends Block
      */
     public function getParentTemplate()
     {
-        return 'title_desc_img';
+        return 'title_desc_img_sidebar';
     }
 
     /**
@@ -55,7 +55,7 @@ class TitleDescImg2 extends Block
      */
     public function getTemplate()
     {
-        return 'TitleDescImg2';
+        return 'TitleDescImgSidebar';
     }
 
     /**
@@ -65,14 +65,14 @@ class TitleDescImg2 extends Block
      */
     public function getSlugTemplate()
     {
-        return 'title_desc_img_2';
+        return $this->template;
     }
 
     /**
      * Set title
      *
      * @param string $title
-     * @return TitleDescImg2
+     * @return TitleDescImgSidebar
      */
     public function setTitle($title)
     {
@@ -95,7 +95,7 @@ class TitleDescImg2 extends Block
      * Set description
      *
      * @param string $description
-     * @return TitleDescImg2
+     * @return TitleDescImgSidebar
      */
     public function setDescription($description)
     {

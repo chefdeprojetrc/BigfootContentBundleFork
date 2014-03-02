@@ -3,16 +3,23 @@
 {% form_theme form bigfoot_theme_bundle ~ ':content:form/template/choose.html.twig' %}
 
 {% block form %}
-    <ul class="templates-type">
-        {% for template in form.template %}
-            <li class="template-row inline">
-                <label>
-                    {{ form_widget(template) }}
-                    <img src="{{ asset('images/template/' ~ form.vars.contentType ~ '/' ~ template.vars.value ~ '.svg') }}">
-                </label>
-            </li>
-        {% endfor %}
-    </ul>
+    <h5>Choose your template</h5>
+    <hr />
+
+    {% for templates in form.vars.templates %}
+        <ul>
+            {% for template in form.template %}
+                {% if template.vars.value in templates|keys %}
+                    <li class="template-row inline">
+                        <label>
+                            {{ form_widget(template) }}
+                            <img src="{{ asset('images/template/' ~ form.vars.contentType ~ '/' ~ template.vars.value ~ '.svg') }}">
+                        </label>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endfor %}
 
     {{ form_rest(form) }}
 {% endblock %}

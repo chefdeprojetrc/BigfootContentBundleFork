@@ -160,8 +160,17 @@ class PageController extends CrudController
             throw new NotFoundHttpException('Unable to find Page entity.');
         }
 
-        $form       = $this->createForm('admin_page_'.$page->getParentTemplate().'_'.$page->getSlugTemplate(), $page);
-        $action     = $this->generateUrl('admin_page_edit', array('id' => $page->getId()));
+        $templates = $this->getTemplates($page->getParentTemplate());
+        $action    = $this->generateUrl('admin_page_edit', array('id' => $page->getId()));
+        $form      = $this->createForm(
+            'admin_page_template_'.$page->getParentTemplate(),
+            $page,
+            array(
+                'template'  => $page->getSlugTemplate(),
+                'templates' => $templates
+            )
+        );
+
         $dbBlocks   = new ArrayCollection();
         $dbSidebars = new ArrayCollection();
 

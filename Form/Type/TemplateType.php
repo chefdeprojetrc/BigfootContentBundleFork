@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TemplateType extends AbstractType
 {
+    private $templates;
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -34,6 +35,7 @@ class TemplateType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['contentType'] = $options['contentType'];
+        $view->vars['templates']   = $this->templates;
     }
 
     /**
@@ -43,7 +45,7 @@ class TemplateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'contentType' => ''
+                'contentType' => '',
             )
         );
     }
@@ -54,11 +56,11 @@ class TemplateType extends AbstractType
 
         foreach ($templates as $key => $template) {
             foreach ($template['sub_templates'] as $subTemplates) {
-                $nTemplates[$subTemplates] = $subTemplates;
+                $nTemplates[$key][$subTemplates] = $subTemplates;
             }
         }
 
-        // var_dump($nTemplates);die();
+        $this->templates = $nTemplates;
 
         return $nTemplates;
     }

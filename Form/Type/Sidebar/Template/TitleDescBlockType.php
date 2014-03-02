@@ -17,6 +17,17 @@ class TitleDescBlockType extends AbstractType
     {
         $builder
             ->add(
+                'template',
+                'choice',
+                array(
+                    'required' => true,
+                    'expanded' => true,
+                    'multiple' => false,
+                    'data'     => $options['template'],
+                    'choices'  => $this->toStringTemplates($options['templates'])
+                )
+            )
+            ->add(
                 'name',
                 'text',
                 array(
@@ -93,11 +104,22 @@ class TitleDescBlockType extends AbstractType
         );
     }
 
+    public function toStringTemplates($templates)
+    {
+        $nTemplates = array();
+
+        foreach ($templates['sub_templates'] as $subTemplates) {
+            $nTemplates[$subTemplates] = $subTemplates;
+        }
+
+        return $nTemplates;
+    }
+
     /**
      * @return string
      */
     public function getName()
     {
-        return 'admin_sidebar_template_title_block';
+        return 'admin_sidebar_template_title_desc_block';
     }
 }

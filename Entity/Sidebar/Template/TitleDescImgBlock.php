@@ -1,6 +1,6 @@
 <?php
 
-namespace Bigfoot\Bundle\ContentBundle\Entity\Sidebar\TitleDescImgBlock;
+namespace Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Template;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;

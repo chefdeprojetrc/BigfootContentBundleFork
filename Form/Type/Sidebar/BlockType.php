@@ -64,6 +64,8 @@ class BlockType extends AbstractType
 
     public function toStringTemplates($templates)
     {
+        // var_dump($templates);die();
+
         $nTemplates = array();
 
         foreach ($templates as $key => $template) {

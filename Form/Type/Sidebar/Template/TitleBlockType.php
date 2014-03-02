@@ -17,6 +17,17 @@ class TitleBlockType extends AbstractType
     {
         $builder
             ->add(
+                'template',
+                'choice',
+                array(
+                    'required' => true,
+                    'expanded' => true,
+                    'multiple' => false,
+                    'data'     => $options['template'],
+                    'choices'  => $this->toStringTemplates($options['templates'])
+                )
+            )
+            ->add(
                 'name',
                 'text',
                 array(
@@ -90,6 +101,17 @@ class TitleBlockType extends AbstractType
                 'templates'  => ''
             )
         );
+    }
+
+    public function toStringTemplates($templates)
+    {
+        $nTemplates = array();
+
+        foreach ($templates['sub_templates'] as $subTemplates) {
+            $nTemplates[$subTemplates] = $subTemplates;
+        }
+
+        return $nTemplates;
     }
 
     /**

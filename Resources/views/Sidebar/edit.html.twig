@@ -3,6 +3,19 @@
 {% form_theme form bigfoot_theme_bundle ~ ':content:form/sidebar/blocks.html.twig' %}
 
 {% block form %}
+    {{ form_label(form.template) }}
+
+    <ul>
+        {% for template in form.template %}
+            <li class="template-row inline">
+                <label>
+                    {{ form_widget(template) }}
+                    <img src="{{ asset('images/template/sidebar/' ~ template.vars.value ~ '.svg') }}">
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
+
     {{ form_rest(form) }}
 {% endblock %}
 

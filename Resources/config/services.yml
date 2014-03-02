@@ -65,19 +65,19 @@ services:
             - { name: form.type, alias: admin_page_template_title_desc_sidebar }
 
     # Sidebar Template TitleBlock Type
-    bigfoot_content.form.type.sidebar_template_title_block_:
+    bigfoot_content.form.type.sidebar_template_title_block:
         class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleBlockType
         tags:
             - { name: form.type, alias: admin_sidebar_template_title_block }
 
     # Sidebar Template TitleDescBlock Type
-    bigfoot_content.form.type.admin_sidebar_template_title_desc_block_:
+    bigfoot_content.form.type.sidebar_template_title_desc_block:
         class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleDescBlockType
         tags:
             - { name: form.type, alias: admin_sidebar_template_title_desc_block }
 
     # Sidebar Template TitleDescImgBlock Type
-    bigfoot_content.form.type.sidebar_template_title_desc_img_block_:
+    bigfoot_content.form.type.sidebar_template_title_desc_img_block:
         class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleDescImgBlockType
         tags:
             - { name: form.type, alias: admin_sidebar_template_title_desc_img_block }

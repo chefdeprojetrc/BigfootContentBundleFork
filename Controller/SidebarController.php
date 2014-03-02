@@ -160,16 +160,17 @@ class SidebarController extends CrudController
             throw new NotFoundHttpException('Unable to find Sidebar entity.');
         }
 
-        $form = $this->createForm(
+        $templates = $this->getTemplates($sidebar->getParentTemplate());
+        $action    = $this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId()));
+        $form      = $this->createForm(
             'admin_sidebar_template_'.$sidebar->getParentTemplate(),
             $sidebar,
             array(
-                'template'  => $template,
+                'template'  => $sidebar->getSlugTemplate(),
                 'templates' => $templates
             )
         );
 
-        $action   = $this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId()));
         $dbBlocks = new ArrayCollection();
 
         foreach ($sidebar->getBlocks() as $block) {

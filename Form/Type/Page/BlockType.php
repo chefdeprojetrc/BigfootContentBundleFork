@@ -40,6 +40,7 @@ class BlockType extends AbstractType
                     'class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block'
                 )
             )
+            ->add('position')
             ->add(
                 'template',
                 'choice',

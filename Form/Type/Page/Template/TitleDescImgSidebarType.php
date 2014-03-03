@@ -17,42 +17,12 @@ class TitleDescImgSidebarType extends AbstractType
     {
         $builder
             ->add(
-                'template',
-                'choice',
+                'content',
+                'admin_content',
                 array(
-                    'required' => true,
-                    'expanded' => true,
-                    'multiple' => false,
-                    'data'     => $options['template'],
-                    'choices'  => $this->toStringTemplates($options['templates'])
-                )
-            )
-            ->add(
-                'name',
-                'text',
-                array(
-                    'attr' => array(
-                        'data-placement' => 'bottom',
-                        'data-popover'   => true,
-                        'data-content'   => 'This is the name of the page in the back office. It will not be displayed to the web user.',
-                        'data-title'     => 'Name',
-                        'data-trigger'   => 'hover',
-                        'data-placement' => 'right'
-                    )
-                )
-            )
-            ->add(
-                'slug',
-                'text',
-                array(
-                    'attr' => array(
-                        'data-placement' => 'bottom',
-                        'data-popover'   => true,
-                        'data-content'   => 'This value is used to generate urls. Should contain only lower case letters and the \'-\' sign.',
-                        'data-title'     => 'Slug',
-                        'data-trigger'   => 'hover',
-                        'data-placement' => 'right'
-                    ),
+                    'data'      => $options['data'],
+                    'template'  => $options['template'],
+                    'templates' => $options['templates']
                 )
             )
             ->add(
@@ -70,7 +40,6 @@ class TitleDescImgSidebarType extends AbstractType
                 )
             )
             ->add('description', 'bigfoot_richtext')
-            ->add('active', 'checkbox', array('required' => false))
             ->add(
                 'sidebars',
                 'collection',
@@ -87,7 +56,6 @@ class TitleDescImgSidebarType extends AbstractType
                     )
                 )
             )
-
             ->add('translation', 'translatable_entity');
     }
 
@@ -103,17 +71,6 @@ class TitleDescImgSidebarType extends AbstractType
                 'templates'  => ''
             )
         );
-    }
-
-    public function toStringTemplates($templates)
-    {
-        $nTemplates = array();
-
-        foreach ($templates['sub_templates'] as $subTemplates) {
-            $nTemplates[$subTemplates] = $subTemplates;
-        }
-
-        return $nTemplates;
     }
 
     /**

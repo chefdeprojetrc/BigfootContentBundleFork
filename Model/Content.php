@@ -16,6 +16,29 @@ use Gedmo\Mapping\Annotation as Gedmo;
 abstract class Content
 {
     /**
+     * @var string
+     *
+     * @Gedmo\Translatable
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     */
+    protected $name;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="template", type="string", length=255)
+     */
+    protected $template;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean")
@@ -54,6 +77,86 @@ abstract class Content
      * @Gedmo\Locale
      */
     protected $locale;
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Block
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Block
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set template
+     *
+     * @param string $template
+     * @return Block
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get slug template
+     *
+     * @return string
+     */
+    public function getSlugTemplate()
+    {
+        return $this->template;
+    }
+
+    public function toStringTemplates($templates)
+    {
+        $nTemplates = array();
+
+        foreach ($templates['sub_templates'] as $subTemplates) {
+            $nTemplates[$subTemplates] = $subTemplates;
+        }
+
+        return $nTemplates;
+    }
 
     /**
      * Set active

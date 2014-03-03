@@ -17,59 +17,14 @@ class TitleBlockType extends AbstractType
     {
         $builder
             ->add(
-                'template',
-                'choice',
+                'content',
+                'admin_content',
                 array(
-                    'required' => true,
-                    'expanded' => true,
-                    'multiple' => false,
-                    'data'     => $options['template'],
-                    'choices'  => $this->toStringTemplates($options['templates'])
+                    'data'      => $options['data'],
+                    'template'  => $options['template'],
+                    'templates' => $options['templates']
                 )
             )
-            ->add(
-                'name',
-                'text',
-                array(
-                    'attr' => array(
-                        'data-placement' => 'bottom',
-                        'data-popover'   => true,
-                        'data-content'   => 'This is the name of the sidebar in the back office. It will not be displayed to the web user.',
-                        'data-title'     => 'Name',
-                        'data-trigger'   => 'hover',
-                        'data-placement' => 'right'
-                    )
-                )
-            )
-            ->add(
-                'slug',
-                'text',
-                array(
-                    'attr' => array(
-                        'data-placement' => 'bottom',
-                        'data-popover'   => true,
-                        'data-content'   => 'This value is used to generate urls. Should contain only lower case letters and the \'-\' sign.',
-                        'data-title'     => 'Slug',
-                        'data-trigger'   => 'hover',
-                        'data-placement' => 'right'
-                    ),
-                )
-            )
-            ->add(
-                'title',
-                'text',
-                array(
-                    'attr' => array(
-                        'data-placement' => 'bottom',
-                        'data-popover'   => true,
-                        'data-content'   => 'This is the title of the sidebar as displayed to the web user.',
-                        'data-title'     => 'Title',
-                        'data-trigger'   => 'hover',
-                        'data-placement' => 'right'
-                    )
-                )
-            )
-            ->add('active', 'checkbox', array('required' => false))
             ->add(
                 'blocks',
                 'collection',
@@ -101,17 +56,6 @@ class TitleBlockType extends AbstractType
                 'templates'  => ''
             )
         );
-    }
-
-    public function toStringTemplates($templates)
-    {
-        $nTemplates = array();
-
-        foreach ($templates['sub_templates'] as $subTemplates) {
-            $nTemplates[$subTemplates] = $subTemplates;
-        }
-
-        return $nTemplates;
     }
 
     /**

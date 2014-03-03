@@ -31,14 +31,6 @@ class TitleDescSidebar extends Page
     private $description;
 
     /**
-     * Construct TitleDescSidebar
-     */
-    public function __construct()
-    {
-        $this->template = $this->getTemplate();
-    }
-
-    /**
      * Get parent template
      *
      * @return string
@@ -56,16 +48,6 @@ class TitleDescSidebar extends Page
     public function getTemplate()
     {
         return 'TitleDescSidebar';
-    }
-
-    /**
-     * Get slug template
-     *
-     * @return string
-     */
-    public function getSlugTemplate()
-    {
-        return $this->template;
     }
 
     /**

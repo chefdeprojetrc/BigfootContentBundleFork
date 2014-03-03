@@ -30,29 +30,6 @@ class Sidebar extends Content
     protected $id;
 
     /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
-     */
-    protected $name;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
-     */
-    protected $slug;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="template", type="string", length=255)
-     */
-    protected $template;
-
-    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar", mappedBy="sidebar", cascade={"persist"})
@@ -88,65 +65,6 @@ class Sidebar extends Content
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Sidebar
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Page
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Set template
-     *
-     * @param string $template
-     * @return Sidebar
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-
-        return $this;
     }
 
     /**

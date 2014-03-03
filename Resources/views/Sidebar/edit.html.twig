@@ -3,10 +3,10 @@
 {% form_theme form bigfoot_theme_bundle ~ ':content:form/sidebar/blocks.html.twig' %}
 
 {% block form %}
-    {{ form_label(form.template) }}
+    {{ form_label(form.content.template) }}
 
     <ul>
-        {% for template in form.template %}
+        {% for template in form.content.template %}
             <li class="template-row inline">
                 <label>
                     {{ form_widget(template) }}

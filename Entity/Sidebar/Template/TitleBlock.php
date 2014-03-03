@@ -23,14 +23,6 @@ class TitleBlock extends Sidebar
     private $title;
 
     /**
-     * Construct TitleBlock
-     */
-    public function __construct()
-    {
-        $this->template = $this->getTemplate();
-    }
-
-    /**
      * Get parent template
      *
      * @return string
@@ -48,16 +40,6 @@ class TitleBlock extends Sidebar
     public function getTemplate()
     {
         return 'TitleBlock';
-    }
-
-    /**
-     * Get slug template
-     *
-     * @return string
-     */
-    public function getSlugTemplate()
-    {
-        return $this->template;
     }
 
     /**

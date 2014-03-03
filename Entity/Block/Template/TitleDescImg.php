@@ -51,16 +51,6 @@ class TitleDescImg extends Block
     }
 
     /**
-     * Get slug template
-     *
-     * @return string
-     */
-    public function getSlugTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
      * Set title
      *
      * @param string $title

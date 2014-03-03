@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 use Bigfoot\Bundle\ContentBundle\Model\Content;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
 
 /**
  * Block

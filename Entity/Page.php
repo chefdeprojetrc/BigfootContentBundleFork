@@ -3,15 +3,22 @@
 namespace Bigfoot\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+
+use Bigfoot\Bundle\ContentBundle\Model\Content;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar as PageSidebar;
 
 /**
  * Page
  *
- * @ORM\Table()
+ * @ORM\Table(name="bigfoot_content_page")
  * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\PageRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string")
  */
-class Page
+class Page extends Content
 {
     /**
      * @var integer
@@ -20,90 +27,35 @@ class Page
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @var string
-     * @Gedmo\Translatable
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
-     */
-    private $name;
-
-    /**
-     * @var string
-     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
-     */
-    private $slug;
-
-    /**
-     * @var string
-     * @Gedmo\Translatable
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @var text
-     * @Gedmo\Translatable
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @var Template
+     * @var ArrayCollection
      *
-     * @ORM\ManyToOne(targetEntity="Template", inversedBy="pages")
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar", mappedBy="page", cascade={"persist"})
      */
-    private $template;
+    private $sidebars;
 
     /**
-     * @var string
+     * @var ArrayCollection
      *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="page", cascade={"persist"})
      */
-    private $image;
+    private $blocks;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean")
+     * Construct Page
      */
-    private $active = true;
+    public function __construct()
+    {
+        $this->sidebars = new ArrayCollection();
+        $this->blocks   = new ArrayCollection();
+    }
 
-    /**
-     * @var datetime $created
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     */
-    private $created;
-
-    /**
-     * @var datetime $updated
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
-    private $updated;
-
-    /**
-     * @Gedmo\Blameable(on="create")
-     * @ORM\Column(name="created_by", type="string", nullable=true)
-     */
-    private $createdBy;
-
-    /**
-     * @Gedmo\Blameable(on="update")
-     * @ORM\Column(name="updated_by", type="string", nullable=true)
-     */
-    private $updatedBy;
-
-    /**
-     * @Gedmo\Locale
-     */
-    protected $locale;
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Get id
@@ -115,238 +67,73 @@ class Page
         return $this->id;
     }
 
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
-
     /**
-     * Set name
+     * Add sidebar
      *
-     * @param string $name
+     * @param PageSidebar $sidebar
      * @return Page
      */
-    public function setName($name)
+    public function addSidebar(PageSidebar $sidebar)
     {
-        $this->name = $name;
+        $this->sidebars[] = $sidebar;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Remove sidebar
      *
-     * @return string
+     * @param PageSidebar $sidebar
      */
-    public function getName()
+    public function removeSidebar(PageSidebar $sidebar)
     {
-        return $this->name;
+        $this->sidebars->removeElement($sidebar);
+
+        return $this;
     }
 
     /**
-     * Set slug
+     * Get sidebars
      *
-     * @param string $slug
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSidebars()
+    {
+        return $this->sidebars;
+    }
+
+    /**
+     * Add block
+     *
+     * @param PageBlock $block
      * @return Page
      */
-    public function setSlug($slug)
+    public function addBlock(PageBlock $block)
     {
-        $this->slug = $slug;
+        $this->blocks[] = $block;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Remove block
      *
-     * @return string
+     * @param PageBlock $block
      */
-    public function getSlug()
+    public function removeBlock(PageBlock $block)
     {
-        return $this->slug;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Page
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
+        $this->blocks->removeElement($block);
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get blocks
      *
-     * @return string
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTitle()
+    public function getBlocks()
     {
-        return $this->title;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Page
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Template $template
-     * @return Page
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-
-        return $this;
-    }
-
-    /**
-     * @return \Bigfoot\Bundle\ContentBundle\Entity\Template
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
-     * Set image
-     *
-     * @param string $image
-     * @return Page
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * Set active
-     *
-     * @param boolean $active
-     * @return Page
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Page
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Page
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Get createdBy
-     *
-     * @return string
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
-     * Get updatedBy
-     *
-     * @return string
-     */
-    public function getUpdatedBy()
-    {
-        return $this->updatedBy;
+        return $this->blocks;
     }
 }

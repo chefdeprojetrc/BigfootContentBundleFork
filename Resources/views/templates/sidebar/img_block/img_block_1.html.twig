@@ -1,0 +1,9 @@
+<img src="http://placehold.it/300x150">
+
+{% for sBlock in sidebar.blocks %}
+    <hr />
+
+    <div class="block">
+        {{ display_block(sBlock.block, null, sidebar) }}
+    </div>
+{% endfor %}

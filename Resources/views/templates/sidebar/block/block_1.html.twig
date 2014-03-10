@@ -1,0 +1,7 @@
+{% for sBlock in sidebar.blocks %}
+    <div class="block">
+        {{ display_block(sBlock.block, null, sidebar) }}
+    </div>
+
+    <hr />
+{% endfor %}

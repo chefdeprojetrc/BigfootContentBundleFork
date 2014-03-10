@@ -1,13 +1,25 @@
 <?php
+
 namespace Bigfoot\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/** @ORM\MappedSuperclass */
-class Block
-{
+use Bigfoot\Bundle\ContentBundle\Model\Content;
+use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
 
+/**
+ * Block
+ *
+ * @ORM\Table(name="bigfoot_content_block")
+ * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\BlockRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string")
+ */
+class Block extends Content
+{
     /**
      * @var integer
      *
@@ -20,80 +32,36 @@ class Block
     /**
      * @var string
      *
-     * @ORM\Column(name="label", type="string", length=255)
+     * @ORM\Column(name="action", type="string", length=255, nullable=true)
      */
-    protected $label;
+    protected $action;
 
     /**
-     * @var integer
+     * @var ArrayCollection
      *
-     * @ORM\Column(name="position", type="integer")
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="block", cascade={"persist"})
      */
-    protected $position = 1;
+    private $pages;
 
     /**
-     * @var Template
+     * @var ArrayCollection
      *
-     * @ORM\ManyToOne(targetEntity="Template", inversedBy="blocks")
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block", mappedBy="block", cascade={"persist"})
      */
-    private $template;
+    private $sidebars;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="params", type="array")
+     * Construct Block
      */
-    protected $params;
-
-    /**
-     * @var datetime $created
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     */
-    protected $created;
-
-    /**
-     * @var datetime $updated
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
-    protected $updated;
-
-    /**
-     * @Gedmo\Blameable(on="create")
-     * @ORM\Column(name="created_by", type="string", nullable=true)
-     */
-    protected $createdBy;
-
-    /**
-     * @Gedmo\Blameable(on="update")
-     * @ORM\Column(name="updated_by", type="string", nullable=true)
-     */
-    protected $updatedBy;
-
-    /**
-     * @param $name string
-     * @param $value
-     */
-    public function __set($name, $value)
+    public function __construct()
     {
-        $this->params[$name] = $value;
+        $this->pages    = new ArrayCollection();
+        $this->sidebars = new ArrayCollection();
     }
 
-    /**
-     * @param $name string
-     * @return null
-     */
-    public function __get($name)
+    public function __toString()
     {
-        if (sizeof($this->params) > 0 && array_key_exists($name, $this->params)) {
-            return $this->params[$name];
-        }
-
-        return null;
+        return $this->getName().' - '.$this->getParentTemplate();
     }
 
     /**
@@ -107,182 +75,95 @@ class Block
     }
 
     /**
-     * @var boolean
+     * Set action
      *
-     * @ORM\Column(name="active", type="boolean")
-     */
-    private $active = true;
-
-    /**
-     * Set label
-     *
-     * @param string $label
-     * @return Widget
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
-    /**
-     * Set position
-     *
-     * @param integer $position
-     * @return integer
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return integer
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Template $template
+     * @param string $action
      * @return Block
      */
-    public function setTemplate($template)
+    public function setAction($action)
     {
-        $this->template = $template;
+        $this->action = $action;
 
         return $this;
     }
 
     /**
-     * @return \Bigfoot\Bundle\ContentBundle\Entity\Template
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
-     * Set active
-     *
-     * @param boolean $active
-     * @return StaticContent
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Set Parameters
-     */
-    public function setParams($params)
-    {
-        $this->params= $params;
-
-        return $this;
-    }
-
-    /**
-     * Get parameters
-     *
-     */
-    public function getParams()
-    {
-        return $this->params;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Page
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Page
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Get createdBy
+     * Get action
      *
      * @return string
      */
-    public function getCreatedBy()
+    public function getAction()
     {
-        return $this->createdBy;
+        return $this->action;
     }
 
     /**
-     * Get updatedBy
+     * Add page
      *
-     * @return string
+     * @param PageBlock $page
+     * @return Block
      */
-    public function getUpdatedBy()
+    public function addPage(PageBlock $page)
     {
-        return $this->updatedBy;
+        $this->pages->add($page);
+
+        return $this;
+    }
+
+    /**
+     * Remove page
+     *
+     * @param PageBlock $page
+     */
+    public function removePage(PageBlock $page)
+    {
+        $this->pages->removeElement($page);
+
+        return $this;
+    }
+
+    /**
+     * Get pages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPages()
+    {
+        return $this->pages;
+    }
+
+    /**
+     * Add sidebar
+     *
+     * @param SidebarBlock $sidebar
+     * @return Block
+     */
+    public function addSidebar(SidebarBlock $sidebar)
+    {
+        $this->sidebars->add($sidebar);
+
+        return $this;
+    }
+
+    /**
+     * Remove sidebar
+     *
+     * @param SidebarBlock $sidebar
+     */
+    public function removeSidebar(SidebarBlock $sidebar)
+    {
+        $this->sidebars->removeElement($sidebar);
+
+        return $this;
+    }
+
+    /**
+     * Get sidebars
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSidebars()
+    {
+        return $this->sidebars;
     }
 }

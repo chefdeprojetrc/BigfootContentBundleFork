@@ -1,0 +1,17 @@
+<img src="http://placehold.it/300x150">
+
+<h4>
+    {{ sidebar.title }}
+</h4>
+
+<p>
+    {{ sidebar.description|raw }}
+</p>
+
+{% for sBlock in sidebar.getOrderedBlocks() %}
+    <hr />
+
+    <div class="block">
+        {{ display_block(sBlock.block, null, sidebar) }}
+    </div>
+{% endfor %}

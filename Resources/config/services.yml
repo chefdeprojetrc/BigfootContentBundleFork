@@ -1,47 +1,174 @@
-parameters:
-    bigfoot_content.template.class: 'Bigfoot\Bundle\ContentBundle\Services\Template'
-    bigfoot_content.widgettype.class: 'Bigfoot\Bundle\ContentBundle\Form\WidgetType'
-    bigfoot_content.widgettesttype.class: 'Bigfoot\Bundle\ContentBundle\Form\WidgetTestType'
-    bigfoot_content.sidebartype.class: 'Bigfoot\Bundle\ContentBundle\Form\SidebarType'
-    bigfoot_content.staticcontenttype.class: 'Bigfoot\Bundle\ContentBundle\Form\StaticContentType'
-    bigfoot_content.pagetype.class: 'Bigfoot\Bundle\ContentBundle\Form\PageType'
-    bigfoot_content.display_content.class: 'Bigfoot\Bundle\ContentBundle\Services\DisplayContent'
-
 services:
-    bigfoot_content.template:
-            class: '%bigfoot_content.template.class%'
-    bigfoot_bundle_contentbundle_widgettype:
-            class: '%bigfoot_content.widgettype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_widgettype}
-    bigfoot_bundle_contentbundle_widgettesttype:
-            class: '%bigfoot_content.widgettesttype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_widgettesttype}
-    bigfoot_bundle_contentbundle_sidebartype:
-            class: '%bigfoot_content.sidebartype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_sidebartype}
-    bigfoot_bundle_contentbundle_pagetype:
-            class: '%bigfoot_content.pagetype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_pagetype}
-    bigfoot_bundle_contentbundle_staticcontenttype:
-            class: '%bigfoot_content.staticcontenttype.class%'
-            tags:
-                - { name: form.type, alias: bigfoot_bundle_contentbundle_staticcontenttype}
-    bigfoot_content.display_content:
-            class: '%bigfoot_content.display_content.class%'
-            arguments: [@service_container]
-    bigfoot_content.twig.content_renderer_extension:
-        class: Bigfoot\Bundle\ContentBundle\Twig\ContentRendererExtension
-        arguments: [@bigfoot_content.display_content]
+    # Content Extension
+    bigfoot_content.twig.extension.content:
+        class: Bigfoot\Bundle\ContentBundle\Twig\Extension\ContentExtension
+        arguments:
+            - @twig
+            - @router
+            - @doctrine.orm.entity_manager
         tags:
             - { name: twig.extension }
 
-    # Menu Listener
-    bigfoot_content.listener.menu:
-        class: Bigfoot\Bundle\ContentBundle\Listener\MenuListener
+    # Menu Subscriber
+    bigfoot_content.subscriber.menu:
+        class: Bigfoot\Bundle\ContentBundle\Subscriber\MenuSubscriber
         arguments: [@security.context]
         tags:
             - { name: kernel.event_subscriber }
+
+
+    # Content Type
+    bigfoot_content.form.type.content:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\ContentType
+        tags:
+            - { name: form.type, alias: admin_content }
+
+    # Template Type
+    bigfoot_content.form.type.template:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\TemplateType
+        tags:
+            - { name: form.type, alias: admin_template }
+
+    # Page Sidebar Type
+    bigfoot_content.form.type.page_sidebar:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\SidebarType
+        arguments:
+            - %bigfoot_content.templates.sidebar%
+        tags:
+            - { name: form.type, alias: admin_page_sidebar }
+
+    # Page Block Type
+    bigfoot_content.form.type.page_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\BlockType
+        arguments:
+            - %bigfoot_content.templates.block%
+        tags:
+            - { name: form.type, alias: admin_page_block }
+
+    # Sidebar Block Type
+    bigfoot_content.form.type.sidebar_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\BlockType
+        arguments:
+            - %bigfoot_content.templates.block%
+        tags:
+            - { name: form.type, alias: admin_sidebar_block }
+
+    # Page Template TitleDesc Type
+    bigfoot_content.form.type.page_template_title_desc:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc }
+
+    # Page Template TitleDescImg Type
+    bigfoot_content.form.type.page_template_title_desc_img:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescImgType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc_img }
+
+    # Page Template TitleDescBlock Type
+    bigfoot_content.form.type.page_template_title_desc_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescBlockType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc_block }
+
+    # Page Template TitleDescImgBlock Type
+    bigfoot_content.form.type.page_template_title_desc_img_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescImgBlockType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc_img_block }
+
+    # Page Template TitleDescSidebar Type
+    bigfoot_content.form.type.page_template_title_desc_sidebar:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescSidebarType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc_sidebar }
+
+    # Page Template TitleDescBlockSidebar Type
+    bigfoot_content.form.type.page_template_title_desc_block_sidebar:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescBlockSidebarType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc_block_sidebar }
+
+    # Page Template TitleDescImgBlockSidebar Type
+    bigfoot_content.form.type.page_template_title_desc_img_block_sidebar:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescImgBlockSidebarType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc_img_block_sidebar }
+
+    # Page Template TitleDescImgSidebar Type
+    bigfoot_content.form.type.page_template_title_desc_img_sidebar:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescImgSidebarType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc_img_sidebar }
+
+    # Page Template TitleDesc2 Type
+    bigfoot_content.form.type.page_template_title_desc2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDes2cType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc2 }
+
+    # Page Template TitleDesc2Img Type
+    bigfoot_content.form.type.page_template_title_desc2_img:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2ImgType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc2_img }
+
+    # Page Template TitleDesc2Block Type
+    bigfoot_content.form.type.page_template_title_desc2_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2BlockType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc2_block }
+
+    # Page Template TitleDesc2ImgBlock Type
+    bigfoot_content.form.type.page_template_title_desc2_img_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2ImgBlockType
+        tags:
+            - { name: form.type, alias: admin_page_template_title_desc2_img_block }
+
+    # Sidebar Template Block Type
+    bigfoot_content.form.type.sidebar_template_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\BlockType
+        tags:
+            - { name: form.type, alias: admin_sidebar_template_block }
+
+    # Sidebar Template ImgBlock Type
+    bigfoot_content.form.type.sidebar_template_img_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\ImgBlockType
+        tags:
+            - { name: form.type, alias: admin_sidebar_template_img_block }
+
+    # Sidebar Template TitleBlock Type
+    bigfoot_content.form.type.sidebar_template_title_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleBlockType
+        tags:
+            - { name: form.type, alias: admin_sidebar_template_title_block }
+
+    # Sidebar Template TitleImgBlock Type
+    bigfoot_content.form.type.sidebar_template_title_img_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleImgBlockType
+        tags:
+            - { name: form.type, alias: admin_sidebar_template_title_img_block }
+
+    # Sidebar Template TitleDescBlock Type
+    bigfoot_content.form.type.sidebar_template_title_desc_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleDescBlockType
+        tags:
+            - { name: form.type, alias: admin_sidebar_template_title_desc_block }
+
+    # Sidebar Template TitleDescImgBlock Type
+    bigfoot_content.form.type.sidebar_template_title_desc_img_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleDescImgBlockType
+        tags:
+            - { name: form.type, alias: admin_sidebar_template_title_desc_img_block }
+
+    # Block Template TitleDescImg Type
+    bigfoot_content.form.type.block_template_title_desc_img:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\TitleDescImgType
+        tags:
+            - { name: form.type, alias: admin_block_template_title_desc_img }
+
+    # Block Template Title2Desc2Img2 Type
+    bigfoot_content.form.type.block_template_title2_desc2_img2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\Title2Desc2Img2Type
+        tags:
+            - { name: form.type, alias: admin_block_template_title2_desc2_img2 }

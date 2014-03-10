@@ -1,7 +1,0 @@
-{% extends bigfoot_theme_bundle ~ ':crud:form.html.twig' %}
-
-{%- block form %}
-    {{ form_row(form.sidebar, {'attr': {'class': 'sidebar_select'}, value: id_sidebar|number_format, 'label' : 'Sidebar'}) }}
-    {{ form_widget(form.position, {'attr': {'class': 'sortable-field'}, value: position|number_format}) }}
-    {{ form_widget(form) }}
-{%- endblock %}

@@ -5,15 +5,20 @@ namespace Bigfoot\Bundle\ContentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Bigfoot\Bundle\ContentBundle\Util\ContentManager;
+
+use Bigfoot\Bundle\ContentBundle\Model\Content;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar as PageSidebar;
+use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
 
 /**
  * Sidebar
  *
- * @ORM\Table()
+ * @ORM\Table(name="bigfoot_content_sidebar")
  * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\SidebarRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string")
  */
-class Sidebar
+class Sidebar extends Content
 {
     /**
      * @var integer
@@ -22,97 +27,40 @@ class Sidebar
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @var string
+     * @var ArrayCollection
      *
-     * @Gedmo\Slug(fields={"title"}, updatable=true, unique=true)
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar", mappedBy="sidebar", cascade={"persist"})
      */
-    private $slug;
+    private $pages;
 
     /**
-     * @var string
+     * @var ArrayCollection
      *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block", mappedBy="sidebar", cascade={"persist"})
      */
-    private $title;
+    private $blocks;
 
     /**
-     * @var Template
-     *
-     * @ORM\ManyToOne(targetEntity="Template", inversedBy="sidebars")
-     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
-     */
-    private $template;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean")
-     */
-    private $active = true;
-
-    /**
-     * @var ArrayCollection $staticcontent
-     *
-     * @ORM\OneToMany(targetEntity="StaticContent", mappedBy="sidebar", cascade={"persist", "remove", "merge"})
-     */
-    private $staticcontent;
-
-    /**
-     * @var ArrayCollection $widget
-     *
-     * @ORM\OneToMany(targetEntity="Widget", mappedBy="sidebar", cascade={"persist", "remove", "merge"})
-     */
-    private $widget;
-
-    /**
-     * @Gedmo\Locale
-     */
-    protected $locale;
-
-    /**
-     * @var text
-     * @Gedmo\Translatable
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    protected $description;
-
-    /**
-     * @var string
-     * @ORM\Column(name="thumbnail", type="string", length=255, nullable=true)
-     */
-    protected $thumbnail;
-
-    /**
-     * @var SidebarCategory
-     *
-     * @ORM\ManyToOne(targetEntity="SidebarCategory", inversedBy="sidebars", cascade={"persist"})
-     * @ORM\JoinColumn(name="sidebar_category_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    private $sidebarCategory;
-
-    /**
-     * Constructor
+     * Construct Sidebar
      */
     public function __construct()
     {
-        $this->staticcontent = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->widget = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pages  = new ArrayCollection();
+        $this->blocks = new ArrayCollection();
     }
 
     public function __toString()
     {
-        return $this->title;
+        return $this->getName().' - '.$this->getParentTemplate();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -120,233 +68,88 @@ class Sidebar
     }
 
     /**
-     * Set slug
+     * Add page
      *
-     * @param string $slug
+     * @param PageSidebar $page
      * @return Sidebar
      */
-    public function setSlug($slug)
+    public function addPage(PageSidebar $page)
     {
-        $this->slug = $slug;
+        $this->pages[] = $page;
 
         return $this;
     }
 
     /**
-     * Get slug
+     * Remove page
      *
-     * @return string
+     * @param PageSidebar $page
      */
-    public function getSlug()
+    public function removePage(PageSidebar $page)
     {
-        return $this->slug;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Sidebar
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set active
-     *
-     * @param boolean $active
-     * @return Sidebar
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-    
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean 
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Add staticcontent
-     *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\StaticContent $staticcontent
-     * @return Sidebar
-     */
-    public function addStaticcontent(\Bigfoot\Bundle\ContentBundle\Entity\StaticContent $staticcontent)
-    {
-        $this->staticcontent[] = $staticcontent;
+        $this->pages->removeElement($page);
 
         return $this;
     }
 
     /**
-     * Remove staticcontent
-     *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\StaticContent $staticcontent
-     */
-    public function removeStaticcontent(\Bigfoot\Bundle\ContentBundle\Entity\StaticContent $staticcontent)
-    {
-        $this->staticcontent->removeElement($staticcontent);
-    }
-
-    /**
-     * Get staticcontent
+     * Get pages
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getStaticcontent()
+    public function getPages()
     {
-        return $this->staticcontent;
+        return $this->pages;
     }
 
     /**
+     * Add block
      *
-     * Get Block
+     * @param SidebarBlock $block
+     * @return Sidebar
+     */
+    public function addBlock(SidebarBlock $block)
+    {
+        $this->blocks[] = $block;
+
+        return $this;
+    }
+
+    /**
+     * Remove block
      *
+     * @param SidebarBlock $block
+     */
+    public function removeBlock(SidebarBlock $block)
+    {
+        $this->blocks->removeElement($block);
+
+        return $this;
+    }
+
+    /**
+     * Get blocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
+
+    /**
      * @return ArrayCollection
      */
-    public function getBlock()
+    public function getOrderedBlocks()
     {
-        $tabBlock = array_merge($this->staticcontent->toArray(), $this->widget->toArray());
-        ContentManager::aasort($tabBlock,"position");
+        $blocks = array();
 
-        return new ArrayCollection($tabBlock);
-    }
+        foreach ($this->blocks as $block) {
+            $blocks[$block->getPosition()] = $block;
+        }
 
-    /**
-     * Add widget
-     *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Widget $widget
-     * @return Sidebar
-     */
-    public function addWidget(\Bigfoot\Bundle\ContentBundle\Entity\Widget $widget)
-    {
-        $this->widget[] = $widget;
+        ksort($blocks);
 
-        return $this;
-    }
-
-    /**
-     * Remove widget
-     *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Widget $widget
-     */
-    public function removeWidget(\Bigfoot\Bundle\ContentBundle\Entity\Widget $widget)
-    {
-        $this->widget->removeElement($widget);
-    }
-
-    /**
-     * Get widget
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getWidget()
-    {
-        return $this->widget;
-    }
-
-    /**
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Template $template
-     * @return Sidebar
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-
-        return $this;
-    }
-
-    /**
-     * @return \Bigfoot\Bundle\ContentBundle\Entity\Template
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * @return Sidebar
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get Description
-     * @return text
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return Sidebar
-     */
-    public function setThumbnail($thumbnail)
-    {
-        $this->thumbnail = $thumbnail;
-
-        return $this;
-    }
-
-    /**
-     * Get Thumbnail
-     * @return text
-     */
-    public function getThumbnail()
-    {
-        return $this->thumbnail;
-    }
-
-    /**
-     * @return Sidebar
-     */
-    public function setSidebarCategory($sidebarCategory)
-    {
-        $this->sidebarCategory = $sidebarCategory;
-
-        return $this;
-    }
-
-    /**
-     * @return SidebarCategory
-     */
-    public function getSidebarCategory()
-    {
-        return $this->sidebarCategory;
+        return $blocks;
     }
 }

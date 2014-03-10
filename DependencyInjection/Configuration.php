@@ -22,9 +22,17 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('widgets')
-                    ->isRequired()
-                    ->prototype('variable')->end()
+                ->arrayNode('templates')
+                    ->prototype('array')
+                        ->prototype('array')
+                            ->children()
+                                ->scalarNode('class')->end()
+                                ->arrayNode('sub_templates')
+                                    ->prototype('scalar')->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ->end();

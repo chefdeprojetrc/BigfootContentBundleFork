@@ -1,7 +1,0 @@
-{% for block in tabFinal %}
-    {% if 'widget' in block.type %}
-        {% include block.template with block.data only %}
-    {% elseif  'static_content' in block.type %}
-        {{ display_content.displayContentAction(block.type, block.slug) | raw }}
-    {% endif %}
-{% endfor %}

@@ -8,11 +8,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Bigfoot\Bundle\ContentBundle\Entity\Block;
 
 /**
- * TitleDescImg
+ * TitleDesc
  *
  * @ORM\Entity()
  */
-class TitleDescImg extends Block
+class TitleDesc extends Block
 {
     /**
      * @var string
@@ -31,20 +31,13 @@ class TitleDescImg extends Block
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="media", type="string", length=255)
-     */
-    private $media;
-
-    /**
      * Get parent template
      *
      * @return string
      */
     public function getParentTemplate()
     {
-        return 'title_desc_img';
+        return 'title_desc';
     }
 
     /**
@@ -54,14 +47,14 @@ class TitleDescImg extends Block
      */
     public function getTemplate()
     {
-        return 'TitleDescImg';
+        return 'TitleDesc';
     }
 
     /**
      * Set title
      *
      * @param string $title
-     * @return TitleDescImg
+     * @return Title2Desc2Img2
      */
     public function setTitle($title)
     {
@@ -84,7 +77,7 @@ class TitleDescImg extends Block
      * Set description
      *
      * @param string $description
-     * @return TitleDescImg
+     * @return Title2Desc2Img2
      */
     public function setDescription($description)
     {
@@ -101,21 +94,5 @@ class TitleDescImg extends Block
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * @param string $media
-     */
-    public function setMedia($media)
-    {
-        $this->media = $media;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMedia()
-    {
-        return $this->media;
     }
 }

@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class TitleDescImgType extends AbstractType
+class TitleDescType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -40,7 +40,6 @@ class TitleDescImgType extends AbstractType
                 )
             )
             ->add('description', 'bigfoot_richtext')
-            ->add('media', 'bigfoot_media')
             ->add('action', 'text', array('required' => false))
             ->add('translation', 'translatable_entity');
     }
@@ -52,7 +51,7 @@ class TitleDescImgType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block\Template\TitleDescImg',
+                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block\Template\TitleDesc',
                 'template'   => '',
                 'templates'  => ''
             )
@@ -64,6 +63,6 @@ class TitleDescImgType extends AbstractType
      */
     public function getName()
     {
-        return 'admin_block_template_title_desc_img';
+        return 'admin_block_template_title_desc';
     }
 }

@@ -167,6 +167,12 @@ services:
         tags:
             - { name: form.type, alias: admin_block_template_title_desc_img }
 
+    # Block Template TitleDesc Type
+    bigfoot_content.form.type.block_template_title_desc:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\TitleDescType
+        tags:
+            - { name: form.type, alias: admin_block_template_title_desc }
+
     # Block Template Title2Desc2Img2 Type
     bigfoot_content.form.type.block_template_title2_desc2_img2:
         class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\Title2Desc2Img2Type

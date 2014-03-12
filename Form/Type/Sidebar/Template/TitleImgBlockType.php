@@ -39,6 +39,7 @@ class TitleImgBlockType extends AbstractType
                     )
                 )
             )
+            ->add('media', 'bigfoot_media')
             ->add(
                 'blocks',
                 'collection',

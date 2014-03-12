@@ -41,6 +41,7 @@ class TitleDesc2ImgBlockType extends AbstractType
             )
             ->add('description', 'bigfoot_richtext')
             ->add('description2', 'bigfoot_richtext')
+            ->add('media', 'bigfoot_media')
             ->add(
                 'blocks',
                 'collection',

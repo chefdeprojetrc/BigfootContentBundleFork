@@ -15,6 +15,13 @@ use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
 class ImgBlock extends Sidebar
 {
     /**
+     * @var string
+     *
+     * @ORM\Column(name="media", type="string", length=255, nullable=true)
+     */
+    private $media;
+
+    /**
      * Get parent template
      *
      * @return string
@@ -32,5 +39,21 @@ class ImgBlock extends Sidebar
     public function getTemplate()
     {
         return 'ImgBlock';
+    }
+
+    /**
+     * @param string $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 }

@@ -25,6 +25,7 @@ class ImgBlockType extends AbstractType
                     'templates' => $options['templates']
                 )
             )
+            ->add('media', 'bigfoot_media')
             ->add(
                 'blocks',
                 'collection',

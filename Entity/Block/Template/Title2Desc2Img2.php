@@ -48,6 +48,20 @@ class Title2Desc2Img2 extends Block
     private $description2;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="media1", type="string", length=255, nullable=true)
+     */
+    private $media1;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="media2", type="string", length=255, nullable=true)
+     */
+    private $media2;
+
+    /**
      * Get parent template
      *
      * @return string
@@ -157,5 +171,37 @@ class Title2Desc2Img2 extends Block
     public function getDescription2()
     {
         return $this->description2;
+    }
+
+    /**
+     * @param string $media1
+     */
+    public function setMedia1($media1)
+    {
+        $this->media1 = $media1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMedia1()
+    {
+        return $this->media1;
+    }
+
+    /**
+     * @param string $media2
+     */
+    public function setMedia2($media2)
+    {
+        $this->media2 = $media2;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMedia2()
+    {
+        return $this->media2;
     }
 }

@@ -39,6 +39,13 @@ class TitleDesc2ImgBlock extends Page
     private $description2;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="media", type="string", length=255, nullable=true)
+     */
+    private $media;
+
+    /**
      * Get parent template
      *
      * @return string
@@ -125,5 +132,21 @@ class TitleDesc2ImgBlock extends Page
     public function getDescription2()
     {
         return $this->description2;
+    }
+
+    /**
+     * @param string $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 }

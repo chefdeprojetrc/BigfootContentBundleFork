@@ -40,6 +40,7 @@ class TitleDescImgBlockSidebarType extends AbstractType
                 )
             )
             ->add('description', 'bigfoot_richtext')
+            ->add('media', 'bigfoot_media')
             ->add(
                 'blocks',
                 'collection',

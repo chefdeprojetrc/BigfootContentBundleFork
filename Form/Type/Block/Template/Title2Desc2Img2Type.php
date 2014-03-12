@@ -55,6 +55,8 @@ class Title2Desc2Img2Type extends AbstractType
                 )
             )
             ->add('description2', 'bigfoot_richtext')
+            ->add('media1', 'bigfoot_media')
+            ->add('media2', 'bigfoot_media')
             ->add('action', 'text', array('required' => false))
             ->add('translation', 'translatable_entity');
     }

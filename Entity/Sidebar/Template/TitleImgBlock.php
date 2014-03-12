@@ -23,6 +23,13 @@ class TitleImgBlock extends Sidebar
     private $title;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="media", type="string", length=255, nullable=true)
+     */
+    private $media;
+
+    /**
      * Get parent template
      *
      * @return string
@@ -63,5 +70,21 @@ class TitleImgBlock extends Sidebar
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @param string $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 }

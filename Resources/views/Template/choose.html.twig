@@ -10,10 +10,11 @@
         <ul>
             {% for template in form.template %}
                 {% if template.vars.value in templates|keys %}
-                    <li class="template-row inline">
-                        <label>
+                    <li class="template-row inline" style="margin-right:10px;">
+                        <label style="text-align:center;">
                             {{ form_widget(template) }}
-                            <img src="{{ asset('images/template/' ~ form.vars.contentType ~ '/' ~ template.vars.value ~ '.svg') }}">
+                            <img src="{{ asset('images/template/' ~ form.vars.contentType ~ '/' ~ template.vars.value ~ '.svg') }}"><br />
+                            <span style="font-size:9px;">{{ template.vars.value }}</span>
                         </label>
                     </li>
                 {% endif %}

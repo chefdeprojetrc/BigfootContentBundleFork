@@ -32,14 +32,14 @@ class Sidebar extends Content
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar", mappedBy="sidebar", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar", mappedBy="sidebar", cascade={"persist", "remove"})
      */
     private $pages;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block", mappedBy="sidebar", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block", mappedBy="sidebar", cascade={"persist", "remove"})
      */
     private $blocks;
 
@@ -52,6 +52,9 @@ class Sidebar extends Content
         $this->blocks = new ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName().' - '.$this->getParentTemplate();

@@ -24,11 +24,13 @@ class Block
 
     /**
      * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar", inversedBy="blocks")
+     * @ORM\JoinColumn(name="sidebar_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $sidebar;
 
     /**
      * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Block", inversedBy="sidebars")
+     * @ORM\JoinColumn(name="block_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $block;
 

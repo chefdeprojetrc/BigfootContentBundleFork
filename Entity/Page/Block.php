@@ -24,11 +24,13 @@ class Block
 
     /**
      * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page", inversedBy="blocks")
+     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $page;
 
     /**
      * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Block", inversedBy="pages")
+     * @ORM\JoinColumn(name="block_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $block;
 

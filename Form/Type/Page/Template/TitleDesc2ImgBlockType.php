@@ -51,7 +51,8 @@ class TitleDesc2ImgBlockType extends AbstractType
                     'allow_delete' => true,
                     'type'         => 'admin_page_block',
                     'options'      => array(
-                        'page' => $options['data'],
+                        'page'       => $options['data'],
+                        'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Page\Block',
                     ),
                     'attr' => array(
                         'class' => 'widget-blocks',

@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
 use Bigfoot\Bundle\CoreBundle\Util\StringManager;
+use Bigfoot\Bundle\ContentBundle\Entity\Page;
+use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
 
 /**
  * Block controller.
@@ -118,7 +120,7 @@ class BlockController extends CrudController
     public function newAction(Request $request, $template)
     {
         $pTemplate = $this->getParentTemplate($template);
-        $templates = $this->getTemplates($pTemplate);
+        $templates = $this->getTemplates('block', $pTemplate);
         $block     = $templates['class'];
         $block     = new $block();
         $block->setTemplate($template);
@@ -139,7 +141,43 @@ class BlockController extends CrudController
             if ($form->isValid()) {
                 $this->persistAndFlush($block);
 
+                if ($request->isXmlHttpRequest()) {
+                    $contentType = $request->query->get('contentType');
+                    $qTemplate   = $request->query->get('template');
+
+                    if (is_numeric($qTemplate)) {
+                        $qTemplate = $this->getRepository('BigfootContentBundle:'.ucfirst($contentType))->find($qTemplate)->getSlugTemplate();
+                    }
+
+                    $pTemplate     = $this->getParentTemplate($qTemplate);
+                    $templates     = $this->getTemplates($contentType, $pTemplate);
+                    $contentEntity = $templates['class'];
+                    $contentEntity = new $contentEntity();
+                    $contentForm   = $this->createForm(
+                        'admin_'.$contentType.'_template_'.$pTemplate,
+                        $contentEntity,
+                        array(
+                            'template'  => $qTemplate,
+                            'templates' => $templates
+                        )
+                    );
+
+                    $blocksForm = $this->renderView('BigfootContentBundle:'.ucfirst($contentType).':Block/list.html.twig', array('form' => $contentForm->createView()));
+
+                    $content = array(
+                        'prototype' => $blocksForm,
+                        'option'    => array(
+                            'label' => $block->getName().' - '.$block->getParentTemplate(),
+                            'value' => $block->getId()
+                        )
+                    );
+
+                    return $this->renderAjax('new_block', 'Block created!', $content);
+                }
+
                 return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
+            } else {
+                return $this->renderAjax(false, 'Error during addition!', $this->renderForm($form, $action, $block)->getContent());
             }
         }
 
@@ -201,9 +239,9 @@ class BlockController extends CrudController
         return str_replace('_'.$end, '', $template);
     }
 
-    public function getTemplates($parent)
+    public function getTemplates($contentType, $parent)
     {
-        $templates = $this->container->getParameter('bigfoot_content.templates.block');
+        $templates = $this->container->getParameter('bigfoot_content.templates.'.$contentType);
 
         return $templates[$parent];
     }

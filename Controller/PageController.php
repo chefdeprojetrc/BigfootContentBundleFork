@@ -172,10 +172,15 @@ class PageController extends CrudController
         );
 
         $dbBlocks   = new ArrayCollection();
+        $dbBlocks2  = new ArrayCollection();
         $dbSidebars = new ArrayCollection();
 
         foreach ($page->getBlocks() as $block) {
             $dbBlocks->add($block);
+        }
+
+        foreach ($page->getBlocks2() as $block2) {
+            $dbBlocks2->add($block2);
         }
 
         foreach ($page->getSidebars() as $sidebar) {
@@ -190,6 +195,13 @@ class PageController extends CrudController
                     if ($page->getBlocks()->contains($block) === false) {
                         $page->getBlocks()->removeElement($block);
                         $this->getEntityManager()->remove($block);
+                    }
+                }
+
+                foreach ($dbBlocks2 as $block2) {
+                    if ($page->getBlocks2()->contains($block2) === false) {
+                        $page->getBlocks2()->removeElement($block2);
+                        $this->getEntityManager()->remove($block2);
                     }
                 }
 

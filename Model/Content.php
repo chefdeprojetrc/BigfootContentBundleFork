@@ -18,6 +18,7 @@ abstract class Content
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
@@ -25,8 +26,11 @@ abstract class Content
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank()
      * @Gedmo\Translatable
      * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
+     * @Gedmo\Translatable
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     protected $slug;

@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 use Bigfoot\Bundle\ContentBundle\Model\Content;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block2 as PageBlock2;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar as PageSidebar;
 
 /**
@@ -32,16 +33,23 @@ class Page extends Content
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar", mappedBy="page", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="page", cascade={"persist", "remove"})
      */
-    private $sidebars;
+    private $blocks;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="page", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block2", mappedBy="page", cascade={"persist", "remove"})
      */
-    private $blocks;
+    private $blocks2;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar", mappedBy="page", cascade={"persist", "remove"})
+     */
+    private $sidebars;
 
     /**
      * Construct Page
@@ -50,6 +58,7 @@ class Page extends Content
     {
         $this->sidebars = new ArrayCollection();
         $this->blocks   = new ArrayCollection();
+        $this->blocks2  = new ArrayCollection();
     }
 
     /**
@@ -130,5 +139,40 @@ class Page extends Content
     public function getBlocks()
     {
         return $this->blocks;
+    }
+
+    /**
+     * Add block2
+     *
+     * @param PageBlock2 $block2
+     * @return Page
+     */
+    public function addBlock2(PageBlock2 $block2)
+    {
+        $this->blocks2[] = $block2;
+
+        return $this;
+    }
+
+    /**
+     * Remove block2
+     *
+     * @param PageBlock2 $block2
+     */
+    public function removeBlock2(PageBlock2 $block2)
+    {
+        $this->blocks2->removeElement($block2);
+
+        return $this;
+    }
+
+    /**
+     * Get blocks2
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlocks2()
+    {
+        return $this->blocks2;
     }
 }

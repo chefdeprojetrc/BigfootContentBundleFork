@@ -1,4 +1,4 @@
-{% extends bigfoot_theme_bundle ~ ':crud:form.html.twig' %}
+{% extends bigfoot_theme_bundle ~ ':crud:form' ~ app.request.get('layout') ~ '.html.twig' %}
 
 {% form_theme form bigfoot_theme_bundle ~ ':content:form/page/blocks.html.twig' bigfoot_theme_bundle ~ ':content:form/page/sidebars.html.twig' %}
 

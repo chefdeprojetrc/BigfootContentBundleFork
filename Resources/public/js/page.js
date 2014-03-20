@@ -3,15 +3,24 @@ $(function() {
     /**
      * Handle blocks
      */
-    var
-        containerBlock = $('.widget-blocks'),
-        prototypeBlock = containerBlock.attr('data-prototype'),
-        blocks         = containerBlock.find('.admin_block_select');
+    var containers = $('.widget-blocks');
 
-    handleBlockTemplates(blocks);
+    containers.each(function (index) {
+        var blocks = $(this).find('.admin_block_select');
 
-    $('.admin-add-page-block').on('click', function (event) {
+        handleBlockTemplates(blocks);
+    });
+
+    $('body').on('click', '.admin-add-page-block', function (event) {
         event.preventDefault();
+
+        var
+            containerBlock = $(this)
+                .closest('.collection-container')
+                    .find('.widget-blocks');
+
+            prototypeBlock = containerBlock.attr('data-prototype'),
+            blocks         = containerBlock.find('.admin_block_select');
 
         blockCount = containerBlock
             .find('li')
@@ -23,9 +32,7 @@ $(function() {
 
         $(".chosen-select").chosen();
 
-        var
-            lastBlock = containerBlock.find('li:last'),
-            blocks    = containerBlock.find('.admin_block_select');
+        var blocks = containerBlock.find('.admin_block_select');
 
         handleBlockTemplates(blocks);
     });
@@ -57,7 +64,7 @@ $(function() {
                     .html()
                     .split('-'),
 
-            template = val[1].trim(),
+            template = val[val.length-1].trim(),
             radios   = block
                 .closest('.block-row')
                     .find('input[type=radio]');

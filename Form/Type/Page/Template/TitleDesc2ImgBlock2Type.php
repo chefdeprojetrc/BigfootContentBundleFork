@@ -1,13 +1,13 @@
 <?php
 
-namespace Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template;
+namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class Title2Desc2Img2Type extends AbstractType
+class TitleDesc2ImgBlock2Type extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -32,7 +32,7 @@ class Title2Desc2Img2Type extends AbstractType
                     'attr' => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
-                        'data-content'   => 'This is the title of the block as displayed to the web user.',
+                        'data-content'   => 'This is the title of the page as displayed to the web user.',
                         'data-title'     => 'Title',
                         'data-trigger'   => 'hover',
                         'data-placement' => 'right'
@@ -40,24 +40,42 @@ class Title2Desc2Img2Type extends AbstractType
                 )
             )
             ->add('description', 'bigfoot_richtext')
+            ->add('description2', 'bigfoot_richtext')
+            ->add('media', 'bigfoot_media')
             ->add(
-                'title2',
-                'text',
+                'blocks',
+                'collection',
                 array(
+                    'prototype'    => true,
+                    'allow_add'    => true,
+                    'allow_delete' => true,
+                    'type'         => 'admin_page_block',
+                    'options'      => array(
+                        'page'       => $options['data'],
+                        'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Page\Block',
+                    ),
                     'attr' => array(
-                        'data-placement' => 'bottom',
-                        'data-popover'   => true,
-                        'data-content'   => 'This is the title of the block as displayed to the web user.',
-                        'data-title'     => 'Title',
-                        'data-trigger'   => 'hover',
-                        'data-placement' => 'right'
+                        'class' => 'widget-blocks',
                     )
                 )
             )
-            ->add('description2', 'bigfoot_richtext')
-            ->add('media', 'bigfoot_media')
-            ->add('media2', 'bigfoot_media')
-            ->add('action', 'text', array('required' => false))
+            ->add(
+                'blocks2',
+                'collection',
+                array(
+                    'prototype'    => true,
+                    'allow_add'    => true,
+                    'allow_delete' => true,
+                    'type'         => 'admin_page_block',
+                    'options'      => array(
+                        'page'       => $options['data'],
+                        'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Page\Block2',
+                    ),
+                    'attr' => array(
+                        'class' => 'widget-blocks',
+                    )
+                )
+            )
             ->add('translation', 'translatable_entity');
     }
 
@@ -68,7 +86,7 @@ class Title2Desc2Img2Type extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block\Template\Title2Desc2Img2',
+                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Page\Template\TitleDesc2ImgBlock2',
                 'template'   => '',
                 'templates'  => ''
             )
@@ -80,6 +98,6 @@ class Title2Desc2Img2Type extends AbstractType
      */
     public function getName()
     {
-        return 'admin_block_template_title2_desc2_img2';
+        return 'admin_page_template_title_desc2_img_block2';
     }
 }

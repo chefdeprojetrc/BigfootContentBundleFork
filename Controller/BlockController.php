@@ -197,7 +197,7 @@ class BlockController extends CrudController
             throw new NotFoundHttpException('Unable to find block entity.');
         }
 
-        $templates = $this->getTemplates($block->getParentTemplate());
+        $templates = $this->getTemplates('block', $block->getParentTemplate());
         $action    = $this->generateUrl('admin_block_edit', array('id' => $block->getId()));
         $form      = $this->createForm(
             'admin_block_template_'.$block->getParentTemplate(),

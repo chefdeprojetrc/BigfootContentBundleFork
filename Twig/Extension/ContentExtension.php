@@ -96,7 +96,7 @@ class ContentExtension extends Twig_Extension
         }
 
         if (!$block) {
-            throw new NotFoundHttpException('Unable to find block.');
+            return '';
         }
 
         $action      = $block->getAction();

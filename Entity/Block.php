@@ -7,8 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Bigfoot\Bundle\ContentBundle\Model\Content;
-use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block2 as PageBlock2;
+use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
 
 /**
  * Block
@@ -41,7 +42,14 @@ class Block extends Content
      *
      * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="block", cascade={"persist", "remove"})
      */
-    private $pages;
+    private $pageBlocks;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block2", mappedBy="block", cascade={"persist", "remove"})
+     */
+    private $pageBlocks2;
 
     /**
      * @var ArrayCollection
@@ -55,8 +63,9 @@ class Block extends Content
      */
     public function __construct()
     {
-        $this->pages    = new ArrayCollection();
-        $this->sidebars = new ArrayCollection();
+        $this->pageBlocks  = new ArrayCollection();
+        $this->pageBlocks2 = new ArrayCollection();
+        $this->sidebars    = new ArrayCollection();
     }
 
     /**
@@ -101,38 +110,73 @@ class Block extends Content
     }
 
     /**
-     * Add page
+     * Add pageBlocks
      *
-     * @param PageBlock $page
+     * @param PageBlock $pageBlocks
      * @return Block
      */
-    public function addPage(PageBlock $page)
+    public function addPageBlock(PageBlock $pageBlock)
     {
-        $this->pages->add($page);
+        $this->pageBlocks->add($pageBlock);
 
         return $this;
     }
 
     /**
-     * Remove page
+     * Remove pageBlocks
      *
-     * @param PageBlock $page
+     * @param PageBlock $pageBlocks
      */
-    public function removePage(PageBlock $page)
+    public function removePageBlock(PageBlock $pageBlock)
     {
-        $this->pages->removeElement($page);
+        $this->pageBlocks->removeElement($pageBlock);
 
         return $this;
     }
 
     /**
-     * Get pages
+     * Get pageBlocks
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPages()
+    public function getPageBlocks()
     {
-        return $this->pages;
+        return $this->pageBlocks;
+    }
+
+    /**
+     * Add pageBlocks2
+     *
+     * @param PageBlock $pageBlocks2
+     * @return Block
+     */
+    public function addPageBlock2(PageBlock2 $pageBlock2)
+    {
+        $this->pageBlocks2->add($pageBlock2);
+
+        return $this;
+    }
+
+    /**
+     * Remove pageBlocks2
+     *
+     * @param PageBlock $pageBlocks2
+     */
+    public function removePageBlock2(PageBlock2 $pageBlock2)
+    {
+        $this->pageBlocks2->removeElement($pageBlock2);
+
+        return $this;
+    }
+
+    /**
+     * Get pageBlocks2
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPageBlocks2()
+    {
+        return $this->pageBlocks2;
     }
 
     /**

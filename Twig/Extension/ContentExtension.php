@@ -11,6 +11,7 @@ use BeSimple\I18nRoutingBundle\Routing\Router;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Page;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar as PageSidebar;
 use Bigfoot\Bundle\ContentBundle\Entity\Block;
 
@@ -45,24 +46,22 @@ class ContentExtension extends Twig_Extension
         );
     }
 
-    public function displayPage($page, array $parameters = null, $tpl = null)
+    public function displayPage($page, array $data = null)
     {
-        $template = $tpl ? $tpl : $page->getParentTemplate().'/'.$page->getSlugTemplate();
-
-        // var_dump($tpl);die();
+        $template = (isset($data['template'])) ? $data['template'] : $page->getParentTemplate().'/'.$page->getSlugTemplate();
 
         return $this->twig->render(
             'BigfootContentBundle:templates:page/'.$template.'.html.twig',
             array(
                 'page'       => $page,
-                'parameters' => $parameters,
+                'parameters' => (isset($data['parameters'])) ? $data['parameters'] : null,
             )
         );
     }
 
-    public function displaySidebar($sidebar, array $parameters = null, $page = null, $tpl = null)
+    public function displaySidebar($sidebar, array $data = null)
     {
-        if (!$sidebar instanceof Sidebar) {
+        if (is_string($sidebar)) {
             $sidebar = $this->entityManager->getRepository('BigfootContentBundle:Sidebar')->findOneBySlug($sidebar);
         }
 
@@ -70,28 +69,22 @@ class ContentExtension extends Twig_Extension
             throw new NotFoundHttpException('Unable to find sidebar.');
         }
 
-        $pageSidebar = $this->entityManager->getRepository('BigfootContentBundle:Page\Sidebar')->findOneByPageSidebar($page, $sidebar);
-
-        if ($pageSidebar) {
-            $template = $pageSidebar->getTemplate();
-        } elseif ($tpl) {
-            $template = $tpl;
-        } else {
-            $template = $sidebar->getParentTemplate().'/'.$sidebar->getSlugTemplate();
-        }
+        $pageSidebar = (!$sidebar instanceof Sidebar) ? $sidebar : false;
+        $template    = ($pageSidebar) ? $pageSidebar->getTemplate() : $sidebar->getParentTemplate().'/'.$sidebar->getSlugTemplate();
+        $template    = (isset($data['template'])) ? $data['template'] : $template;
 
         return $this->twig->render(
             'BigfootContentBundle:templates:sidebar/'.$template.'.html.twig',
             array(
                 'sidebar'    => $sidebar,
-                'parameters' => $parameters,
+                'parameters' => (isset($data['parameters'])) ? $data['parameters'] : null,
             )
         );
     }
 
-    public function displayBlock($block, array $parameters = null, $entity = null, $tpl = null)
+    public function displayBlock($block, array $data = null)
     {
-        if (!$block instanceof Block) {
+        if (is_string($block)) {
             $block = $this->entityManager->getRepository('BigfootContentBundle:Block')->findOneBySlug($block);
         }
 
@@ -99,28 +92,22 @@ class ContentExtension extends Twig_Extension
             throw new NotFoundHttpException('Unable to find block.');
         }
 
-        $action      = $block->getAction();
-        $nParameters = $this->handleParameters($action, $parameters);
+        $entityBlock = (!$block instanceof Block) ? $block : false;
+        $template    = ($entityBlock) ? $entityBlock->getTemplate() : $block->getParentTemplate().'/'.$block->getSlugTemplate();
+        $template    = (isset($data['template'])) ? $data['template'] : $template;
 
-        if ($entity instanceof Page) {
-            $entityBlock = $this->entityManager->getRepository('BigfootContentBundle:Page\Block')->findOneByPageBlock($entity, $block);
-        } elseif ($entity instanceof Sidebar) {
-            $entityBlock = $this->entityManager->getRepository('BigfootContentBundle:Sidebar\Block')->findOneBySidebarBlock($entity, $block);
+        if (isset($data['parameters'])) {
+            $action             = ($entityBlock) ? $entityBlock->getBlock()->getAction() : $block->getAction();
+            $data['parameters'] = $this->handleParameters($action, $data['parameters']);
         }
 
-        if (isset($entityBlock)) {
-            $template = $entityBlock->getTemplate();
-        } elseif ($tpl) {
-            $template = $tpl;
-        } else {
-            $template = $block->getParentTemplate().'/'.$block->getSlugTemplate();
-        }
+        $block = (!$block instanceof Block) ? $entityBlock->getBlock() : $block;
 
         return $this->twig->render(
             'BigfootContentBundle:templates:block/'.$template.'.html.twig',
             array(
                 'block'      => $block,
-                'parameters' => $parameters,
+                'parameters' => (isset($data['parameters'])) ? $data['parameters'] : null,
             )
         );
     }

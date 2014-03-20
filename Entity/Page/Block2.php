@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Block
+ * Block2
  *
- * @ORM\Table(name="bigfoot_content_page_block")
- * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\Page\BlockRepository")
+ * @ORM\Table(name="bigfoot_content_page_block_2")
+ * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\Page\Block2Repository")
  */
-class Block
+class Block2
 {
     /**
      * @var integer
@@ -23,13 +23,13 @@ class Block
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page", inversedBy="blocks")
+     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page", inversedBy="blocks2")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $page;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Block", inversedBy="pageBlocks")
+     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Block", inversedBy="pageBlocks2")
      * @ORM\JoinColumn(name="block_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $block;

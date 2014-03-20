@@ -1,0 +1,29 @@
+<div class="col-md-8 content">
+    <div class="page">
+        <img src="http://placehold.it/550x150">
+
+        <h4>
+            {{ page.title }}
+        </h4>
+
+        <p>
+            {{ page.description|raw }}
+        </p>
+
+        <div class="inner-sidebar">
+            {% for pBlock in page.blocks %}
+                {{ display_block(pBlock) }}
+            {% endfor %}
+        </div>
+
+        {# {{ display_block('social', { 'parameters': { 'lol':'lul', 'lal': 'lil' }, 'template': 'title_desc/title_desc_1' }) }} #}
+    </div>
+</div>
+
+<div class="col-md-4 sidebar">
+    <div class="inner-sidebar">
+        {% for pBlock2 in page.blocks2 %}
+            {{ display_block(pBlock2) }}
+        {% endfor %}
+    </div>
+</div>

@@ -8,11 +8,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Bigfoot\Bundle\ContentBundle\Entity\Page;
 
 /**
- * TitleDesc2Block
+ * TitleDescImgBlock2
  *
  * @ORM\Entity
  */
-class TitleDesc2Block extends Page
+class TitleDescImgBlock2 extends Page
 {
     /**
      * @var string
@@ -31,19 +31,11 @@ class TitleDesc2Block extends Page
     private $description;
 
     /**
-     * @var text
+     * @var string
      *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="description_2", type="text", nullable=true)
+     * @ORM\Column(name="media", type="string", length=255, nullable=true)
      */
-    private $description2;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="page", cascade={"persist", "remove"})
-     */
-    private $blocks;
+    private $media;
 
     /**
      * Get parent template
@@ -52,7 +44,7 @@ class TitleDesc2Block extends Page
      */
     public function getParentTemplate()
     {
-        return 'title_desc2_block';
+        return 'title_desc_img_block2';
     }
 
     /**
@@ -62,14 +54,14 @@ class TitleDesc2Block extends Page
      */
     public function getTemplate()
     {
-        return 'TitleDesc2Block';
+        return 'TitleDescImgBlock2';
     }
 
     /**
      * Set title
      *
      * @param string $title
-     * @return TitleDesc2Block
+     * @return TitleDescImgBlock2
      */
     public function setTitle($title)
     {
@@ -92,7 +84,7 @@ class TitleDesc2Block extends Page
      * Set description
      *
      * @param string $description
-     * @return TitleDesc2Block
+     * @return TitleDescImgBlock2
      */
     public function setDescription($description)
     {
@@ -112,25 +104,18 @@ class TitleDesc2Block extends Page
     }
 
     /**
-     * Set description2
-     *
-     * @param string $description2
-     * @return TitleDesc2Block
+     * @param string $media
      */
-    public function setDescription2($description2)
+    public function setMedia($media)
     {
-        $this->description2 = $description2;
-
-        return $this;
+        $this->media = $media;
     }
 
     /**
-     * Get description2
-     *
      * @return string
      */
-    public function getDescription2()
+    public function getMedia()
     {
-        return $this->description2;
+        return $this->media;
     }
 }

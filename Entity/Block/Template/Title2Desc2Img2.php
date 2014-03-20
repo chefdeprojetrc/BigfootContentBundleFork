@@ -50,14 +50,14 @@ class Title2Desc2Img2 extends Block
     /**
      * @var string
      *
-     * @ORM\Column(name="media1", type="string", length=255, nullable=true)
+     * @ORM\Column(name="media", type="string", length=255, nullable=true)
      */
-    private $media1;
+    private $media;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="media2", type="string", length=255, nullable=true)
+     * @ORM\Column(name="media_2", type="string", length=255, nullable=true)
      */
     private $media2;
 
@@ -174,19 +174,19 @@ class Title2Desc2Img2 extends Block
     }
 
     /**
-     * @param string $media1
+     * @param string $media
      */
-    public function setMedia1($media1)
+    public function setMedia($media)
     {
-        $this->media1 = $media1;
+        $this->media = $media;
     }
 
     /**
      * @return string
      */
-    public function getMedia1()
+    public function getMedia()
     {
-        return $this->media1;
+        return $this->media;
     }
 
     /**

@@ -50,7 +50,8 @@ class TitleDescImgBlockType extends AbstractType
                     'allow_delete' => true,
                     'type'         => 'admin_sidebar_block',
                     'options'      => array(
-                        'sidebar' => $options['data'],
+                        'sidebar'    => $options['data'],
+                        'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block',
                     ),
                     'attr' => array(
                         'class' => 'widget-blocks',

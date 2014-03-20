@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class TemplateType extends AbstractType
 {
@@ -24,10 +25,13 @@ class TemplateType extends AbstractType
                 'template',
                 'choice',
                 array(
-                    'required' => true,
-                    'expanded' => true,
-                    'multiple' => false,
-                    'choices'  => $this->toStringTemplates($templates)
+                    'required'    => true,
+                    'expanded'    => true,
+                    'multiple'    => false,
+                    'choices'     => $this->toStringTemplates($templates),
+                    'constraints' => array(
+                        new Assert\NotNull(),
+                    )
                 )
             );
     }

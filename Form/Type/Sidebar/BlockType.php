@@ -82,8 +82,7 @@ class BlockType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block',
-                'sidebar'    => ''
+                'sidebar' => null
             )
         );
     }

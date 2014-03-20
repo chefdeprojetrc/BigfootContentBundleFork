@@ -3,29 +3,37 @@ $(function() {
     /**
      * Handle blocks
      */
-    var
-        container = $('.widget-blocks'),
-        prototype = container.attr('data-prototype'),
-        blocks    = container.find('.admin_block_select');
+    var containers = $('.widget-blocks');
 
-    handleTemplates(blocks);
+    containers.each(function (index) {
+        var blocks = $(this).find('.admin_block_select');
 
-    $('.admin-add-sidebar-block').on('click', function (event) {
+        handleTemplates(blocks);
+    });
+
+    $('body').on('click', '.admin-add-sidebar-block', function (event) {
         event.preventDefault();
 
-        blockCount = container
+        var
+            containerBlock = $(this)
+                .closest('.collection-container')
+                    .find('.widget-blocks');
+
+        var
+            prototypeBlock = containerBlock.attr('data-prototype'),
+            blocks         = containerBlock.find('.admin_block_select');
+
+        var blockCount = containerBlock
             .find('li')
             .length;
 
-        newBlock = prototype.replace(/__name__/g, blockCount);
+        var newBlock = prototypeBlock.replace(/__name__/g, blockCount);
 
-        container.append(newBlock);
+        containerBlock.append(newBlock);
 
         $(".chosen-select").chosen();
 
-        var
-            lastBlock = container.find('li:last'),
-            blocks    = container.find('.admin_block_select');
+        var blocks = containerBlock.find('.admin_block_select');
 
         handleTemplates(blocks);
     });
@@ -57,7 +65,7 @@ $(function() {
                     .html()
                     .split('-'),
 
-            template = val[1].trim(),
+            template = val[val.length-1].trim(),
             radios   = block
                 .closest('.block-row')
                     .find('input[type=radio]');

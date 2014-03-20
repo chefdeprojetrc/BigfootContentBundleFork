@@ -19,14 +19,15 @@ $(function() {
                 .closest('.collection-container')
                     .find('.widget-blocks');
 
+        var
             prototypeBlock = containerBlock.attr('data-prototype'),
             blocks         = containerBlock.find('.admin_block_select');
 
-        blockCount = containerBlock
+        var blockCount = containerBlock
             .find('li')
             .length;
 
-        newBlock = prototypeBlock.replace(/__name__/g, blockCount);
+        var newBlock = prototypeBlock.replace(/__name__/g, blockCount);
 
         containerBlock.append(newBlock);
 

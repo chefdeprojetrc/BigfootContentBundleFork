@@ -153,6 +153,7 @@ class BlockController extends CrudController
                     $templates     = $this->getTemplates($contentType, $pTemplate);
                     $contentEntity = $templates['class'];
                     $contentEntity = new $contentEntity();
+
                     $contentForm   = $this->createForm(
                         'admin_'.$contentType.'_template_'.$pTemplate,
                         $contentEntity,
@@ -199,7 +200,8 @@ class BlockController extends CrudController
 
         $templates = $this->getTemplates('block', $block->getParentTemplate());
         $action    = $this->generateUrl('admin_block_edit', array('id' => $block->getId()));
-        $form      = $this->createForm(
+
+        $form = $this->createForm(
             'admin_block_template_'.$block->getParentTemplate(),
             $block,
             array(

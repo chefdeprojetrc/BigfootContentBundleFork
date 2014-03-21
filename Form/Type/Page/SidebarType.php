@@ -37,7 +37,10 @@ class SidebarType extends AbstractType
                 'sidebar',
                 'entity',
                 array(
-                    'class' => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar'
+                    'class'         => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('s')->orderBy('s.name', 'ASC');
+                    }
                 )
             )
             ->add(

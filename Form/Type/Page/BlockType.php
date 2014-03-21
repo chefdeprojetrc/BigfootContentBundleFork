@@ -37,7 +37,10 @@ class BlockType extends AbstractType
                 'block',
                 'entity',
                 array(
-                    'class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block'
+                    'class'         => 'Bigfoot\Bundle\ContentBundle\Entity\Block',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('b')->orderBy('b.name', 'ASC');
+                    }
                 )
             )
             ->add('position')

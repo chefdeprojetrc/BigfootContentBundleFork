@@ -2,7 +2,6 @@
 
 {% form_theme form
     bigfoot_theme_bundle ~ ':content:form/page/blocks.html.twig'
-    bigfoot_theme_bundle ~ ':content:form/page/blocks2.html.twig'
     bigfoot_theme_bundle ~ ':content:form/page/sidebars.html.twig' %}
 
 {% block form %}
@@ -27,4 +26,5 @@
     {{ parent() }}
 
     <script src="{{ asset('bundles/bigfootcontent/js/page.js') }}"></script>
+    <script src="{{ asset('bundles/bigfootcontent/js/block.js') }}"></script>
 {% endblock %}

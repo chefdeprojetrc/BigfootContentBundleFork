@@ -2,7 +2,6 @@
 
 {% form_theme form
     bigfoot_theme_bundle ~ ':content:form/page/blocks.html.twig'
-    bigfoot_theme_bundle ~ ':content:form/page/blocks2.html.twig'
     bigfoot_theme_bundle ~ ':content:form/page/sidebars.html.twig' %}
 
 {% block form %}
@@ -14,7 +13,7 @@
                 <label style="text-align:center;">
                     {{ form_widget(template) }}
                     <img src="{{ asset('images/template/page/' ~ template.vars.value ~ '.svg') }}"><br />
-                    <span style="font-size:9px;">{{ template.vars.value }}</span>
+                    <span style="font-size:9px;">{{ template.vars.label }}</span>
                 </label>
             </li>
         {% endfor %}
@@ -27,4 +26,5 @@
     {{ parent() }}
 
     <script src="{{ asset('bundles/bigfootcontent/js/page.js') }}"></script>
+    <script src="{{ asset('bundles/bigfootcontent/js/block.js') }}"></script>
 {% endblock %}

@@ -188,7 +188,7 @@ class BlockController extends CrudController
     /**
      * Edit Block entity.
      *
-     * @Route("/edit/{id}", name="admin_block_edit")
+     * @Route("/edit/{id}", name="admin_block_edit", options={"expose"=true})
      */
     public function editAction(Request $request, $id)
     {
@@ -215,6 +215,41 @@ class BlockController extends CrudController
 
             if ($form->isValid()) {
                 $this->persistAndFlush($block);
+
+                if ($request->isXmlHttpRequest()) {
+                    $contentType = $request->query->get('contentType');
+                    $qTemplate   = $request->query->get('template');
+
+                    if (is_numeric($qTemplate)) {
+                        $qTemplate = $this->getRepository('BigfootContentBundle:'.ucfirst($contentType))->find($qTemplate)->getSlugTemplate();
+                    }
+
+                    $pTemplate     = $this->getParentTemplate($qTemplate);
+                    $templates     = $this->getTemplates($contentType, $pTemplate);
+                    $contentEntity = $templates['class'];
+                    $contentEntity = new $contentEntity();
+
+                    $contentForm   = $this->createForm(
+                        'admin_'.$contentType.'_template_'.$pTemplate,
+                        $contentEntity,
+                        array(
+                            'template'  => $qTemplate,
+                            'templates' => $templates
+                        )
+                    );
+
+                    $blocksForm = $this->renderView('BigfootContentBundle:'.ucfirst($contentType).':Block/list.html.twig', array('form' => $contentForm->createView()));
+
+                    $content = array(
+                        'prototype' => $blocksForm,
+                        'option'    => array(
+                            'id'    => $block->getId(),
+                            'label' => $block->getName().' - '.$block->getParentTemplate(),
+                        )
+                    );
+
+                    return $this->renderAjax('edit_block', 'Block edited!', $content);
+                }
 
                 return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
             }

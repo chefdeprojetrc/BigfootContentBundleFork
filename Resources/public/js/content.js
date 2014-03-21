@@ -1,6 +1,12 @@
 $(function() {
 
     /**
+     * Init chosen select and translation fields
+     */
+    $(".chosen-select").chosen();
+    setTranslatableFields();
+
+    /**
      * Handle modal response
      */
     var
@@ -39,6 +45,26 @@ $(function() {
                 .find('.modal-body')
                 .empty()
                 .prepend(responseText.content);
+        } else if (responseText.status === 'new_block') {
+            modal.modal('hide');
+
+            $('.widget-blocks').attr('data-prototype', responseText.content.prototype);
+
+            $('.admin_block_select').each(function (index) {
+                $(this).append('<option value="' + responseText.content.option.value + '">' + responseText.content.option.label + '</option>');
+            });
+
+            $('.admin_block_select').trigger("chosen:updated");
+        } else if (responseText.status === 'edit_block') {
+            modal.modal('hide');
+
+            $('.widget-blocks').attr('data-prototype', responseText.content.prototype);
+
+            $('.admin_block_select > option[value="' + responseText.content.option.id + '"]').each(function (index) {
+                $(this).html(responseText.content.option.label);
+            });
+
+            $('.admin_block_select').trigger("chosen:updated");
         } else {
             modal
                 .find('.modal-body')
@@ -47,5 +73,4 @@ $(function() {
                 .append(responseText.content);
         }
     }
-
 });

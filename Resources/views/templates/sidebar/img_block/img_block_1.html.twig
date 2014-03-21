@@ -1,9 +1,9 @@
-<img src="http://placehold.it/300x150">
+{% extends 'BigfootContentBundle:templates/sidebar:layout.html.twig' %}
 
-{% for sBlock in sidebar.blocks %}
+{% block sidebar_content %}
+    {% if sidebar.media %}<img src="{{ sidebar|media }}" />{% endif %}
+{%- for sBlock in sidebar.blocks %}
+    {{ display_block(sBlock) }}
     <hr />
-
-    <div class="block">
-        {{ display_block(sBlock.block, null, sidebar) }}
-    </div>
-{% endfor %}
+{%- endfor %}
+{% endblock sidebar_content %}

@@ -1,21 +1,16 @@
-<div class="col-md-8 content">
-    <div class="page">
-        <img src="http://placehold.it/550x150">
+{% extends 'BigfootContentBundle:templates/page:layout.html.twig' %}
 
-        <h4>
-            {{ page.title }}
-        </h4>
-
-        <p>
-            {{ page.description|raw }}
-        </p>
-    </div>
-</div>
-
-<div class="col-md-4 sidebar">
-    <div class="inner-sidebar">
-        {% for pSidebar in page.sidebars %}
-            {{ display_sidebar(pSidebar.sidebar, null, page) }}
-        {% endfor %}
-    </div>
-</div>
+{% block page_content %}
+    <article>
+        <div class="mainContent">
+            {% if page.media %}<img src="{{ page.media|media }}" />{% endif %}
+            {% if page.title %}<h1>{{ page.title }}</h1>{% endif %}
+            <div class="richText">
+                {{ page.description|raw }}
+            </div>
+        </div>
+        <aside class="aside sidebarVertical right">
+            {{ display_sidebar(page.sidebar) }}
+        </aside>
+    </article>
+{% endblock page_content %}

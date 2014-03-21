@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template;
 
+use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -23,6 +24,26 @@ class TitleDesc2BlockType extends AbstractType
                     'data'      => $options['data'],
                     'template'  => $options['template'],
                     'templates' => $options['templates']
+                )
+            )
+            ->add(
+                'attributes',
+                'entity',
+                array(
+                    'class'     => 'BigfootContentBundle:Attribute',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->getAttributesForType(Attribute::TYPE_PAGE);
+                    },
+                    'required'  => false,
+                    'multiple'  => true,
+                    'attr'      => array(
+                        'data-placement' => 'bottom',
+                        'data-popover'   => true,
+                        'data-content'   => 'Styles applied to this content element.',
+                        'data-title'     => 'Style',
+                        'data-trigger'   => 'hover',
+                    ),
+                    'label' => 'Style',
                 )
             )
             ->add(

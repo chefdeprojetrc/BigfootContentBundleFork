@@ -1,17 +1,13 @@
-<h4>
-    {{ sidebar.title }}
-</h4>
+{% extends 'BigfootContentBundle:templates/sidebar:layout.html.twig' %}
 
-<img src="http://placehold.it/300x150">
-
-<p>
-    {{ sidebar.description|raw }}
-</p>
-
-{% for sBlock in sidebar.getOrderedBlocks() %}
-    <hr />
-
-    <div class="block">
-        {{ display_block(sBlock.block, null, sidebar) }}
+{% block sidebar_content %}
+    {% if sidebar.title %}<h2>{{ sidebar.title }}</h2>{% endif %}
+    {% if sidebar.media %}<img src="{{ sidebar.media }}" />{% endif %}
+    <div class="richText">
+        {{ sidebar.description|raw }}
     </div>
-{% endfor %}
+{%- for sBlock in sidebar.blocks %}
+    {{ display_block(sBlock) }}
+    <hr />
+{%- endfor %}
+{% endblock sidebar_content %}

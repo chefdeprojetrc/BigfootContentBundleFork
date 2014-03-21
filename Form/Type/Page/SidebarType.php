@@ -66,8 +66,8 @@ class SidebarType extends AbstractType
         $nTemplates = array();
 
         foreach ($templates as $key => $template) {
-            foreach ($template['sub_templates'] as $subTemplates) {
-                $nTemplates[$key.'/'.$subTemplates] = $subTemplates;
+            foreach ($template['sub_templates'] as $subTemplates => $label) {
+                $nTemplates[$key.'/'.$subTemplates] = $label;
             }
         }
 

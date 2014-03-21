@@ -1,11 +1,9 @@
-<h4>
-    {{ sidebar.title }}
-</h4>
+{% extends 'BigfootContentBundle:templates/sidebar:layout.html.twig' %}
 
-{% for sBlock in sidebar.blocks %}
+{% block sidebar_content %}
+    {% if sidebar.title %}<h2>{{ sidebar.title }}</h2>{% endif %}
+{%- for sBlock in sidebar.blocks %}
+    {{ display_block(sBlock) }}
     <hr />
-
-    <div class="block">
-        {{ display_block(sBlock.block, null, sidebar) }}
-    </div>
-{% endfor %}
+{%- endfor %}
+{% endblock sidebar_content %}

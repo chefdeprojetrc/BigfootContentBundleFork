@@ -1,18 +1,18 @@
 {% extends 'BigfootContentBundle:templates/block:layout.html.twig' %}
 
 {% block block_content %}
-    {%- if block.media %}
-    <div class="img left">
-        <img src="{{ block.media|media }}">
-    </div>
-    {%- endif %}
     <div class="mainContent">
         {% if block.title %}<h3>{{ block.title }}</h3>{% endif %}
         <div class="richText">
             {{ block.description|raw }}
         </div>
     </div>
-{%- if block.action is not null %}
-    {{ render(url(block.action)) }}
-{%- endif %}
+    {%- if block.media %}
+    <div class="img right">
+        <img src="{{ block.media|media }}">
+    </div>
+    {%- endif %}
+    {%- if block.action is not null %}
+        {{ render(url(block.action)) }}
+    {%- endif %}
 {% endblock block_content %}

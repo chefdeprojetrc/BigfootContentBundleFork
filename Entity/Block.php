@@ -59,6 +59,13 @@ class Block extends Content
     private $sidebars;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyTomany(targetEntity="Attribute")
+     */
+    private $attributes;
+
+    /**
      * Construct Block
      */
     public function __construct()
@@ -66,6 +73,7 @@ class Block extends Content
         $this->pageBlocks  = new ArrayCollection();
         $this->pageBlocks2 = new ArrayCollection();
         $this->sidebars    = new ArrayCollection();
+        $this->attributes  = new ArrayCollection();
     }
 
     /**
@@ -212,5 +220,61 @@ class Block extends Content
     public function getSidebars()
     {
         return $this->sidebars;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $attributes
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * @param Attribute $attribute
+     */
+    public function addAttribute($attribute)
+    {
+        $this->attributes->add($attribute);
+
+        return $this;
+    }
+
+    /**
+     * @param Attribute $attribute
+     */
+    public function removeAttribute($attribute)
+    {
+        $this->attributes->removeElement($attribute);
+
+        return $this;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * @param $type
+     * @return array
+     */
+    public function getArrayAttributes() {
+        $toReturn = array();
+
+        /** @var Attribute $attribute */
+        foreach ($this->attributes as $attribute) {
+            if (!isset($toReturn[$attribute->getName()])) {
+                $toReturn[$attribute->getName()] = array();
+            }
+            $toReturn[$attribute->getName()][] = $attribute->getValue();
+        }
+
+        return $toReturn;
     }
 }

@@ -1,19 +1,15 @@
-<div class="col-md-8 content">
-    <div class="page">
-        <h4>
-            {{ page.title }}
-        </h4>
+{% extends 'BigfootContentBundle:templates/page:layout.html.twig' %}
 
-        <p>
-            {{ page.description|raw }}
-        </p>
-    </div>
-</div>
-
-<div class="col-md-4 sidebar">
-    <div class="inner-sidebar">
-        {% for pSidebar in page.sidebars %}
-            {{ display_sidebar(pSidebar.sidebar, null, page) }}
-        {% endfor %}
-    </div>
-</div>
+{% block page_content %}
+    <article>
+        <div class="mainContent">
+            {% if page.title %}<h1>{{ page.title }}</h1>{% endif %}
+            <div class="richText">
+                {{ page.description|raw }}
+            </div>
+        </div>
+        <aside class="aside sidebarVertical right">
+            {{ display_sidebar(page.sidebar) }}
+        </aside>
+    </article>
+{% endblock page_content %}

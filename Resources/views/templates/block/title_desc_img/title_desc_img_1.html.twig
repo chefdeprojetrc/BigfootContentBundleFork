@@ -1,13 +1,12 @@
-<img src="http://placehold.it/300x150">
+{% extends 'BigfootContentBundle:templates/block:layout.html.twig' %}
 
-<h5>
-    {{ block.title }}
-</h5>
-
-<p>
-    {{ block.description|raw }}
-</p>
-
-{% if block.action is not null %}
+{% block block_content %}
+    {% if block.title %}<h3>{{ block.title }}</h3>{% endif %}
+    <div class="richText">
+        {{ block.description|raw }}
+    </div>
+    {% if block.media %}<img class="bottom" src="{{ block.media|media }}">{% endif %}
+{%- if block.action is not null %}
     {{ render(url(block.action)) }}
-{% endif %}
+{%- endif %}
+{% endblock block_content %}

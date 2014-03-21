@@ -11,7 +11,7 @@
                 <label style="text-align:center;">
                     {{ form_widget(template) }}
                     <img src="{{ asset('images/template/block/' ~ template.vars.value ~ '.svg') }}"><br />
-                    <span style="font-size:9px;">{{ template.vars.value }}</span>
+                    <span style="font-size:9px;">{{ template.vars.label }}</span>
                 </label>
             </li>
         {% endfor %}

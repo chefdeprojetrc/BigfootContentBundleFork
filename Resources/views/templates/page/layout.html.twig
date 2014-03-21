@@ -1,0 +1,3 @@
+<div {% for attrname, attrlist in page.arrayAttributes %}{{ attrname }}="{{ attrlist|join(' ') }}"{% endfor %}>
+    {% block page_content %}{% endblock page_content %}
+</div>

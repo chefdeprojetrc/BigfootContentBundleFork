@@ -1,7 +1,7 @@
 {% extends 'BigfootContentBundle:templates/block:layout.html.twig' %}
 
 {% block block_content %}
-    {% if block.media %}<img class="left" src="{{ block.media|media }}">{% endif %}
+    {% if block.media %}<img class="right" src="{{ block.media|media }}">{% endif %}
     {% if block.title %}<h3>{{ block.title }}</h3>{% endif %}
     <div class="richText">
         {{ block.description|raw }}

@@ -1,11 +1,15 @@
-<h5>{{ block.title }}</h5>
+{% extends 'BigfootContentBundle:templates/block:layout.html.twig' %}
 
-<p>{{ block.description|raw }}</p>
-
-<h5>{{ block.title2 }}</h5>
-
-<p>{{ block.description2|raw }}</p>
-
-{% if block.action is not null %}
+{% block block_content %}
+    <h3>{{ block.title }}</h3>
+    <div class="richText">
+        {{ block.description|raw }}
+    </div>
+    <h3>{{ block.title2 }}</h3>
+    <div class="richText">
+        {{ block.description2|raw }}
+    </div>
+{%- if block.action is not null %}
     {{ render(url(block.action)) }}
-{% endif %}
+{%- endif %}
+{% endblock block_content %}

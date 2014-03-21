@@ -1,1 +1,15 @@
-title_desc_block_1.html.twig
+{% extends 'BigfootContentBundle:templates/page:layout.html.twig' %}
+
+{% block page_content %}
+    <article>
+        {% if page.title %}<h1>{{ page.title }}</h1>{% endif %}
+        <div class="richText">
+            {{ page.description|raw }}
+        </div>
+        <aside class="blocksHorizontal bottom">
+        {%- for pBlock in page.blocks %}
+            {{ display_block(pBlock) }}
+        {%- endfor %}
+        </aside>
+    </article>
+{% endblock page_content %}

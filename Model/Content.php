@@ -48,7 +48,7 @@ abstract class Content
     protected $active = true;
 
     /**
-     * @var datetime $created
+     * @var \DateTime $created
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
@@ -56,7 +56,7 @@ abstract class Content
     protected $created;
 
     /**
-     * @var datetime $updated
+     * @var \DateTime $updated
      *
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
@@ -161,8 +161,8 @@ abstract class Content
     {
         $nTemplates = array();
 
-        foreach ($templates['sub_templates'] as $subTemplates) {
-            $nTemplates[$subTemplates] = $subTemplates;
+        foreach ($templates['sub_templates'] as $subTemplates => $label) {
+            $nTemplates[$subTemplates] = $label;
         }
 
         return $nTemplates;

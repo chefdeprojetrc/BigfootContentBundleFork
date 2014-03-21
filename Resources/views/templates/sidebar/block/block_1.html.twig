@@ -1,7 +1,8 @@
-{% for sBlock in sidebar.blocks %}
-    <div class="block">
-        {{ display_block(sBlock.block, null, sidebar) }}
-    </div>
+{% extends 'BigfootContentBundle:templates/sidebar:layout.html.twig' %}
 
+{% block sidebar_content %}
+{%- for sBlock in sidebar.blocks %}
+    {{ display_block(sBlock) }}
     <hr />
-{% endfor %}
+{%- endfor %}
+{% endblock sidebar_content %}

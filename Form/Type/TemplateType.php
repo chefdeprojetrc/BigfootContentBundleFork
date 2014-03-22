@@ -64,6 +64,8 @@ class TemplateType extends AbstractType
             }
         }
 
+        asort($nTemplates);
+
         $this->templates = $nTemplates;
 
         return $nTemplates;

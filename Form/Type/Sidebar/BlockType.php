@@ -75,6 +75,8 @@ class BlockType extends AbstractType
             }
         }
 
+        asort($nTemplates);
+
         return $nTemplates;
     }
 

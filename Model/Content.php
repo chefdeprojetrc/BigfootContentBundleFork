@@ -165,6 +165,8 @@ abstract class Content
             $nTemplates[$subTemplates] = $label;
         }
 
+        asort($nTemplates);
+
         return $nTemplates;
     }
 

@@ -74,6 +74,8 @@ class SidebarType extends AbstractType
             }
         }
 
+        asort($nTemplates);
+
         return $nTemplates;
     }
 

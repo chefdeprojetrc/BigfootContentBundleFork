@@ -16,7 +16,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-
     # Content Type
     bigfoot_content.form.type.content:
         class: Bigfoot\Bundle\ContentBundle\Form\Type\ContentType

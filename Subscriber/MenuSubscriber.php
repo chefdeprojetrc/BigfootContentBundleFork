@@ -44,9 +44,31 @@ class MenuSubscriber implements EventSubscriberInterface
      */
     public function onGenerateMain(GenericEvent $event)
     {
-        $menu        = $event->getSubject();
+        $menu = $event->getSubject();
+        $root = $menu->getRoot();
 
-        $contentMenu = $menu->getChild('content');
+        $contentMenu = $root->addChild(
+            'content',
+            array(
+                'label'          => 'Content',
+                'url'            => '#',
+                'linkAttributes' => array(
+                    'class' => 'dropdown-toggle',
+                    'icon'  => 'list-alt',
+                ),
+                'extras' => array(
+                    'routes' => array(
+                        'admin_content_template_choose',
+                    )
+                )
+            )
+        );
+
+        $contentMenu->setChildrenAttributes(
+            array(
+                'class' => 'submenu',
+            )
+        );
 
         $contentMenu->addChild(
             'page',

@@ -1,64 +1,6 @@
 $(function() {
 
     /**
-     * Handle modal response
-     */
-    var
-        modal   = $('#ajax-modal'),
-        options = {
-            success: successResponse,
-        };
-
-    $('.modal-save')
-        .unbind('click')
-        .on('click', function (event) {
-            var
-                pathname    = window.location.pathname.split('/'),
-                contentType = null;
-                template    = pathname[pathname.length-1].trim(),
-                form        = $(this)
-                    .closest('.modal')
-                        .find('form');
-
-            var action = form.attr('action');
-
-            if ($.inArray('page', pathname) != -1) {
-                contentType = 'page';
-            } else {
-                contentType = 'sidebar';
-            }
-
-            form
-                .attr('action', action + '?layout=_blank&contentType=' + contentType + '&template=' + template)
-                .ajaxSubmit(options);
-        });
-
-    function successResponse(responseText, statusText, xhr) {
-        if (responseText.status === true) {
-            modal
-                .find('.modal-body')
-                .empty()
-                .prepend(responseText.content);
-        } else if (responseText.status === 'edit_block') {
-            modal.modal('hide');
-
-            $('.widget-blocks').attr('data-prototype', responseText.content.prototype);
-
-            $('.admin_block_select > option[value="' + responseText.content.option.id + '"]').each(function (index) {
-                $(this).html(responseText.content.option.label);
-            });
-
-            $('.admin_block_select').trigger("chosen:updated");
-        } else {
-            modal
-                .find('.modal-body')
-                .empty()
-                .prepend("<div class='alert alert-block alert-danger'>" + responseText.message + '</div>')
-                .append(responseText.content);
-        }
-    }
-
-    /**
      * Handle blocks
      */
     var containers = $('.widget-blocks');
@@ -95,10 +37,13 @@ $(function() {
         handleTemplates(blocks);
     });
 
+    $('.admin-edit-block').unbind('click');
+
     $('body').on('click', '.admin-edit-block', function (event) {
         event.preventDefault();
 
         var
+            modal   = $('#ajax-modal'),
             blockId = $(this).closest('.block-row').find('.admin_block_select').val();
             url     = Routing.generate('admin_block_edit', { 'id': blockId, 'layout': '_modal' }),
             title   = $(this).data('title');

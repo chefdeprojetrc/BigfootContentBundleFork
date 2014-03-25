@@ -14,10 +14,11 @@ $(function() {
     $('body').on('click', '.admin-add-block', function (event) {
         event.preventDefault();
 
-        var
-            containerBlock = $(this)
-                .closest('.collection-container')
-                    .find('.widget-blocks');
+        var containerBlock = $(this)
+            .closest('.collection-container')
+                .find('.widget-blocks');
+
+        console.log(containerBlock);
 
         var
             prototypeBlock = containerBlock.attr('data-prototype'),
@@ -61,7 +62,7 @@ $(function() {
     $('body').on('click', '.admin-delete-block', function (event) {
         event.preventDefault();
 
-        currentBlock = $(this)
+        var currentBlock = $(this)
             .closest('li')
             .remove();
     });
@@ -79,12 +80,12 @@ $(function() {
 
     function handleTemplate(block)
     {
-        var
-            val = block
-                .find('option:selected')
-                    .html()
-                    .split('-'),
+        var val = block
+            .find('option:selected')
+                .html()
+                .split('-');
 
+        var
             template = val[val.length-1].trim(),
             radios   = block
                 .closest('.block-row')

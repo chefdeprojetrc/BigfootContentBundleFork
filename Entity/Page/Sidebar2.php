@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Sidebar
+ * Sidebar2
  *
- * @ORM\Table(name="bigfoot_content_page_sidebar")
- * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\Page\SidebarRepository")
+ * @ORM\Table(name="bigfoot_content_page_sidebar_2")
+ * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2Repository")
  */
-class Sidebar
+class Sidebar2
 {
     /**
      * @var integer
@@ -23,13 +23,13 @@ class Sidebar
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page", inversedBy="sidebars")
+     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page", inversedBy="sidebars2")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $page;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar", inversedBy="pageSidebars")
+     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar", inversedBy="pageSidebars2")
      * @ORM\JoinColumn(name="sidebar_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $sidebar;
@@ -62,7 +62,7 @@ class Sidebar
      * Set position
      *
      * @param integer $position
-     * @return Sidebar
+     * @return Sidebar2
      */
     public function setPosition($position)
     {
@@ -85,7 +85,7 @@ class Sidebar
      * Set template
      *
      * @param string $template
-     * @return Sidebar
+     * @return Sidebar2
      */
     public function setTemplate($template)
     {
@@ -108,7 +108,7 @@ class Sidebar
      * Set page
      *
      * @param Bigfoot\Bundle\ContentBundle\Entity\Page $page
-     * @return Sidebar
+     * @return Sidebar2
      */
     public function setPage($page = null)
     {
@@ -131,7 +131,7 @@ class Sidebar
      * Set sidebar
      *
      * @param Bigfoot\Bundle\ContentBundle\Entity\Sidebar $sidebar
-     * @return Sidebar
+     * @return Sidebar2
      */
     public function setSidebar($sidebar = null)
     {

@@ -51,36 +51,6 @@ class SidebarController extends CrudController
     }
 
     /**
-     * Add sucess flash
-     */
-    protected function addSuccessFlash($message)
-    {
-        $this->addFlash(
-            'success',
-            $this->renderView(
-                $this->getThemeBundle().':admin:flash.html.twig',
-                array(
-                    'icon'    => 'ok',
-                    'heading' => 'Success!',
-                    'message' => $this->getTranslator()->trans($message, array('%entity%' => $this->getEntityName())),
-                    'actions' => array(
-                        array(
-                            'route' => $this->generateUrl($this->getRouteNameForAction('index')),
-                            'label' => 'Back to the listing',
-                            'type'  => 'success',
-                        ),
-                        array(
-                            'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar')),
-                            'label' => $this->getTranslator()->trans('Add a new %entity%', array('%entity%' => $this->getEntityName())),
-                            'type'  => 'success',
-                        )
-                    )
-                )
-            )
-        );
-    }
-
-    /**
      * Return array of allowed global actions
      *
      * @return array
@@ -140,6 +110,11 @@ class SidebarController extends CrudController
             if ($form->isValid()) {
                 $this->persistAndFlush($sidebar);
 
+                $this->addSuccessFlash(
+                    'Sidebar successfully added!',
+                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar'))
+                );
+
                 return $this->redirect($this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId())));
             }
         }
@@ -190,6 +165,11 @@ class SidebarController extends CrudController
 
                 $this->persistAndFlush($sidebar);
 
+                $this->addSuccessFlash(
+                    'Sidebar successfully updated!',
+                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar'))
+                );
+
                 return $this->redirect($this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId())));
             }
         }
@@ -204,6 +184,24 @@ class SidebarController extends CrudController
      */
     public function deleteAction(Request $request, $id)
     {
+        $entity = $this->getRepository($this->getEntity())->find($id);
+
+        if (!$entity) {
+            throw new NotFoundHttpException(sprintf('Unable to find %s entity.', $this->getEntity()));
+        }
+
+        $this->removeAndFlush($entity);
+
+        if (!$request->isXmlHttpRequest()) {
+            $this->addSuccessFlash(
+                'Sidebar successfully deleted!',
+                $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar'))
+            );
+
+
+            return $this->redirect($this->generateUrl($this->getRouteNameForAction('index')));
+        }
+
         return $this->doDelete($request, $id);
     }
 

@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Sidebar
+ * Block3
  *
- * @ORM\Table(name="bigfoot_content_page_sidebar")
- * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\Page\SidebarRepository")
+ * @ORM\Table(name="bigfoot_content_page_block_3")
+ * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\Page\Block3Repository")
  */
-class Sidebar
+class Block3
 {
     /**
      * @var integer
@@ -23,16 +23,16 @@ class Sidebar
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page", inversedBy="sidebars")
+     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page", inversedBy="blocks3")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $page;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar", inversedBy="pageSidebars")
-     * @ORM\JoinColumn(name="sidebar_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Block", inversedBy="pageBlocks3")
+     * @ORM\JoinColumn(name="block_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    private $sidebar;
+    private $block;
 
     /**
      * @var string
@@ -62,7 +62,7 @@ class Sidebar
      * Set position
      *
      * @param integer $position
-     * @return Sidebar
+     * @return Block3
      */
     public function setPosition($position)
     {
@@ -85,7 +85,7 @@ class Sidebar
      * Set template
      *
      * @param string $template
-     * @return Sidebar
+     * @return Block3
      */
     public function setTemplate($template)
     {
@@ -108,7 +108,7 @@ class Sidebar
      * Set page
      *
      * @param Bigfoot\Bundle\ContentBundle\Entity\Page $page
-     * @return Sidebar
+     * @return Block
      */
     public function setPage($page = null)
     {
@@ -128,25 +128,25 @@ class Sidebar
     }
 
     /**
-     * Set sidebar
+     * Set block
      *
-     * @param Bigfoot\Bundle\ContentBundle\Entity\Sidebar $sidebar
-     * @return Sidebar
+     * @param Bigfoot\Bundle\ContentBundle\Entity\Block $block
+     * @return Block
      */
-    public function setSidebar($sidebar = null)
+    public function setBlock($block = null)
     {
-        $this->sidebar = $sidebar;
+        $this->block = $block;
 
         return $this;
     }
 
     /**
-     * Get sidebar
+     * Get block
      *
-     * @return Bigfoot\Bundle\ContentBundle\Entity\Sidebar
+     * @return Bigfoot\Bundle\ContentBundle\Entity\Block
      */
-    public function getSidebar()
+    public function getBlock()
     {
-        return $this->sidebar;
+        return $this->block;
     }
 }

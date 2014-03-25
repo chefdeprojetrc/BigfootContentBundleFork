@@ -39,13 +39,6 @@ class TitleDesc2Block extends Page
     private $description2;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="page", cascade={"persist", "remove"})
-     */
-    private $blocks;
-
-    /**
      * Get parent template
      *
      * @return string

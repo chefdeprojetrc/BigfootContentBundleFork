@@ -47,9 +47,58 @@ class Page extends Content
     /**
      * @var ArrayCollection
      *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block3", mappedBy="page", cascade={"persist", "remove"})
+     */
+    private $blocks3;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block4", mappedBy="page", cascade={"persist", "remove"})
+     */
+    private $blocks4;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block5", mappedBy="page", cascade={"persist", "remove"})
+     */
+    private $blocks5;
+
+    /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar", mappedBy="page", cascade={"persist", "remove"})
      */
     private $sidebars;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2", mappedBy="page", cascade={"persist", "remove"})
+     */
+    private $sidebars2;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3", mappedBy="page", cascade={"persist", "remove"})
+     */
+    private $sidebars3;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4", mappedBy="page", cascade={"persist", "remove"})
+     */
+    private $sidebars4;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5", mappedBy="page", cascade={"persist", "remove"})
+     */
+    private $sidebars5;
 
     /**
      * @var ArrayCollection
@@ -63,10 +112,17 @@ class Page extends Content
      */
     public function __construct()
     {
-        $this->sidebars     = new ArrayCollection();
-        $this->blocks       = new ArrayCollection();
-        $this->blocks2      = new ArrayCollection();
-        $this->attributes   = new ArrayCollection();
+        $this->blocks     = new ArrayCollection();
+        $this->blocks2    = new ArrayCollection();
+        $this->blocks3    = new ArrayCollection();
+        $this->blocks4    = new ArrayCollection();
+        $this->blocks5    = new ArrayCollection();
+        $this->sidebars   = new ArrayCollection();
+        $this->sidebars2  = new ArrayCollection();
+        $this->sidebars3  = new ArrayCollection();
+        $this->sidebars4  = new ArrayCollection();
+        $this->sidebars5  = new ArrayCollection();
+        $this->attributes = new ArrayCollection();
     }
 
     /**
@@ -185,6 +241,111 @@ class Page extends Content
     }
 
     /**
+     * Add block3
+     *
+     * @param PageBlock3 $block3
+     * @return Page
+     */
+    public function addBlock3(PageBlock3 $block3)
+    {
+        $this->blocks3[] = $block3;
+
+        return $this;
+    }
+
+    /**
+     * Remove block3
+     *
+     * @param PageBlock3 $block3
+     */
+    public function removeBlock3(PageBlock3 $block3)
+    {
+        $this->blocks3->removeElement($block3);
+
+        return $this;
+    }
+
+    /**
+     * Get blocks3
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlocks3()
+    {
+        return $this->blocks3;
+    }
+
+    /**
+     * Add block4
+     *
+     * @param PageBlock4 $block4
+     * @return Page
+     */
+    public function addBlock4(PageBlock4 $block4)
+    {
+        $this->blocks4[] = $block4;
+
+        return $this;
+    }
+
+    /**
+     * Remove block4
+     *
+     * @param PageBlock4 $block4
+     */
+    public function removeBlock4(PageBlock4 $block4)
+    {
+        $this->blocks4->removeElement($block4);
+
+        return $this;
+    }
+
+    /**
+     * Get blocks4
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlocks4()
+    {
+        return $this->blocks4;
+    }
+
+    /**
+     * Add block5
+     *
+     * @param PageBlock5 $block5
+     * @return Page
+     */
+    public function addBlock5(PageBlock5 $block5)
+    {
+        $this->blocks5[] = $block5;
+
+        return $this;
+    }
+
+    /**
+     * Remove block5
+     *
+     * @param PageBlock5 $block5
+     */
+    public function removeBlock5(PageBlock5 $block5)
+    {
+        $this->blocks5->removeElement($block5);
+
+        return $this;
+    }
+
+    /**
+     * Get blocks5
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlocks5()
+    {
+        return $this->blocks5;
+    }
+
+    /**
      * @param \Doctrine\Common\Collections\ArrayCollection $attributes
      */
     public function setAttributes($attributes)
@@ -195,6 +356,138 @@ class Page extends Content
     }
 
     /**
+     * Add sidebars2
+     *
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2
+     * @return Page
+     */
+    public function addSidebar2(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2)
+    {
+        $this->sidebars2[] = $sidebars2;
+
+        return $this;
+    }
+
+    /**
+     * Remove sidebars2
+     *
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2
+     */
+    public function removeSidebar2(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2)
+    {
+        $this->sidebars2->removeElement($sidebars2);
+    }
+
+    /**
+     * Get sidebars2
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSidebars2()
+    {
+        return $this->sidebars2;
+    }
+
+    /**
+     * Add sidebars3
+     *
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3
+     * @return Page
+     */
+    public function addSidebar3(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3)
+    {
+        $this->sidebars3[] = $sidebars3;
+
+        return $this;
+    }
+
+    /**
+     * Remove sidebars3
+     *
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3
+     */
+    public function removeSidebar3(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3)
+    {
+        $this->sidebars3->removeElement($sidebars3);
+    }
+
+    /**
+     * Get sidebars3
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSidebars3()
+    {
+        return $this->sidebars3;
+    }
+
+    /**
+     * Add sidebars4
+     *
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4
+     * @return Page
+     */
+    public function addSidebar4(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4)
+    {
+        $this->sidebars4[] = $sidebars4;
+
+        return $this;
+    }
+
+    /**
+     * Remove sidebars4
+     *
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4
+     */
+    public function removeSidebar4(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4)
+    {
+        $this->sidebars4->removeElement($sidebars4);
+    }
+
+    /**
+     * Get sidebars4
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSidebars4()
+    {
+        return $this->sidebars4;
+    }
+
+    /**
+     * Add sidebars5
+     *
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5
+     * @return Page
+     */
+    public function addSidebar5(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5)
+    {
+        $this->sidebars5[] = $sidebars5;
+
+        return $this;
+    }
+
+    /**
+     * Remove sidebars5
+     *
+     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5
+     */
+    public function removeSidebar5(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5)
+    {
+        $this->sidebars5->removeElement($sidebars5);
+    }
+
+    /**
+     * Get sidebars5
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSidebars5()
+    {
+        return $this->sidebars5;
+    }
+
+        /**
      * @param Attribute $attribute
      */
     public function addAttribute($attribute)
@@ -229,11 +522,11 @@ class Page extends Content
     public function getArrayAttributes() {
         $toReturn = array();
 
-        /** @var Attribute $attribute */
         foreach ($this->attributes as $attribute) {
             if (!isset($toReturn[$attribute->getName()])) {
                 $toReturn[$attribute->getName()] = array();
             }
+
             $toReturn[$attribute->getName()][] = $attribute->getValue();
         }
 

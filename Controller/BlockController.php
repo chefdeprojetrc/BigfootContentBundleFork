@@ -52,36 +52,6 @@ class BlockController extends CrudController
     }
 
     /**
-     * Add sucess flash
-     */
-    protected function addSuccessFlash($message)
-    {
-        $this->addFlash(
-            'success',
-            $this->renderView(
-                $this->getThemeBundle().':admin:flash.html.twig',
-                array(
-                    'icon'    => 'ok',
-                    'heading' => 'Success!',
-                    'message' => $this->getTranslator()->trans($message, array('%entity%' => $this->getEntityName())),
-                    'actions' => array(
-                        array(
-                            'route' => $this->generateUrl($this->getRouteNameForAction('index')),
-                            'label' => 'Back to the listing',
-                            'type'  => 'success',
-                        ),
-                        array(
-                            'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'block')),
-                            'label' => $this->getTranslator()->trans('Add a new %entity%', array('%entity%' => $this->getEntityName())),
-                            'type'  => 'success',
-                        )
-                    )
-                )
-            )
-        );
-    }
-
-    /**
      * Return array of allowed global actions
      *
      * @return array
@@ -176,6 +146,11 @@ class BlockController extends CrudController
                     return $this->renderAjax('new_block', 'Block created!', $content);
                 }
 
+                $this->addSuccessFlash(
+                    'Block successfully added!',
+                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'block'))
+                );
+
                 return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
             } else {
                 return $this->renderAjax(false, 'Error during addition!', $this->renderForm($form, $action, $block)->getContent());
@@ -251,6 +226,11 @@ class BlockController extends CrudController
                     return $this->renderAjax('edit_block', 'Block edited!', $content);
                 }
 
+                $this->addSuccessFlash(
+                    'Block successfully updated!',
+                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'block'))
+                );
+
                 return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
             }
         }
@@ -265,6 +245,24 @@ class BlockController extends CrudController
      */
     public function deleteAction(Request $request, $id)
     {
+        $entity = $this->getRepository($this->getEntity())->find($id);
+
+        if (!$entity) {
+            throw new NotFoundHttpException(sprintf('Unable to find %s entity.', $this->getEntity()));
+        }
+
+        $this->removeAndFlush($entity);
+
+        if (!$request->isXmlHttpRequest()) {
+            $this->addSuccessFlash(
+                'Block successfully deleted!',
+                $this->generateUrl('admin_content_template_choose', array('contentType' => 'block'))
+            );
+
+
+            return $this->redirect($this->generateUrl($this->getRouteNameForAction('index')));
+        }
+
         return $this->doDelete($request, $id);
     }
 

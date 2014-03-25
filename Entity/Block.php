@@ -9,6 +9,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Bigfoot\Bundle\ContentBundle\Model\Content;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block2 as PageBlock2;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock3;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block4 as PageBlock4;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block5 as PageBlock5;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
 
 /**
@@ -54,6 +57,26 @@ class Block extends Content
     /**
      * @var ArrayCollection
      *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block3", mappedBy="block", cascade={"persist", "remove"})
+     */
+    private $pageBlocks3;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block4", mappedBy="block", cascade={"persist", "remove"})
+     */
+    private $pageBlocks4;
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block5", mappedBy="block", cascade={"persist", "remove"})
+     */
+    private $pageBlocks5;
+
+    /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block", mappedBy="block", cascade={"persist", "remove"})
      */
     private $sidebars;
@@ -72,6 +95,9 @@ class Block extends Content
     {
         $this->pageBlocks  = new ArrayCollection();
         $this->pageBlocks2 = new ArrayCollection();
+        $this->pageBlocks3 = new ArrayCollection();
+        $this->pageBlocks4 = new ArrayCollection();
+        $this->pageBlocks5 = new ArrayCollection();
         $this->sidebars    = new ArrayCollection();
         $this->attributes  = new ArrayCollection();
     }
@@ -188,6 +214,111 @@ class Block extends Content
     }
 
     /**
+     * Add pageBlocks3
+     *
+     * @param PageBlock $pageBlocks3
+     * @return Block
+     */
+    public function addPageBlock3(PageBlock3 $pageBlock3)
+    {
+        $this->pageBlocks3->add($pageBlock3);
+
+        return $this;
+    }
+
+    /**
+     * Remove pageBlocks3
+     *
+     * @param PageBlock $pageBlocks3
+     */
+    public function removePageBlock3(PageBlock3 $pageBlock3)
+    {
+        $this->pageBlocks3->removeElement($pageBlock3);
+
+        return $this;
+    }
+
+    /**
+     * Get pageBlocks3
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPageBlocks3()
+    {
+        return $this->pageBlocks3;
+    }
+
+    /**
+     * Add pageBlocks4
+     *
+     * @param PageBlock $pageBlocks4
+     * @return Block
+     */
+    public function addPageBlock4(PageBlock4 $pageBlock4)
+    {
+        $this->pageBlocks4->add($pageBlock4);
+
+        return $this;
+    }
+
+    /**
+     * Remove pageBlocks4
+     *
+     * @param PageBlock $pageBlocks4
+     */
+    public function removePageBlock4(PageBlock4 $pageBlock4)
+    {
+        $this->pageBlocks4->removeElement($pageBlock4);
+
+        return $this;
+    }
+
+    /**
+     * Get pageBlocks4
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPageBlocks4()
+    {
+        return $this->pageBlocks4;
+    }
+
+    /**
+     * Add pageBlocks5
+     *
+     * @param PageBlock $pageBlocks5
+     * @return Block
+     */
+    public function addPageBlock5(PageBlock5 $pageBlock5)
+    {
+        $this->pageBlocks5->add($pageBlock5);
+
+        return $this;
+    }
+
+    /**
+     * Remove pageBlocks5
+     *
+     * @param PageBlock $pageBlocks5
+     */
+    public function removePageBlock5(PageBlock5 $pageBlock5)
+    {
+        $this->pageBlocks5->removeElement($pageBlock5);
+
+        return $this;
+    }
+
+    /**
+     * Get pageBlocks5
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPageBlocks5()
+    {
+        return $this->pageBlocks5;
+    }
+
+    /**
      * Add sidebar
      *
      * @param SidebarBlock $sidebar
@@ -267,11 +398,11 @@ class Block extends Content
     public function getArrayAttributes() {
         $toReturn = array();
 
-        /** @var Attribute $attribute */
         foreach ($this->attributes as $attribute) {
             if (!isset($toReturn[$attribute->getName()])) {
                 $toReturn[$attribute->getName()] = array();
             }
+
             $toReturn[$attribute->getName()][] = $attribute->getValue();
         }
 

@@ -58,11 +58,11 @@ services:
         tags:
             - { name: form.type, alias: admin_page_template_title_desc }
 
-    # Page Template TitleDescImg Type
-    bigfoot_content.form.type.page_template_title_desc_img:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescImgType
+    # Page Template TitleDescMedia Type
+    bigfoot_content.form.type.page_template_title_desc_media:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescMediaType
         tags:
-            - { name: form.type, alias: admin_page_template_title_desc_img }
+            - { name: form.type, alias: admin_page_template_title_desc_media }
 
     # Page Template TitleDescBlock Type
     bigfoot_content.form.type.page_template_title_desc_block:
@@ -70,17 +70,17 @@ services:
         tags:
             - { name: form.type, alias: admin_page_template_title_desc_block }
 
-    # Page Template TitleDescImgBlock Type
-    bigfoot_content.form.type.page_template_title_desc_img_block:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescImgBlockType
+    # Page Template TitleDescMediaBlock Type
+    bigfoot_content.form.type.page_template_title_desc_media_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescMediaBlockType
         tags:
-            - { name: form.type, alias: admin_page_template_title_desc_img_block }
+            - { name: form.type, alias: admin_page_template_title_desc_media_block }
 
-    # Page Template TitleDescImgBlock2 Type
-    bigfoot_content.form.type.page_template_title_desc_img_block2:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescImgBlock2Type
+    # Page Template TitleDescMediaBlock2 Type
+    bigfoot_content.form.type.page_template_title_desc_media_block2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescMediaBlock2Type
         tags:
-            - { name: form.type, alias: admin_page_template_title_desc_img_block2 }
+            - { name: form.type, alias: admin_page_template_title_desc_media_block2 }
 
     # Page Template TitleDescSidebar Type
     bigfoot_content.form.type.page_template_title_desc_sidebar:
@@ -94,17 +94,17 @@ services:
         tags:
             - { name: form.type, alias: admin_page_template_title_desc_block_sidebar }
 
-    # Page Template TitleDescImgBlockSidebar Type
-    bigfoot_content.form.type.page_template_title_desc_img_block_sidebar:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescImgBlockSidebarType
+    # Page Template TitleDescMediaBlockSidebar Type
+    bigfoot_content.form.type.page_template_title_desc_media_block_sidebar:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescMediaBlockSidebarType
         tags:
-            - { name: form.type, alias: admin_page_template_title_desc_img_block_sidebar }
+            - { name: form.type, alias: admin_page_template_title_desc_media_block_sidebar }
 
-    # Page Template TitleDescImgSidebar Type
-    bigfoot_content.form.type.page_template_title_desc_img_sidebar:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescImgSidebarType
+    # Page Template TitleDescMediaSidebar Type
+    bigfoot_content.form.type.page_template_title_desc_media_sidebar:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescMediaSidebarType
         tags:
-            - { name: form.type, alias: admin_page_template_title_desc_img_sidebar }
+            - { name: form.type, alias: admin_page_template_title_desc_media_sidebar }
 
     # Page Template TitleDesc2 Type
     bigfoot_content.form.type.page_template_title_desc2:
@@ -112,11 +112,11 @@ services:
         tags:
             - { name: form.type, alias: admin_page_template_title_desc2 }
 
-    # Page Template TitleDesc2Img Type
-    bigfoot_content.form.type.page_template_title_desc2_img:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2ImgType
+    # Page Template TitleDesc2Media Type
+    bigfoot_content.form.type.page_template_title_desc2_media:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2MediaType
         tags:
-            - { name: form.type, alias: admin_page_template_title_desc2_img }
+            - { name: form.type, alias: admin_page_template_title_desc2_media }
 
     # Page Template TitleDesc2Block Type
     bigfoot_content.form.type.page_template_title_desc2_block:
@@ -130,17 +130,17 @@ services:
         tags:
             - { name: form.type, alias: admin_page_template_title_desc2_block2 }
 
-    # Page Template TitleDesc2ImgBlock Type
-    bigfoot_content.form.type.page_template_title_desc2_img_block:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2ImgBlockType
+    # Page Template TitleDesc2MediaBlock Type
+    bigfoot_content.form.type.page_template_title_desc2_media_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2MediaBlockType
         tags:
-            - { name: form.type, alias: admin_page_template_title_desc2_img_block }
+            - { name: form.type, alias: admin_page_template_title_desc2_media_block }
 
-    # Page Template TitleDesc2ImgBlock2 Type
-    bigfoot_content.form.type.page_template_title_desc2_img_block2:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2ImgBlock2Type
+    # Page Template TitleDesc2MediaBlock2 Type
+    bigfoot_content.form.type.page_template_title_desc2_media_block2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2MediaBlock2Type
         tags:
-            - { name: form.type, alias: admin_page_template_title_desc2_img_block2 }
+            - { name: form.type, alias: admin_page_template_title_desc2_media_block2 }
 
     # Sidebar Template Block Type
     bigfoot_content.form.type.sidebar_template_block:
@@ -148,11 +148,11 @@ services:
         tags:
             - { name: form.type, alias: admin_sidebar_template_block }
 
-    # Sidebar Template ImgBlock Type
-    bigfoot_content.form.type.sidebar_template_img_block:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\ImgBlockType
+    # Sidebar Template MediaBlock Type
+    bigfoot_content.form.type.sidebar_template_media_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\MediaBlockType
         tags:
-            - { name: form.type, alias: admin_sidebar_template_img_block }
+            - { name: form.type, alias: admin_sidebar_template_media_block }
 
     # Sidebar Template TitleBlock Type
     bigfoot_content.form.type.sidebar_template_title_block:
@@ -160,11 +160,11 @@ services:
         tags:
             - { name: form.type, alias: admin_sidebar_template_title_block }
 
-    # Sidebar Template TitleImgBlock Type
-    bigfoot_content.form.type.sidebar_template_title_img_block:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleImgBlockType
+    # Sidebar Template TitleMediaBlock Type
+    bigfoot_content.form.type.sidebar_template_title_media_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleMediaBlockType
         tags:
-            - { name: form.type, alias: admin_sidebar_template_title_img_block }
+            - { name: form.type, alias: admin_sidebar_template_title_media_block }
 
     # Sidebar Template TitleDescBlock Type
     bigfoot_content.form.type.sidebar_template_title_desc_block:
@@ -172,17 +172,17 @@ services:
         tags:
             - { name: form.type, alias: admin_sidebar_template_title_desc_block }
 
-    # Sidebar Template TitleDescImgBlock Type
-    bigfoot_content.form.type.sidebar_template_title_desc_img_block:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleDescImgBlockType
+    # Sidebar Template TitleDescMediaBlock Type
+    bigfoot_content.form.type.sidebar_template_title_desc_media_block:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleDescMediaBlockType
         tags:
-            - { name: form.type, alias: admin_sidebar_template_title_desc_img_block }
+            - { name: form.type, alias: admin_sidebar_template_title_desc_media_block }
 
-    # Block Template TitleDescImg Type
-    bigfoot_content.form.type.block_template_title_desc_img:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\TitleDescImgType
+    # Block Template TitleDescMedia Type
+    bigfoot_content.form.type.block_template_title_desc_media:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\TitleDescMediaType
         tags:
-            - { name: form.type, alias: admin_block_template_title_desc_img }
+            - { name: form.type, alias: admin_block_template_title_desc_media }
 
     # Block Template TitleDesc Type
     bigfoot_content.form.type.block_template_title_desc:
@@ -190,8 +190,8 @@ services:
         tags:
             - { name: form.type, alias: admin_block_template_title_desc }
 
-    # Block Template Title2Desc2Img2 Type
-    bigfoot_content.form.type.block_template_title2_desc2_img2:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\Title2Desc2Img2Type
+    # Block Template Title2Desc2Media2 Type
+    bigfoot_content.form.type.block_template_title2_desc2_media2:
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\Title2Desc2Media2Type
         tags:
-            - { name: form.type, alias: admin_block_template_title2_desc2_img2 }
+            - { name: form.type, alias: admin_block_template_title2_desc2_media2 }

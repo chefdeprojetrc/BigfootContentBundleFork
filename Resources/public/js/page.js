@@ -13,11 +13,11 @@ $(function() {
     $('.admin-add-sidebar').on('click', function (event) {
         event.preventDefault();
 
-        sidebarCount = containerSidebar
+        var sidebarCount = containerSidebar
             .find('li')
             .length;
 
-        newSidebar = prototypeSidebar.replace(/__name__/g, sidebarCount);
+        var newSidebar = prototypeSidebar.replace(/__name__/g, sidebarCount);
 
         containerSidebar.append(newSidebar);
 
@@ -33,7 +33,7 @@ $(function() {
     $('body').on('click', '.admin-delete-sidebar', function (event) {
         event.preventDefault();
 
-        currentSidebar = $(this)
+        var currentSidebar = $(this)
             .closest('li')
             .remove();
     });
@@ -51,12 +51,12 @@ $(function() {
 
     function handleSidebarTemplate(sidebar)
     {
-        var
-            val = sidebar
-                .find('option:selected')
-                    .html()
-                    .split('-'),
+        var val = sidebar
+            .find('option:selected')
+                .html()
+                .split('-');
 
+        var
             template = val[1].trim(),
             radios   = sidebar
                 .closest('.sidebar-row')

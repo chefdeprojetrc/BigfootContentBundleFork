@@ -146,9 +146,16 @@ class PageController extends CrudController
             )
         );
 
-        $dbBlocks   = new ArrayCollection();
-        $dbBlocks2  = new ArrayCollection();
-        $dbSidebars = new ArrayCollection();
+        $dbBlocks    = new ArrayCollection();
+        $dbBlocks2   = new ArrayCollection();
+        $dbBlocks3   = new ArrayCollection();
+        $dbBlocks4   = new ArrayCollection();
+        $dbBlocks5   = new ArrayCollection();
+        $dbSidebars  = new ArrayCollection();
+        $dbSidebars2 = new ArrayCollection();
+        $dbSidebars3 = new ArrayCollection();
+        $dbSidebars4 = new ArrayCollection();
+        $dbSidebars5 = new ArrayCollection();
 
         foreach ($page->getBlocks() as $block) {
             $dbBlocks->add($block);
@@ -158,8 +165,36 @@ class PageController extends CrudController
             $dbBlocks2->add($block2);
         }
 
+        foreach ($page->getBlocks3() as $block3) {
+            $dbBlocks3->add($block3);
+        }
+
+        foreach ($page->getBlocks4() as $block4) {
+            $dbBlocks4->add($block4);
+        }
+
+        foreach ($page->getBlocks5() as $block5) {
+            $dbBlocks5->add($block5);
+        }
+
         foreach ($page->getSidebars() as $sidebar) {
             $dbSidebars->add($sidebar);
+        }
+
+        foreach ($page->getSidebars2() as $sidebar2) {
+            $dbSidebars2->add($sidebar2);
+        }
+
+        foreach ($page->getSidebars3() as $sidebar3) {
+            $dbSidebars3->add($sidebar3);
+        }
+
+        foreach ($page->getSidebars4() as $sidebar4) {
+            $dbSidebars4->add($sidebar4);
+        }
+
+        foreach ($page->getSidebars5() as $sidebar5) {
+            $dbSidebars5->add($sidebar5);
         }
 
         if ('POST' === $request->getMethod()) {
@@ -180,10 +215,59 @@ class PageController extends CrudController
                     }
                 }
 
+                foreach ($dbBlocks3 as $block3) {
+                    if ($page->getBlocks3()->contains($block3) === false) {
+                        $page->getBlocks3()->removeElement($block3);
+                        $this->getEntityManager()->remove($block3);
+                    }
+                }
+
+                foreach ($dbBlocks4 as $block4) {
+                    if ($page->getBlocks4()->contains($block4) === false) {
+                        $page->getBlocks4()->removeElement($block4);
+                        $this->getEntityManager()->remove($block4);
+                    }
+                }
+
+                foreach ($dbBlocks5 as $block5) {
+                    if ($page->getBlocks5()->contains($block5) === false) {
+                        $page->getBlocks5()->removeElement($block5);
+                        $this->getEntityManager()->remove($block5);
+                    }
+                }
+
                 foreach ($dbSidebars as $sidebar) {
                     if ($page->getSidebars()->contains($sidebar) === false) {
                         $page->getSidebars()->removeElement($sidebar);
                         $this->getEntityManager()->remove($sidebar);
+                    }
+                }
+
+                foreach ($dbSidebars2 as $sidebar2) {
+                    if ($page->getSidebars2()->contains($sidebar2) === false) {
+                        $page->getSidebars2()->removeElement($sidebar2);
+                        $this->getEntityManager()->remove($sidebar2);
+                    }
+                }
+
+                foreach ($dbSidebars3 as $sidebar3) {
+                    if ($page->getSidebars3()->contains($sidebar3) === false) {
+                        $page->getSidebars3()->removeElement($sidebar3);
+                        $this->getEntityManager()->remove($sidebar3);
+                    }
+                }
+
+                foreach ($dbSidebars4 as $sidebar4) {
+                    if ($page->getSidebars4()->contains($sidebar4) === false) {
+                        $page->getSidebars4()->removeElement($sidebar4);
+                        $this->getEntityManager()->remove($sidebar4);
+                    }
+                }
+
+                foreach ($dbSidebars5 as $sidebar5) {
+                    if ($page->getSidebars5()->contains($sidebar5) === false) {
+                        $page->getSidebars5()->removeElement($sidebar5);
+                        $this->getEntityManager()->remove($sidebar5);
                     }
                 }
 

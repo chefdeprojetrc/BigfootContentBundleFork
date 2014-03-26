@@ -18,8 +18,6 @@ $(function() {
             .closest('.collection-container')
                 .find('.widget-blocks');
 
-        console.log(containerBlock);
-
         var
             prototypeBlock = containerBlock.attr('data-prototype'),
             blocks         = containerBlock.find('.admin_block_select');
@@ -31,7 +29,10 @@ $(function() {
         var newBlock = prototypeBlock.replace(/__name__/g, blockCount);
 
         containerBlock.append(newBlock);
+
         $(".chosen-select").chosen();
+
+        // $('.templates-container').last().find('input:first').attr('checked', true);
 
         var blocks = containerBlock.find('.admin_block_select');
 

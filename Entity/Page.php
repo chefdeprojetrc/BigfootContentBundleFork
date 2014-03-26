@@ -9,6 +9,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Bigfoot\Bundle\ContentBundle\Model\Content;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block2 as PageBlock2;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock3;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock4;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock5;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar as PageSidebar;
 
 /**

@@ -10,9 +10,13 @@ use Bigfoot\Bundle\ContentBundle\Model\Content;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block2 as PageBlock2;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock3;
-use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock4;
-use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock5;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block4 as PageBlock4;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block5 as PageBlock5;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar as PageSidebar;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 as PageSidebar2;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 as PageSidebar3;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 as PageSidebar4;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 as PageSidebar5;
 
 /**
  * Page
@@ -361,10 +365,10 @@ class Page extends Content
     /**
      * Add sidebars2
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2
+     * @param PageSidebar2 $sidebars2
      * @return Page
      */
-    public function addSidebar2(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2)
+    public function addSidebar2(PageSidebar2 $sidebars2)
     {
         $this->sidebars2[] = $sidebars2;
 
@@ -374,9 +378,9 @@ class Page extends Content
     /**
      * Remove sidebars2
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2
+     * @param PageSidebar2 $sidebars2
      */
-    public function removeSidebar2(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2)
+    public function removeSidebar2(PageSidebar2 $sidebars2)
     {
         $this->sidebars2->removeElement($sidebars2);
     }
@@ -394,10 +398,10 @@ class Page extends Content
     /**
      * Add sidebars3
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3
+     * @param PageSidebar3 $sidebars3
      * @return Page
      */
-    public function addSidebar3(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3)
+    public function addSidebar3(PageSidebar3 $sidebars3)
     {
         $this->sidebars3[] = $sidebars3;
 
@@ -407,9 +411,9 @@ class Page extends Content
     /**
      * Remove sidebars3
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3
+     * @param PageSidebar3 $sidebars3
      */
-    public function removeSidebar3(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3)
+    public function removeSidebar3(PageSidebar3 $sidebars3)
     {
         $this->sidebars3->removeElement($sidebars3);
     }
@@ -427,10 +431,10 @@ class Page extends Content
     /**
      * Add sidebars4
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4
+     * @param PageSidebar4 $sidebars4
      * @return Page
      */
-    public function addSidebar4(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4)
+    public function addSidebar4(PageSidebar4 $sidebars4)
     {
         $this->sidebars4[] = $sidebars4;
 
@@ -440,9 +444,9 @@ class Page extends Content
     /**
      * Remove sidebars4
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4
+     * @param PageSidebar4 $sidebars4
      */
-    public function removeSidebar4(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4)
+    public function removeSidebar4(PageSidebar4 $sidebars4)
     {
         $this->sidebars4->removeElement($sidebars4);
     }
@@ -460,10 +464,10 @@ class Page extends Content
     /**
      * Add sidebars5
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5
+     * @param PageSidebar5 $sidebars5
      * @return Page
      */
-    public function addSidebar5(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5)
+    public function addSidebar5(PageSidebar5 $sidebars5)
     {
         $this->sidebars5[] = $sidebars5;
 
@@ -473,9 +477,9 @@ class Page extends Content
     /**
      * Remove sidebars5
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5
+     * @param PageSidebar5 $sidebars5
      */
-    public function removeSidebar5(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5)
+    public function removeSidebar5(PageSidebar5 $sidebars5)
     {
         $this->sidebars5->removeElement($sidebars5);
     }

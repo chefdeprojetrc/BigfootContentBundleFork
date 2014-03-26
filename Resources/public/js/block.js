@@ -32,11 +32,15 @@ $(function() {
 
         $(".chosen-select").chosen();
 
-        // $('.templates-container').last().find('input:first').attr('checked', true);
-
         var blocks = containerBlock.find('.admin_block_select');
 
         handleTemplates(blocks);
+
+        $(this)
+            .closest('.collection-container')
+                .find('.templates-container:last')
+                    .find('label.shown:first > input')
+                        .attr('checked', true);
     });
 
     $('.admin-edit-block').unbind('click');
@@ -100,10 +104,12 @@ $(function() {
             if (values[0] !== template) {
                 $(this)
                     .parent()
+                    .addClass('hidden')
                     .hide();
             } else {
                 $(this)
                     .parent()
+                    .addClass('shown')
                     .show();
             }
         });

@@ -535,4 +535,96 @@ class Page extends Content
 
         return $toReturn;
     }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars5
+     */
+    public function setSidebars5($sidebars5)
+    {
+        $this->sidebars5 = $sidebars5;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks
+     */
+    public function setBlocks($blocks)
+    {
+        $this->blocks = $blocks;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks2
+     */
+    public function setBlocks2($blocks2)
+    {
+        $this->blocks2 = $blocks2;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks3
+     */
+    public function setBlocks3($blocks3)
+    {
+        $this->blocks3 = $blocks3;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks4
+     */
+    public function setBlocks4($blocks4)
+    {
+        $this->blocks4 = $blocks4;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks5
+     */
+    public function setBlocks5($blocks5)
+    {
+        $this->blocks5 = $blocks5;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars
+     */
+    public function setSidebars($sidebars)
+    {
+        $this->sidebars = $sidebars;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars2
+     */
+    public function setSidebars2($sidebars2)
+    {
+        $this->sidebars2 = $sidebars2;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars3
+     */
+    public function setSidebars3($sidebars3)
+    {
+        $this->sidebars3 = $sidebars3;
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars4
+     */
+    public function setSidebars4($sidebars4)
+    {
+        $this->sidebars4 = $sidebars4;
+        return $this;
+    }
+
+
 }

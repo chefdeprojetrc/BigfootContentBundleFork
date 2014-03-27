@@ -143,41 +143,6 @@ class Page extends Content
     }
 
     /**
-     * Add sidebar
-     *
-     * @param PageSidebar $sidebar
-     * @return Page
-     */
-    public function addSidebar(PageSidebar $sidebar)
-    {
-        $this->sidebars[] = $sidebar;
-
-        return $this;
-    }
-
-    /**
-     * Remove sidebar
-     *
-     * @param PageSidebar $sidebar
-     */
-    public function removeSidebar(PageSidebar $sidebar)
-    {
-        $this->sidebars->removeElement($sidebar);
-
-        return $this;
-    }
-
-    /**
-     * Get sidebars
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSidebars()
-    {
-        return $this->sidebars;
-    }
-
-    /**
      * Add block
      *
      * @param PageBlock $block
@@ -198,6 +163,16 @@ class Page extends Content
     public function removeBlock(PageBlock $block)
     {
         $this->blocks->removeElement($block);
+
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks
+     */
+    public function setBlocks($blocks)
+    {
+        $this->blocks = $blocks;
 
         return $this;
     }
@@ -238,6 +213,16 @@ class Page extends Content
     }
 
     /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks2
+     */
+    public function setBlocks2($blocks2)
+    {
+        $this->blocks2 = $blocks2;
+
+        return $this;
+    }
+
+    /**
      * Get blocks2
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -268,6 +253,16 @@ class Page extends Content
     public function removeBlock3(PageBlock3 $block3)
     {
         $this->blocks3->removeElement($block3);
+
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks3
+     */
+    public function setBlocks3($blocks3)
+    {
+        $this->blocks3 = $blocks3;
 
         return $this;
     }
@@ -308,6 +303,16 @@ class Page extends Content
     }
 
     /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks4
+     */
+    public function setBlocks4($blocks4)
+    {
+        $this->blocks4 = $blocks4;
+
+        return $this;
+    }
+
+    /**
      * Get blocks4
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -343,6 +348,16 @@ class Page extends Content
     }
 
     /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks5
+     */
+    public function setBlocks5($blocks5)
+    {
+        $this->blocks5 = $blocks5;
+
+        return $this;
+    }
+
+    /**
      * Get blocks5
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -353,13 +368,48 @@ class Page extends Content
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $attributes
+     * Add sidebar
+     *
+     * @param PageSidebar $sidebar
+     * @return Page
      */
-    public function setAttributes($attributes)
+    public function addSidebar(PageSidebar $sidebar)
     {
-        $this->attributes = $attributes;
+        $this->sidebars[] = $sidebar;
 
         return $this;
+    }
+
+    /**
+     * Remove sidebar
+     *
+     * @param PageSidebar $sidebar
+     */
+    public function removeSidebar(PageSidebar $sidebar)
+    {
+        $this->sidebars->removeElement($sidebar);
+
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars
+     */
+    public function setSidebars($sidebars)
+    {
+        $this->sidebars = $sidebars;
+
+        return $this;
+    }
+
+    /**
+     * Get sidebars
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSidebars()
+    {
+        return $this->sidebars;
     }
 
     /**
@@ -383,6 +433,16 @@ class Page extends Content
     public function removeSidebar2(PageSidebar2 $sidebars2)
     {
         $this->sidebars2->removeElement($sidebars2);
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars2
+     */
+    public function setSidebars2($sidebars2)
+    {
+        $this->sidebars2 = $sidebars2;
+
+        return $this;
     }
 
     /**
@@ -419,6 +479,16 @@ class Page extends Content
     }
 
     /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars3
+     */
+    public function setSidebars3($sidebars3)
+    {
+        $this->sidebars3 = $sidebars3;
+
+        return $this;
+    }
+
+    /**
      * Get sidebars3
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -449,6 +519,16 @@ class Page extends Content
     public function removeSidebar4(PageSidebar4 $sidebars4)
     {
         $this->sidebars4->removeElement($sidebars4);
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars4
+     */
+    public function setSidebars4($sidebars4)
+    {
+        $this->sidebars4 = $sidebars4;
+
+        return $this;
     }
 
     /**
@@ -485,6 +565,16 @@ class Page extends Content
     }
 
     /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars5
+     */
+    public function setSidebars5($sidebars5)
+    {
+        $this->sidebars5 = $sidebars5;
+
+        return $this;
+    }
+
+    /**
      * Get sidebars5
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -494,7 +584,7 @@ class Page extends Content
         return $this->sidebars5;
     }
 
-        /**
+    /**
      * @param Attribute $attribute
      */
     public function addAttribute($attribute)
@@ -510,6 +600,16 @@ class Page extends Content
     public function removeAttribute($attribute)
     {
         $this->attributes->removeElement($attribute);
+
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $attributes
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
 
         return $this;
     }
@@ -539,96 +639,4 @@ class Page extends Content
 
         return $toReturn;
     }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars5
-     */
-    public function setSidebars5($sidebars5)
-    {
-        $this->sidebars5 = $sidebars5;
-        return $this;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $blocks
-     */
-    public function setBlocks($blocks)
-    {
-        $this->blocks = $blocks;
-        return $this;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $blocks2
-     */
-    public function setBlocks2($blocks2)
-    {
-        $this->blocks2 = $blocks2;
-        return $this;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $blocks3
-     */
-    public function setBlocks3($blocks3)
-    {
-        $this->blocks3 = $blocks3;
-        return $this;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $blocks4
-     */
-    public function setBlocks4($blocks4)
-    {
-        $this->blocks4 = $blocks4;
-        return $this;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $blocks5
-     */
-    public function setBlocks5($blocks5)
-    {
-        $this->blocks5 = $blocks5;
-        return $this;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars
-     */
-    public function setSidebars($sidebars)
-    {
-        $this->sidebars = $sidebars;
-        return $this;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars2
-     */
-    public function setSidebars2($sidebars2)
-    {
-        $this->sidebars2 = $sidebars2;
-        return $this;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars3
-     */
-    public function setSidebars3($sidebars3)
-    {
-        $this->sidebars3 = $sidebars3;
-        return $this;
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars4
-     */
-    public function setSidebars4($sidebars4)
-    {
-        $this->sidebars4 = $sidebars4;
-        return $this;
-    }
-
-
 }

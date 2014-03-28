@@ -66,12 +66,13 @@ class ContentExtension extends Twig_Extension
         }
 
         if (!$sidebar) {
-            throw new NotFoundHttpException('Unable to find sidebar.');
+            return '';
         }
 
         $pageSidebar = (!$sidebar instanceof Sidebar) ? $sidebar : false;
         $template    = ($pageSidebar) ? $pageSidebar->getTemplate() : $sidebar->getParentTemplate().'/'.$sidebar->getSlugTemplate();
         $template    = (isset($data['template'])) ? $data['template'] : $template;
+        $sidebar     = ($sidebar instanceof PageSidebar) ?  $sidebar->getSidebar() : $sidebar;
 
         return $this->twig->render(
             'BigfootContentBundle:templates:sidebar/'.$template.'.html.twig',

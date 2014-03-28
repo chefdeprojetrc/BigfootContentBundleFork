@@ -32,7 +32,7 @@ $(function() {
         $(this)
             .closest('.collection-container')
                 .find('.templates-container:last')
-                    .find('label.shown:first > input')
+                    .find('label.is-shown:first > input')
                         .attr('checked', true);
     });
 
@@ -76,12 +76,12 @@ $(function() {
             if (values[0] !== template) {
                 $(this)
                     .parent()
-                    .addClass('hidden')
+                    .addClass('is-hidden')
                     .hide();
             } else {
                 $(this)
                     .parent()
-                    .addClass('shown')
+                    .addClass('is-shown')
                     .show();
             }
         });

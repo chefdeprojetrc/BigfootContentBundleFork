@@ -10,9 +10,13 @@ use Bigfoot\Bundle\ContentBundle\Model\Content;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block as PageBlock;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block2 as PageBlock2;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock3;
-use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock4;
-use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock5;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block4 as PageBlock4;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Block5 as PageBlock5;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar as PageSidebar;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 as PageSidebar2;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 as PageSidebar3;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 as PageSidebar4;
+use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 as PageSidebar5;
 
 /**
  * Page
@@ -139,41 +143,6 @@ class Page extends Content
     }
 
     /**
-     * Add sidebar
-     *
-     * @param PageSidebar $sidebar
-     * @return Page
-     */
-    public function addSidebar(PageSidebar $sidebar)
-    {
-        $this->sidebars[] = $sidebar;
-
-        return $this;
-    }
-
-    /**
-     * Remove sidebar
-     *
-     * @param PageSidebar $sidebar
-     */
-    public function removeSidebar(PageSidebar $sidebar)
-    {
-        $this->sidebars->removeElement($sidebar);
-
-        return $this;
-    }
-
-    /**
-     * Get sidebars
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSidebars()
-    {
-        return $this->sidebars;
-    }
-
-    /**
      * Add block
      *
      * @param PageBlock $block
@@ -194,6 +163,16 @@ class Page extends Content
     public function removeBlock(PageBlock $block)
     {
         $this->blocks->removeElement($block);
+
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks
+     */
+    public function setBlocks($blocks)
+    {
+        $this->blocks = $blocks;
 
         return $this;
     }
@@ -234,6 +213,16 @@ class Page extends Content
     }
 
     /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks2
+     */
+    public function setBlocks2($blocks2)
+    {
+        $this->blocks2 = $blocks2;
+
+        return $this;
+    }
+
+    /**
      * Get blocks2
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -264,6 +253,16 @@ class Page extends Content
     public function removeBlock3(PageBlock3 $block3)
     {
         $this->blocks3->removeElement($block3);
+
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks3
+     */
+    public function setBlocks3($blocks3)
+    {
+        $this->blocks3 = $blocks3;
 
         return $this;
     }
@@ -304,6 +303,16 @@ class Page extends Content
     }
 
     /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks4
+     */
+    public function setBlocks4($blocks4)
+    {
+        $this->blocks4 = $blocks4;
+
+        return $this;
+    }
+
+    /**
      * Get blocks4
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -339,6 +348,16 @@ class Page extends Content
     }
 
     /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $blocks5
+     */
+    public function setBlocks5($blocks5)
+    {
+        $this->blocks5 = $blocks5;
+
+        return $this;
+    }
+
+    /**
      * Get blocks5
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -349,22 +368,57 @@ class Page extends Content
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $attributes
+     * Add sidebar
+     *
+     * @param PageSidebar $sidebar
+     * @return Page
      */
-    public function setAttributes($attributes)
+    public function addSidebar(PageSidebar $sidebar)
     {
-        $this->attributes = $attributes;
+        $this->sidebars[] = $sidebar;
 
         return $this;
     }
 
     /**
+     * Remove sidebar
+     *
+     * @param PageSidebar $sidebar
+     */
+    public function removeSidebar(PageSidebar $sidebar)
+    {
+        $this->sidebars->removeElement($sidebar);
+
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars
+     */
+    public function setSidebars($sidebars)
+    {
+        $this->sidebars = $sidebars;
+
+        return $this;
+    }
+
+    /**
+     * Get sidebars
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSidebars()
+    {
+        return $this->sidebars;
+    }
+
+    /**
      * Add sidebars2
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2
+     * @param PageSidebar2 $sidebars2
      * @return Page
      */
-    public function addSidebar2(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2)
+    public function addSidebar2(PageSidebar2 $sidebars2)
     {
         $this->sidebars2[] = $sidebars2;
 
@@ -374,11 +428,21 @@ class Page extends Content
     /**
      * Remove sidebars2
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2
+     * @param PageSidebar2 $sidebars2
      */
-    public function removeSidebar2(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 $sidebars2)
+    public function removeSidebar2(PageSidebar2 $sidebars2)
     {
         $this->sidebars2->removeElement($sidebars2);
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars2
+     */
+    public function setSidebars2($sidebars2)
+    {
+        $this->sidebars2 = $sidebars2;
+
+        return $this;
     }
 
     /**
@@ -394,10 +458,10 @@ class Page extends Content
     /**
      * Add sidebars3
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3
+     * @param PageSidebar3 $sidebars3
      * @return Page
      */
-    public function addSidebar3(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3)
+    public function addSidebar3(PageSidebar3 $sidebars3)
     {
         $this->sidebars3[] = $sidebars3;
 
@@ -407,11 +471,21 @@ class Page extends Content
     /**
      * Remove sidebars3
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3
+     * @param PageSidebar3 $sidebars3
      */
-    public function removeSidebar3(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 $sidebars3)
+    public function removeSidebar3(PageSidebar3 $sidebars3)
     {
         $this->sidebars3->removeElement($sidebars3);
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars3
+     */
+    public function setSidebars3($sidebars3)
+    {
+        $this->sidebars3 = $sidebars3;
+
+        return $this;
     }
 
     /**
@@ -427,10 +501,10 @@ class Page extends Content
     /**
      * Add sidebars4
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4
+     * @param PageSidebar4 $sidebars4
      * @return Page
      */
-    public function addSidebar4(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4)
+    public function addSidebar4(PageSidebar4 $sidebars4)
     {
         $this->sidebars4[] = $sidebars4;
 
@@ -440,11 +514,21 @@ class Page extends Content
     /**
      * Remove sidebars4
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4
+     * @param PageSidebar4 $sidebars4
      */
-    public function removeSidebar4(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 $sidebars4)
+    public function removeSidebar4(PageSidebar4 $sidebars4)
     {
         $this->sidebars4->removeElement($sidebars4);
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars4
+     */
+    public function setSidebars4($sidebars4)
+    {
+        $this->sidebars4 = $sidebars4;
+
+        return $this;
     }
 
     /**
@@ -460,10 +544,10 @@ class Page extends Content
     /**
      * Add sidebars5
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5
+     * @param PageSidebar5 $sidebars5
      * @return Page
      */
-    public function addSidebar5(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5)
+    public function addSidebar5(PageSidebar5 $sidebars5)
     {
         $this->sidebars5[] = $sidebars5;
 
@@ -473,11 +557,21 @@ class Page extends Content
     /**
      * Remove sidebars5
      *
-     * @param \Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5
+     * @param PageSidebar5 $sidebars5
      */
-    public function removeSidebar5(\Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 $sidebars5)
+    public function removeSidebar5(PageSidebar5 $sidebars5)
     {
         $this->sidebars5->removeElement($sidebars5);
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $sidebars5
+     */
+    public function setSidebars5($sidebars5)
+    {
+        $this->sidebars5 = $sidebars5;
+
+        return $this;
     }
 
     /**
@@ -490,7 +584,7 @@ class Page extends Content
         return $this->sidebars5;
     }
 
-        /**
+    /**
      * @param Attribute $attribute
      */
     public function addAttribute($attribute)
@@ -506,6 +600,16 @@ class Page extends Content
     public function removeAttribute($attribute)
     {
         $this->attributes->removeElement($attribute);
+
+        return $this;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $attributes
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
 
         return $this;
     }

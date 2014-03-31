@@ -28,6 +28,12 @@ $(function() {
             sidebars    = containerSidebar.find('.admin_sidebar_select');
 
         handleSidebarTemplates(sidebars);
+
+        $(this)
+            .closest('.collection-container')
+                .find('.templates-container:last')
+                    .find('label.is-shown:first > input')
+                        .attr('checked', true);
     });
 
     $('body').on('click', '.admin-delete-sidebar', function (event) {
@@ -70,10 +76,12 @@ $(function() {
             if (values[0] !== template) {
                 $(this)
                     .parent()
+                    .addClass('is-hidden')
                     .hide();
             } else {
                 $(this)
                     .parent()
+                    .addClass('is-shown')
                     .show();
             }
         });

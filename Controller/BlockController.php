@@ -133,10 +133,10 @@ class BlockController extends CrudController
                         )
                     );
 
-                    $blocksForm = $this->renderView('BigfootContentBundle:'.ucfirst($contentType).':Block/list.html.twig', array('form' => $contentForm->createView()));
+                    $prototype = $this->renderView('BigfootContentBundle:'.ucfirst($contentType).':Block/prototype.html.twig', array('form' => $contentForm->createView()));
 
                     $content = array(
-                        'prototype' => $blocksForm,
+                        'prototype' => $prototype,
                         'option'    => array(
                             'label' => $block->getName().' - '.$block->getParentTemplate(),
                             'value' => $block->getId()
@@ -213,10 +213,10 @@ class BlockController extends CrudController
                         )
                     );
 
-                    $blocksForm = $this->renderView('BigfootContentBundle:'.ucfirst($contentType).':Block/list.html.twig', array('form' => $contentForm->createView()));
+                    $prototype = $this->renderView('BigfootContentBundle:'.ucfirst($contentType).':Block/prototype.html.twig', array('form' => $contentForm->createView()));
 
                     $content = array(
-                        'prototype' => $blocksForm,
+                        'prototype' => $prototype,
                         'option'    => array(
                             'id'    => $block->getId(),
                             'label' => $block->getName().' - '.$block->getParentTemplate(),

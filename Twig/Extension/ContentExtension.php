@@ -66,6 +66,7 @@ class ContentExtension extends Twig_Extension
         }
 
         if (!$sidebar) {
+            return '';
             throw new NotFoundHttpException('Unable to find sidebar.');
         }
 

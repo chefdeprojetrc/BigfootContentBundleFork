@@ -32,7 +32,7 @@ class TitleDescType extends AbstractType
                 array(
                     'class'     => 'BigfootContentBundle:Attribute',
                     'query_builder' => function(EntityRepository $er) {
-                        return $er->getAttributesForType(Attribute::TYPE_BLOCK);
+                        return $er->findByType(Attribute::TYPE_BLOCK);
                     },
                     'required'  => false,
                     'multiple'  => true,

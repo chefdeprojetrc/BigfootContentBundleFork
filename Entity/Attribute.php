@@ -13,9 +13,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Attribute
 {
-    const TYPE_BLOCK    = 1;
-    const TYPE_SIDEBAR  = 2;
-    const TYPE_PAGE     = 3;
+    const TYPE_BLOCK   = 1;
+    const TYPE_SIDEBAR = 2;
+    const TYPE_PAGE    = 3;
 
     /**
      * @var integer

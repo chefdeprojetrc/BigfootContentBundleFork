@@ -16,12 +16,12 @@ class AttributeRepository extends EntityRepository
      * @param $type
      * @return array
      */
-    public function getAttributesForType($type)
+    public function findByType($type)
     {
-        return $this->createQueryBuilder('a')
+        return $this
+            ->createQueryBuilder('a')
             ->where('a.type = :type')
             ->orderBy('a.label')
-            ->setParameter(':type', $type)
-        ;
+            ->setParameter(':type', $type);
     }
 }

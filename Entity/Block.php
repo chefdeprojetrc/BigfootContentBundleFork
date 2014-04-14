@@ -85,6 +85,7 @@ class Block extends Content
      * @var ArrayCollection
      *
      * @ORM\ManyTomany(targetEntity="Attribute")
+     * @ORM\JoinTable(name="bigfoot_block_attribute")
      */
     private $attributes;
 

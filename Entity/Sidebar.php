@@ -79,6 +79,7 @@ class Sidebar extends Content
      * @var ArrayCollection
      *
      * @ORM\ManyTomany(targetEntity="Attribute")
+     * @ORM\JoinTable(name="bigfoot_sidebar_attribute")
      */
     private $attributes;
 

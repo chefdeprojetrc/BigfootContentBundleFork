@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -11,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
 use Bigfoot\Bundle\CoreBundle\Util\StringManager;
+use Bigfoot\Bundle\CoreBundle\Event\FormEvent;
 
 /**
  * Page controller.
@@ -93,7 +95,6 @@ class PageController extends CrudController
         $page      = $templates['class'];
         $page      = new $page();
         $page->setTemplate($template);
-
         $action = $this->generateUrl('admin_page_new', array('template' => $template));
         $form   = $this->createForm(
             'admin_page_template_'.$pTemplate,
@@ -103,6 +104,8 @@ class PageController extends CrudController
                 'templates' => $templates
             )
         );
+
+        $this->getEventDispatcher()->dispatch(FormEvent::CREATE, new GenericEvent($form));
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);

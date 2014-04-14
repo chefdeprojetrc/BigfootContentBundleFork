@@ -37,7 +37,7 @@ class BlockType extends AbstractType
                 'block',
                 'entity',
                 array(
-                    'class'         => 'Bigfoot\Bundle\ContentBundle\Entity\Block\Template\TitleDescMedia',
+                    'class'         => 'Bigfoot\Bundle\ContentBundle\Entity\Block',
                     'contextualize' => true
                 )
             )

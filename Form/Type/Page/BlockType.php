@@ -38,7 +38,6 @@ class BlockType extends AbstractType
                 'entity',
                 array(
                     'class'         => 'Bigfoot\Bundle\ContentBundle\Entity\Block',
-                    'contextualize' => true
                 )
             )
             ->add('position')

@@ -38,6 +38,23 @@ class Page extends Content
     protected $id;
 
     /**
+     * @var string
+     *
+     * @Gedmo\Translatable
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Translatable
+     * @Gedmo\Slug(fields={"title"}, updatable=false, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    protected $slug;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="page", cascade={"persist", "remove"})
@@ -144,10 +161,52 @@ class Page extends Content
     }
 
     /**
+     * Set title
+     *
+     * @param string $title
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $slug
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
      * Add block
      *
      * @param PageBlock $block
-     * @return Page
+     * @return $this
      */
     public function addBlock(PageBlock $block)
     {
@@ -170,6 +229,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $blocks
+     * @return $this
      */
     public function setBlocks($blocks)
     {
@@ -192,7 +252,7 @@ class Page extends Content
      * Add block2
      *
      * @param PageBlock2 $block2
-     * @return Page
+     * @return $this
      */
     public function addBlock2(PageBlock2 $block2)
     {
@@ -205,6 +265,7 @@ class Page extends Content
      * Remove block2
      *
      * @param PageBlock2 $block2
+     * @return $this
      */
     public function removeBlock2(PageBlock2 $block2)
     {
@@ -215,6 +276,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $blocks2
+     * @return $this
      */
     public function setBlocks2($blocks2)
     {
@@ -227,6 +289,7 @@ class Page extends Content
      * Get blocks2
      *
      * @return \Doctrine\Common\Collections\Collection
+     * @return $this
      */
     public function getBlocks2()
     {
@@ -237,7 +300,7 @@ class Page extends Content
      * Add block3
      *
      * @param PageBlock3 $block3
-     * @return Page
+     * @return $this
      */
     public function addBlock3(PageBlock3 $block3)
     {
@@ -250,6 +313,7 @@ class Page extends Content
      * Remove block3
      *
      * @param PageBlock3 $block3
+     * @return $this
      */
     public function removeBlock3(PageBlock3 $block3)
     {
@@ -260,6 +324,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $blocks3
+     * @return $this
      */
     public function setBlocks3($blocks3)
     {
@@ -272,6 +337,7 @@ class Page extends Content
      * Get blocks3
      *
      * @return \Doctrine\Common\Collections\Collection
+     * @return $this
      */
     public function getBlocks3()
     {
@@ -282,7 +348,7 @@ class Page extends Content
      * Add block4
      *
      * @param PageBlock4 $block4
-     * @return Page
+     * @return $this
      */
     public function addBlock4(PageBlock4 $block4)
     {
@@ -295,6 +361,7 @@ class Page extends Content
      * Remove block4
      *
      * @param PageBlock4 $block4
+     * @return $this
      */
     public function removeBlock4(PageBlock4 $block4)
     {
@@ -305,6 +372,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $blocks4
+     * @return $this
      */
     public function setBlocks4($blocks4)
     {
@@ -327,7 +395,7 @@ class Page extends Content
      * Add block5
      *
      * @param PageBlock5 $block5
-     * @return Page
+     * @return $this
      */
     public function addBlock5(PageBlock5 $block5)
     {
@@ -340,6 +408,7 @@ class Page extends Content
      * Remove block5
      *
      * @param PageBlock5 $block5
+     * @return $this
      */
     public function removeBlock5(PageBlock5 $block5)
     {
@@ -350,6 +419,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $blocks5
+     * @return $this
      */
     public function setBlocks5($blocks5)
     {
@@ -372,7 +442,7 @@ class Page extends Content
      * Add sidebar
      *
      * @param PageSidebar $sidebar
-     * @return Page
+     * @return $this
      */
     public function addSidebar(PageSidebar $sidebar)
     {
@@ -385,6 +455,7 @@ class Page extends Content
      * Remove sidebar
      *
      * @param PageSidebar $sidebar
+     * @return $this
      */
     public function removeSidebar(PageSidebar $sidebar)
     {
@@ -395,6 +466,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $sidebars
+     * @return $this
      */
     public function setSidebars($sidebars)
     {
@@ -417,7 +489,7 @@ class Page extends Content
      * Add sidebars2
      *
      * @param PageSidebar2 $sidebars2
-     * @return Page
+     * @return $this
      */
     public function addSidebar2(PageSidebar2 $sidebars2)
     {
@@ -438,6 +510,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $sidebars2
+     * @return $this
      */
     public function setSidebars2($sidebars2)
     {
@@ -460,7 +533,7 @@ class Page extends Content
      * Add sidebars3
      *
      * @param PageSidebar3 $sidebars3
-     * @return Page
+     * @return $this
      */
     public function addSidebar3(PageSidebar3 $sidebars3)
     {
@@ -481,6 +554,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $sidebars3
+     * @return $this
      */
     public function setSidebars3($sidebars3)
     {
@@ -503,7 +577,7 @@ class Page extends Content
      * Add sidebars4
      *
      * @param PageSidebar4 $sidebars4
-     * @return Page
+     * @return $this
      */
     public function addSidebar4(PageSidebar4 $sidebars4)
     {
@@ -524,6 +598,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $sidebars4
+     * @return $this
      */
     public function setSidebars4($sidebars4)
     {
@@ -546,7 +621,7 @@ class Page extends Content
      * Add sidebars5
      *
      * @param PageSidebar5 $sidebars5
-     * @return Page
+     * @return $this
      */
     public function addSidebar5(PageSidebar5 $sidebars5)
     {
@@ -559,14 +634,18 @@ class Page extends Content
      * Remove sidebars5
      *
      * @param PageSidebar5 $sidebars5
+     * @return $this
      */
     public function removeSidebar5(PageSidebar5 $sidebars5)
     {
         $this->sidebars5->removeElement($sidebars5);
+
+        return $this;
     }
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $sidebars5
+     * @return $this
      */
     public function setSidebars5($sidebars5)
     {
@@ -587,6 +666,7 @@ class Page extends Content
 
     /**
      * @param Attribute $attribute
+     * @return $this
      */
     public function addAttribute($attribute)
     {
@@ -597,6 +677,7 @@ class Page extends Content
 
     /**
      * @param Attribute $attribute
+     * @return $this
      */
     public function removeAttribute($attribute)
     {
@@ -607,6 +688,7 @@ class Page extends Content
 
     /**
      * @param \Doctrine\Common\Collections\ArrayCollection $attributes
+     * @return $this
      */
     public function setAttributes($attributes)
     {
@@ -617,6 +699,7 @@ class Page extends Content
 
     /**
      * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return $this
      */
     public function getAttributes()
     {
@@ -624,7 +707,6 @@ class Page extends Content
     }
 
     /**
-     * @param $type
      * @return array
      */
     public function getArrayAttributes() {

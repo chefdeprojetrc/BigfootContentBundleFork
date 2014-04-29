@@ -18,14 +18,6 @@ class TitleDescMediaBlock2 extends Page
      * @var string
      *
      * @Gedmo\Translatable
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @var text
-     *
-     * @Gedmo\Translatable
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
@@ -55,29 +47,6 @@ class TitleDescMediaBlock2 extends Page
     public function getTemplate()
     {
         return 'TitleDescMediaBlock2';
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return TitleDescMediaBlock2
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**

@@ -18,9 +18,10 @@ class TitleDesc2 extends Page
      * @var string
      *
      * @Gedmo\Translatable
-     * @ORM\Column(name="title", type="string", length=255)
+     * @Gedmo\Slug(fields={"title"}, updatable=false, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
-    private $title;
+    protected $slug;
 
     /**
      * @var text
@@ -56,29 +57,6 @@ class TitleDesc2 extends Page
     public function getTemplate()
     {
         return 'TitleDesc2';
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return TitleDesc2
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**

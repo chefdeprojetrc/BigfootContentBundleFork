@@ -34,6 +34,15 @@ class Sidebar extends Content
     protected $id;
 
     /**
+     * @var string
+     *
+     * @Gedmo\Translatable
+     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    protected $slug;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar", mappedBy="sidebar", cascade={"persist", "remove"})
@@ -113,6 +122,25 @@ class Sidebar extends Content
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param string $slug
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

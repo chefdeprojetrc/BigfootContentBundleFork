@@ -2,9 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Model;
 
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -19,19 +17,9 @@ abstract class Content
      * @var string
      *
      * @Assert\NotBlank()
-     * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     protected $name;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
-     */
-    protected $slug;
 
     /**
      * @var string
@@ -92,7 +80,7 @@ abstract class Content
      * Set name
      *
      * @param string $name
-     * @return Block
+     * @return $this
      */
     public function setName($name)
     {
@@ -112,33 +100,10 @@ abstract class Content
     }
 
     /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Block
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
      * Set template
      *
      * @param string $template
-     * @return Block
+     * @return $this
      */
     public function setTemplate($template)
     {
@@ -174,7 +139,7 @@ abstract class Content
      * Set active
      *
      * @param boolean $active
-     * @return Content
+     * @return $this
      */
     public function setActive($active)
     {
@@ -197,7 +162,7 @@ abstract class Content
      * Set created
      *
      * @param \DateTime $created
-     * @return Content
+     * @return $this
      */
     public function setCreated($created)
     {
@@ -220,7 +185,7 @@ abstract class Content
      * Set updated
      *
      * @param \DateTime $updated
-     * @return Content
+     * @return $this
      */
     public function setUpdated($updated)
     {
@@ -259,6 +224,10 @@ abstract class Content
         return $this->updatedBy;
     }
 
+    /**
+     * @param $locale
+     * @return $this
+     */
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;

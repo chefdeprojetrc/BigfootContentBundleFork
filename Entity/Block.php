@@ -36,6 +36,15 @@ class Block extends Content
     /**
      * @var string
      *
+     * @Gedmo\Translatable
+     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="action", type="string", length=255, nullable=true)
      */
     protected $action;
@@ -119,6 +128,25 @@ class Block extends Content
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param string $slug
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

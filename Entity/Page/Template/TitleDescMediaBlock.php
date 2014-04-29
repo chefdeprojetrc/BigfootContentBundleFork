@@ -15,14 +15,6 @@ use Bigfoot\Bundle\ContentBundle\Entity\Page;
 class TitleDescMediaBlock extends Page
 {
     /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
-
-    /**
      * @var text
      *
      * @Gedmo\Translatable
@@ -55,29 +47,6 @@ class TitleDescMediaBlock extends Page
     public function getTemplate()
     {
         return 'TitleDescMediaBlock';
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return TitleDescMediaBlock
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**

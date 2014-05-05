@@ -60,6 +60,20 @@ class TitleDescBlockSidebarType extends AbstractType
                     )
                 )
             )
+            ->add(
+                'slug',
+                'text',
+                array(
+                    'required'  => false,
+                    'attr'      => array(
+                        'data-placement' => 'bottom',
+                        'data-popover'   => true,
+                        'data-content'   => 'This value is used to generate urls. Should contain only lower case letters and the \'-\' sign.',
+                        'data-title'     => 'Slug',
+                        'data-trigger'   => 'hover',
+                    ),
+                )
+            )
             ->add('description', 'bigfoot_richtext')
             ->add(
                 'blocks',

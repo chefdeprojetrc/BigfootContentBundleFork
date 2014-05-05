@@ -15,7 +15,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\Page;
 class TitleDescBlockSidebar extends Page
 {
     /**
-     * @var text
+     * @var string
      *
      * @Gedmo\Translatable
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -46,7 +46,7 @@ class TitleDescBlockSidebar extends Page
      * Set description
      *
      * @param string $description
-     * @return TitleDescBlockSidebar
+     * @return $this
      */
     public function setDescription($description)
     {

@@ -48,7 +48,6 @@ class ContentType extends AbstractType
                 )
             )
             ->add('active', 'checkbox', array('required' => false))
-            ->add('translation', 'translatable_entity')
         ;
     }
 

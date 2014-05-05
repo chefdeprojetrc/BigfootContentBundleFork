@@ -56,12 +56,25 @@ class TitleDescType extends AbstractType
                         'data-content'   => 'This is the title of the block as displayed to the web user.',
                         'data-title'     => 'Title',
                         'data-trigger'   => 'hover',
-                        'data-placement' => 'right'
                     )
                 )
             )
+            ->add(
+                'slug',
+                'text',
+                array(
+                    'required'  => false,
+                    'attr'      => array(
+                        'data-placement' => 'bottom',
+                        'data-popover'   => true,
+                        'data-content'   => 'This value is used to generate urls. Should contain only lower case letters and the \'-\' sign.',
+                        'data-title'     => 'Slug',
+                        'data-trigger'   => 'hover',
+                    ),
+                )
+            )
             ->add('description', 'bigfoot_richtext')
-            ->add('action', 'text', array('required' => false))
+            ->add('action'     , 'text', array('required' => false))
             ->add('translation', 'translatable_entity');
     }
 

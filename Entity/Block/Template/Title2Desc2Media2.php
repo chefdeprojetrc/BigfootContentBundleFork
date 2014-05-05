@@ -32,7 +32,7 @@ class Title2Desc2Media2 extends Block
 
 
     /**
-     * @var text
+     * @var string
      *
      * @Gedmo\Translatable
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -40,7 +40,7 @@ class Title2Desc2Media2 extends Block
     private $description;
 
     /**
-     * @var text
+     * @var string
      *
      * @Gedmo\Translatable
      * @ORM\Column(name="description_2", type="text", nullable=true)

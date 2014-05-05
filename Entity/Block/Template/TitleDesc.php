@@ -23,7 +23,7 @@ class TitleDesc extends Block
     private $title;
 
     /**
-     * @var text
+     * @var string
      *
      * @Gedmo\Translatable
      * @ORM\Column(name="description", type="text", nullable=true)

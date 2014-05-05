@@ -30,20 +30,20 @@ class TitleDescType extends AbstractType
                 'attributes',
                 'entity',
                 array(
-                    'class'     => 'BigfootContentBundle:Attribute',
+                    'class'         => 'BigfootContentBundle:Attribute',
                     'query_builder' => function(EntityRepository $er) {
                         return $er->findByType(Attribute::TYPE_PAGE);
                     },
-                    'required'  => false,
-                    'multiple'  => true,
-                    'attr'      => array(
+                    'required'      => false,
+                    'multiple'      => true,
+                    'attr'          => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
                         'data-content'   => 'Styles applied to this content element.',
                         'data-title'     => 'Style',
                         'data-trigger'   => 'hover',
                     ),
-                    'label' => 'Style',
+                    'label'         => 'Style',
                 )
             )
             ->add(
@@ -58,6 +58,20 @@ class TitleDescType extends AbstractType
                         'data-trigger'   => 'hover',
                         'data-placement' => 'right'
                     )
+                )
+            )
+            ->add(
+                'slug',
+                'text',
+                array(
+                    'required'  => false,
+                    'attr'      => array(
+                        'data-placement' => 'bottom',
+                        'data-popover'   => true,
+                        'data-content'   => 'This value is used to generate urls. Should contain only lower case letters and the \'-\' sign.',
+                        'data-title'     => 'Slug',
+                        'data-trigger'   => 'hover',
+                    ),
                 )
             )
             ->add('description', 'bigfoot_richtext')

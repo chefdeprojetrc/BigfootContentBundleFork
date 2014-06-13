@@ -3,22 +3,19 @@
 {% form_theme form bigfoot_theme_bundle ~ ':content:form/sidebar/blocks.html.twig' %}
 
 {% block form %}
+    {{ form_label(form.content.template) }}
 
-    <div id="templates">
-        <div class="item-template w{{ form.content.template|length }}" style="width: 100%">
-            <span class="group-title">{{ form.content.vars.label }}</span>
-            {% for template in form.content.template %}
-                <div class="template-row">
-                    <label style="text-align:center;">
-                        {{ form_widget(template) }}
-                        <img src="{{ asset('images/template/sidebar/' ~ template.vars.value ~ '.svg') }}"><br />
-                        <span style="font-size:9px;">{{ template.vars.label }}</span>
-                        <i class="icon-ok bigger-110 bigger-160 green" {% if not template.vars.checked %}style="display: none"{% endif %}></i>
-                    </label>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+    <ul>
+        {% for template in form.content.template %}
+            <li class="template-row inline" style="margin-right:10px;">
+                <label style="text-align:center;">
+                    {{ form_widget(template) }}
+                    <img src="{{ asset('images/template/sidebar/' ~ template.vars.value ~ '.svg') }}"><br />
+                    <span style="font-size:9px;">{{ template.vars.label }}</span>
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
 
     {{ form_rest(form) }}
 {% endblock %}
@@ -27,11 +24,4 @@
     {{ parent() }}
 
     <script src="{{ asset('bundles/bigfootcontent/js/block.js') }}"></script>
-    <script src="{{ asset('bundles/bigfootcontent/js/content.js') }}"></script>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-
-    <link rel="stylesheet" href="{{ asset('bundles/bigfootcontent/css/styles.css') }}" />
 {% endblock %}

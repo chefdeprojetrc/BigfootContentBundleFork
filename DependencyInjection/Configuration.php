@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
                         ->prototype('array')
                             ->children()
                                 ->scalarNode('class')->end()
+                                ->scalarNode('label')->end()
                                 ->arrayNode('sub_templates')
                                     ->prototype('scalar')->end()
                                 ->end()

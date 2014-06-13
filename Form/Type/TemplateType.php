@@ -20,6 +20,8 @@ class TemplateType extends AbstractType
     {
         $templates = $options['data'];
 
+        $this->toArrayTemplates($templates);
+
         $builder
             ->add(
                 'template',
@@ -61,6 +63,25 @@ class TemplateType extends AbstractType
         foreach ($templates as $key => $template) {
             foreach ($template['sub_templates'] as $subTemplates => $label) {
                 $nTemplates[$key][$subTemplates] = $label;
+            }
+        }
+
+        asort($nTemplates);
+
+        return $nTemplates;
+    }
+
+    public function toArrayTemplates($templates)
+    {
+        $nTemplates = array();
+
+        foreach ($templates as $key => $template) {
+            $nTemplates[$key] = array(
+                "label" => isset($template['label']) ? $template['label'] : '',
+                "subTemplates" => array()
+            );
+            foreach ($template['sub_templates'] as $subTemplates => $label) {
+                $nTemplates[$key]['subTemplates'][$subTemplates] = $label;
             }
         }
 

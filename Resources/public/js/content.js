@@ -4,7 +4,7 @@ $(function() {
         var $radio = $(this).find('input[type=radio]');
         $radio.click(function() {
             $('.template-row i.icon-ok').hide();
-            $(this).parent().parent().find('i.icon-ok').show();
+            $(this).closest('.template-row').find('i.icon-ok').show();
         });
 
     });

@@ -80,6 +80,7 @@ class TitleDescMediaBlock2Type extends AbstractType
                 'blocks',
                 'collection',
                 array(
+                    'label'        => false,
                     'prototype'    => true,
                     'allow_add'    => true,
                     'allow_delete' => true,
@@ -97,6 +98,7 @@ class TitleDescMediaBlock2Type extends AbstractType
                 'blocks2',
                 'collection',
                 array(
+                    'label'        => false,
                     'prototype'    => true,
                     'allow_add'    => true,
                     'allow_delete' => true,

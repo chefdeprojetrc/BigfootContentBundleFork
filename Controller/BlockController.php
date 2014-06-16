@@ -40,9 +40,15 @@ class BlockController extends CrudController
     protected function getFields()
     {
         return array(
-            'id'       => 'ID',
-            'template' => 'Template',
-            'name'     => 'Name',
+            'id'       => array(
+                'label' => 'ID',
+            ),
+            'template' => array(
+                'label' => 'Template',
+            ),
+            'name'     => array(
+                'label' => 'Name',
+            ),
         );
     }
 

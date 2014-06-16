@@ -98,6 +98,7 @@ class TitleDesc2MediaBlock2Type extends AbstractType
                 'blocks2',
                 'collection',
                 array(
+                    'label'        => false,
                     'prototype'    => true,
                     'allow_add'    => true,
                     'allow_delete' => true,

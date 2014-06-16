@@ -30,6 +30,7 @@ class TemplateType extends AbstractType
                     'required'    => true,
                     'expanded'    => true,
                     'multiple'    => false,
+                    'label'       => false,
                     'choices'     => $this->toStringTemplates($templates),
                     'constraints' => array(
                         new Assert\NotNull(),
@@ -52,6 +53,7 @@ class TemplateType extends AbstractType
         $resolver->setDefaults(
             array(
                 'contentType' => '',
+                'label' => false,
             )
         );
     }

@@ -61,6 +61,7 @@ class ContentType extends AbstractType
                 'inherit_data'  => true,
                 'template'      => '',
                 'templates'     => '',
+                'label'         => false,
             )
         );
     }

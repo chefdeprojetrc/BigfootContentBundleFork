@@ -79,6 +79,7 @@ class TitleDescBlockSidebarType extends AbstractType
                 'blocks',
                 'collection',
                 array(
+                    'label'        => false,
                     'prototype'    => true,
                     'allow_add'    => true,
                     'allow_delete' => true,
@@ -96,6 +97,7 @@ class TitleDescBlockSidebarType extends AbstractType
                 'sidebars',
                 'collection',
                 array(
+                    'label'        => false,
                     'prototype'    => true,
                     'allow_add'    => true,
                     'allow_delete' => true,

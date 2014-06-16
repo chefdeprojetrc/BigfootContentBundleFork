@@ -84,7 +84,7 @@ class BlockType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'page' => null
+                'page' => null,
             )
         );
     }

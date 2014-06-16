@@ -80,6 +80,7 @@ class TitleDesc2BlockType extends AbstractType
                 'blocks',
                 'collection',
                 array(
+                    'label'        => false,
                     'prototype'    => true,
                     'allow_add'    => true,
                     'allow_delete' => true,

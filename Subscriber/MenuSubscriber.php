@@ -44,81 +44,80 @@ class MenuSubscriber implements EventSubscriberInterface
      */
     public function onGenerateMain(GenericEvent $event)
     {
-        $menu = $event->getSubject();
-        $root = $menu->getRoot();
+        $builder = $event->getSubject();
 
-        $contentMenu = $root->addChild(
-            'content',
-            array(
-                'label'          => 'Content',
-                'url'            => '#',
-                'linkAttributes' => array(
-                    'class' => 'dropdown-toggle',
-                    'icon'  => 'list-alt',
+        $builder
+            ->addChild(
+                'content',
+                array(
+                    'label'          => 'Content',
+                    'url'            => '#',
+                    'linkAttributes' => array(
+                        'class' => 'dropdown-toggle',
+                        'icon'  => 'list-alt',
+                    ),
+                    'extras' => array(
+                        'routes' => array(
+                            'admin_content_template_choose',
+                        )
+                    )
                 ),
-                'extras' => array(
-                    'routes' => array(
-                        'admin_content_template_choose',
+                array(
+                    'children-attributes' => array(
+                        'class' => 'submenu'
                     )
                 )
             )
-        );
-
-        $contentMenu->setChildrenAttributes(
-            array(
-                'class' => 'submenu',
-            )
-        );
-
-        $contentMenu->addChild(
-            'page',
-            array(
-                'label'  => 'Page',
-                'route'  => 'admin_page',
-                'extras' => array(
-                    'routes' => array(
-                        'admin_page_new',
-                        'admin_page_edit',
+            ->addChildFor(
+                'content',
+                'content_page',
+                array(
+                    'label'  => 'Page',
+                    'route'  => 'admin_page',
+                    'extras' => array(
+                        'routes' => array(
+                            'admin_page_new',
+                            'admin_page_edit',
+                        )
+                    ),
+                    'linkAttributes' => array(
+                        'icon' => 'list-alt',
                     )
-                ),
-                'linkAttributes' => array(
-                    'icon' => 'list-alt',
                 )
             )
-        );
-
-        $contentMenu->addChild(
-            'sidebar',
-            array(
-                'label'  => 'Sidebar',
-                'route'  => 'admin_sidebar',
-                'extras' => array(
-                    'routes' => array(
-                        'admin_sidebar_new',
-                        'admin_sidebar_edit',
+            ->addChildFor(
+                'content',
+                'content_sidebar',
+                array(
+                    'label'  => 'Sidebar',
+                    'route'  => 'admin_sidebar',
+                    'extras' => array(
+                        'routes' => array(
+                            'admin_sidebar_new',
+                            'admin_sidebar_edit',
+                        )
+                    ),
+                    'linkAttributes' => array(
+                        'icon' => 'list-alt',
                     )
-                ),
-                'linkAttributes' => array(
-                    'icon' => 'list-alt',
                 )
             )
-        );
-
-        $contentMenu->addChild(
-            'block',
-            array(
-                'label'  => 'Block',
-                'route'  => 'admin_block',
-                'extras' => array(
-                    'routes' => array(
-                        'admin_block_new',
-                        'admin_block_edit',
+            ->addChildFor(
+                'content',
+                'content_block',
+                array(
+                    'label'  => 'Block',
+                    'route'  => 'admin_block',
+                    'extras' => array(
+                        'routes' => array(
+                            'admin_block_new',
+                            'admin_block_edit',
+                        )
+                    ),
+                    'linkAttributes' => array(
+                        'icon' => 'list-alt',
                     )
-                ),
-                'linkAttributes' => array(
-                    'icon' => 'list-alt',
                 )
-            )
-        );
+            );
     }
 }

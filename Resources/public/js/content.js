@@ -1,5 +1,14 @@
 $(function() {
 
+    $( ".template-row" ).each(function() {
+        var $radio = $(this).find('input[type=radio]');
+        $radio.click(function() {
+            $('.template-row i.icon-ok').hide();
+            $(this).parent().parent().find('i.icon-ok').show();
+        });
+
+    });
+
     /**
      * Handle modal response
      */

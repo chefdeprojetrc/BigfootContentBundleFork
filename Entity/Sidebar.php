@@ -210,7 +210,17 @@ class Sidebar extends Content
      */
     public function getBlocks()
     {
-        return $this->blocks;
+        $blocks = array();
+
+        foreach ($this->blocks as $block) {
+            $blocks[$block->getPosition()] = $block;
+        }
+
+        ksort($blocks);
+
+        $blocks = new ArrayCollection($blocks);
+
+        return $blocks;
     }
 
     /**
@@ -436,7 +446,8 @@ class Sidebar extends Content
      * @param $type
      * @return array
      */
-    public function getArrayAttributes() {
+    public function getArrayAttributes()
+    {
         $toReturn = array();
 
         /** @var Attribute $attribute */

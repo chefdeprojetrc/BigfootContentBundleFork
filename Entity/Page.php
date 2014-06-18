@@ -245,7 +245,17 @@ class Page extends Content
      */
     public function getBlocks()
     {
-        return $this->blocks;
+        $blocks = array();
+
+        foreach ($this->blocks as $key => $block) {
+            $blocks[$block->getPosition()] = $block;
+        }
+
+        ksort($blocks);
+
+        $blocks = new ArrayCollection($blocks);
+
+        return $blocks;
     }
 
     /**
@@ -293,7 +303,17 @@ class Page extends Content
      */
     public function getBlocks2()
     {
-        return $this->blocks2;
+        $blocks = array();
+
+        foreach ($this->blocks2 as $key => $block) {
+            $blocks[$block->getPosition()] = $block;
+        }
+
+        ksort($blocks);
+
+        $blocks = new ArrayCollection($blocks);
+
+        return $blocks;
     }
 
     /**
@@ -341,7 +361,17 @@ class Page extends Content
      */
     public function getBlocks3()
     {
-        return $this->blocks3;
+        $blocks = array();
+
+        foreach ($this->blocks3 as $key => $block) {
+            $blocks[$block->getPosition()] = $block;
+        }
+
+        ksort($blocks);
+
+        $blocks = new ArrayCollection($blocks);
+
+        return $blocks;
     }
 
     /**
@@ -388,7 +418,17 @@ class Page extends Content
      */
     public function getBlocks4()
     {
-        return $this->blocks4;
+        $blocks = array();
+
+        foreach ($this->blocks4 as $key => $block) {
+            $blocks[$block->getPosition()] = $block;
+        }
+
+        ksort($blocks);
+
+        $blocks = new ArrayCollection($blocks);
+
+        return $blocks;
     }
 
     /**
@@ -435,7 +475,17 @@ class Page extends Content
      */
     public function getBlocks5()
     {
-        return $this->blocks5;
+        $blocks = array();
+
+        foreach ($this->blocks5 as $key => $block) {
+            $blocks[$block->getPosition()] = $block;
+        }
+
+        ksort($blocks);
+
+        $blocks = new ArrayCollection($blocks);
+
+        return $blocks;
     }
 
     /**
@@ -482,7 +532,17 @@ class Page extends Content
      */
     public function getSidebars()
     {
-        return $this->sidebars;
+        $sidebars = array();
+
+        foreach ($this->sidebars as $key => $sidebar) {
+            $sidebars[$sidebar->getPosition()] = $sidebar;
+        }
+
+        ksort($sidebars);
+
+        $sidebars = new ArrayCollection($sidebars);
+
+        return $sidebars;
     }
 
     /**
@@ -526,7 +586,17 @@ class Page extends Content
      */
     public function getSidebars2()
     {
-        return $this->sidebars2;
+        $sidebars = array();
+
+        foreach ($this->sidebars2 as $key => $sidebar) {
+            $sidebars[$sidebar->getPosition()] = $sidebar;
+        }
+
+        ksort($sidebars);
+
+        $sidebars = new ArrayCollection($sidebars);
+
+        return $sidebars;
     }
 
     /**
@@ -570,7 +640,17 @@ class Page extends Content
      */
     public function getSidebars3()
     {
-        return $this->sidebars3;
+        $sidebars = array();
+
+        foreach ($this->sidebars3 as $key => $sidebar) {
+            $sidebars[$sidebar->getPosition()] = $sidebar;
+        }
+
+        ksort($sidebars);
+
+        $sidebars = new ArrayCollection($sidebars);
+
+        return $sidebars;
     }
 
     /**
@@ -614,7 +694,17 @@ class Page extends Content
      */
     public function getSidebars4()
     {
-        return $this->sidebars4;
+        $sidebars = array();
+
+        foreach ($this->sidebars4 as $key => $sidebar) {
+            $sidebars[$sidebar->getPosition()] = $sidebar;
+        }
+
+        ksort($sidebars);
+
+        $sidebars = new ArrayCollection($sidebars);
+
+        return $sidebars;
     }
 
     /**
@@ -661,7 +751,17 @@ class Page extends Content
      */
     public function getSidebars5()
     {
-        return $this->sidebars5;
+        $sidebars = array();
+
+        foreach ($this->sidebars5 as $key => $sidebar) {
+            $sidebars[$sidebar->getPosition()] = $sidebar;
+        }
+
+        ksort($sidebars);
+
+        $sidebars = new ArrayCollection($sidebars);
+
+        return $sidebars;
     }
 
     /**
@@ -709,7 +809,8 @@ class Page extends Content
     /**
      * @return array
      */
-    public function getArrayAttributes() {
+    public function getArrayAttributes()
+    {
         $toReturn = array();
 
         foreach ($this->attributes as $attribute) {

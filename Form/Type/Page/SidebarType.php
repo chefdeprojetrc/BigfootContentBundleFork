@@ -38,11 +38,12 @@ class SidebarType extends AbstractType
                 'entity',
                 array(
                     'class'         => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar',
-                    'query_builder' => function(EntityRepository $er) {
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('s')->orderBy('s.name', 'ASC');
                     }
                 )
             )
+            ->add('position')
             ->add(
                 'template',
                 'choice',
@@ -56,7 +57,7 @@ class SidebarType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
-            function(FormEvent $event) use ($options) {
+            function (FormEvent $event) use ($options) {
                 $form = $event->getForm();
                 $data = $event->getData();
                 $data->setPage($options['page']);

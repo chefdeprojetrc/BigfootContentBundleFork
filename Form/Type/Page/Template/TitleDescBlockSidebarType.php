@@ -30,8 +30,8 @@ class TitleDescBlockSidebarType extends AbstractType
                 'attributes',
                 'entity',
                 array(
-                    'class'     => 'BigfootContentBundle:Attribute',
-                    'query_builder' => function(EntityRepository $er) {
+                    'class'         => 'BigfootContentBundle:Attribute',
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->findByType(Attribute::TYPE_PAGE);
                     },
                     'required'  => false,

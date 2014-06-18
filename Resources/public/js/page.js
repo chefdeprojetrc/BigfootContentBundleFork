@@ -3,12 +3,31 @@ $(function() {
     /**
      * Handle sidebars
      */
+    $('.sidebar-accordion')
+        .accordion({
+            collapsible: true,
+            header:      '> li > h3'
+        })
+        .sortable({
+            handle: 'h3',
+            stop: function( event, ui ) {
+                ui.item.children('li').triggerHandler('focusout');
+
+                orderSidebars();
+            }
+        })
+        .accordion('refresh');
+
     var
         containerSidebar = $('.widget-sidebars');
         prototypeSidebar = containerSidebar.attr('data-prototype'),
         sidebars         = containerSidebar.find('.admin_sidebar_select');
 
     handleSidebarTemplates(sidebars);
+
+    handleSidebarAccordion(sidebars);
+
+    orderSidebars();
 
     $('.admin-add-sidebar').on('click', function (event) {
         event.preventDefault();
@@ -19,7 +38,7 @@ $(function() {
 
         var newSidebar = prototypeSidebar.replace(/__name__/g, sidebarCount);
 
-        containerSidebar.append(newSidebar);
+        $('.sidebar-accordion').append(newSidebar);
 
         $(".chosen-select").chosen();
 
@@ -34,6 +53,25 @@ $(function() {
                 .find('.templates-container:last')
                     .find('label.is-shown:first > input')
                         .attr('checked', true);
+
+        $('.sidebar-accordion')
+            .accordion({
+                collapsible: true,
+                header:      '> li > h3'
+            })
+            .sortable({
+                handle: 'h3',
+                stop: function( event, ui ) {
+                    ui.item.children('li').triggerHandler('focusout');
+
+                    orderSidebars();
+                }
+            })
+            .accordion('refresh');
+
+        handleSidebarAccordion(sidebars);
+
+        orderSidebars();
     });
 
     $('body').on('click', '.admin-delete-sidebar', function (event) {
@@ -46,6 +84,8 @@ $(function() {
 
     $('body').on('change', '.admin_sidebar_select', function (event) {
         handleSidebarTemplate($(this));
+
+        replaceSidebarAccordionName($(this));
     });
 
     function handleSidebarTemplates(sidebars)
@@ -84,6 +124,41 @@ $(function() {
                     .addClass('is-shown')
                     .show();
             }
+        });
+    }
+
+    function handleSidebarAccordion(sidebars)
+    {
+        sidebars.each(function (index) {
+            replaceSidebarAccordionName($(this));
+        });
+    }
+
+    function replaceSidebarAccordionName(sidebar)
+    {
+        var currentSidebarName = sidebar
+            .find('option:selected')
+                .html();
+
+        sidebar
+            .closest('.sidebar-row')
+                .find('.content-sidebar-name')
+                    .text(currentSidebarName);
+    }
+
+    function orderSidebars()
+    {
+        var containers = $('.widget-sidebars');
+
+        containers.each(function (index) {
+            var sidebars  = $(this).find('.admin_sidebar_select');
+
+            sidebars.each(function (index2) {
+                $(this)
+                    .closest('.s-accordion')
+                        .find('.sidebar-position')
+                            .val(index2 + 1);
+            });
         });
     }
 

@@ -3,13 +3,32 @@ $(function() {
     /**
      * Handle blocks
      */
+    $('.block-accordion')
+        .accordion({
+            collapsible: true,
+            header:      '> li > h3'
+        })
+        .sortable({
+            handle: 'h3',
+            stop: function( event, ui ) {
+                ui.item.children('li').triggerHandler('focusout');
+
+                orderBlocks();
+            }
+        })
+        .accordion('refresh');
+
     var containers = $('.widget-blocks');
 
     containers.each(function (index) {
         var blocks = $(this).find('.admin_block_select');
 
         handleTemplates(blocks);
+
+        handleBlockAccordion(blocks);
     });
+
+    orderBlocks();
 
     $('body').on('click', '.admin-add-block', function (event) {
         event.preventDefault();
@@ -28,7 +47,7 @@ $(function() {
 
         var newBlock = prototypeBlock.replace(/__name__/g, blockCount);
 
-        containerBlock.append(newBlock);
+        $('.block-accordion').append(newBlock);
 
         $(".chosen-select").chosen();
 
@@ -41,6 +60,25 @@ $(function() {
                 .find('.templates-container:last')
                     .find('label.is-shown:first > input')
                         .attr('checked', true);
+
+            $('.block-accordion')
+                .accordion({
+                    collapsible: true,
+                    header:      '> li > h3'
+                })
+                .sortable({
+                    handle: 'h3',
+                    stop: function( event, ui ) {
+                        ui.item.children('li').triggerHandler('focusout');
+
+                        orderBlocks();
+                    }
+                })
+                .accordion('refresh');
+
+        handleBlockAccordion(blocks);
+
+        orderBlocks();
     });
 
     $('.admin-edit-block').unbind('click');
@@ -70,10 +108,14 @@ $(function() {
         var currentBlock = $(this)
             .closest('li')
             .remove();
+
+        orderBlocks();
     });
 
     $('body').on('change', '.admin_block_select', function (event) {
         handleTemplate($(this));
+
+        replaceBlockAccordionName($(this));
     });
 
     function handleTemplates(blocks)
@@ -112,6 +154,41 @@ $(function() {
                     .addClass('is-shown')
                     .show();
             }
+        });
+    }
+
+    function handleBlockAccordion(blocks)
+    {
+        blocks.each(function (index) {
+            replaceBlockAccordionName($(this));
+        });
+    }
+
+    function replaceBlockAccordionName(block)
+    {
+        var currentBlockName = block
+            .find('option:selected')
+                .html();
+
+        block
+            .closest('.block-row')
+                .find('.content-block-name')
+                    .text(currentBlockName);
+    }
+
+    function orderBlocks()
+    {
+        var containers = $('.widget-blocks');
+
+        containers.each(function (index) {
+            var blocks  = $(this).find('.admin_block_select');
+
+            blocks.each(function (index2) {
+                $(this)
+                    .closest('.b-accordion')
+                        .find('.block-position')
+                            .val(index2 + 1);
+            });
         });
     }
 

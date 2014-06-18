@@ -37,7 +37,7 @@ class BlockType extends AbstractType
                 'block',
                 'entity',
                 array(
-                    'class'         => 'Bigfoot\Bundle\ContentBundle\Entity\Block',
+                    'class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block',
                 )
             )
             ->add('position')

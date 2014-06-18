@@ -38,7 +38,7 @@ class BlockType extends AbstractType
                 'entity',
                 array(
                     'class'         => 'Bigfoot\Bundle\ContentBundle\Entity\Block',
-                    'query_builder' => function(EntityRepository $er) {
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('b')->orderBy('b.name', 'ASC');
                     }
                 )
@@ -57,7 +57,7 @@ class BlockType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
-            function(FormEvent $event) use ($options) {
+            function (FormEvent $event) use ($options) {
                 $form = $event->getForm();
                 $data = $event->getData();
                 $data->setSidebar($options['sidebar']);

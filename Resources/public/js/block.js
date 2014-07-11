@@ -61,20 +61,20 @@ $(function() {
                     .find('label.is-shown:first > input')
                         .attr('checked', true);
 
-            $('.block-accordion')
-                .accordion({
-                    collapsible: true,
-                    header:      '> li > h3'
-                })
-                .sortable({
-                    handle: 'h3',
-                    stop: function( event, ui ) {
-                        ui.item.children('li').triggerHandler('focusout');
+        $('.block-accordion')
+            .accordion({
+                collapsible: true,
+                header:      '> li > h3'
+            })
+            .sortable({
+                handle: 'h3',
+                stop: function( event, ui ) {
+                    ui.item.children('li').triggerHandler('focusout');
 
-                        orderBlocks();
-                    }
-                })
-                .accordion('refresh');
+                    orderBlocks();
+                }
+            })
+            .accordion('refresh');
 
         handleBlockAccordion(blocks);
 

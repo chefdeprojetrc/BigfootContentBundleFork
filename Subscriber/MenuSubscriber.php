@@ -56,6 +56,9 @@ class MenuSubscriber implements EventSubscriberInterface
                         'class' => 'dropdown-toggle',
                         'icon'  => 'list-alt',
                     ),
+                    'attributes' => array(
+                        'class' => 'parent'
+                    ),
                     'extras' => array(
                         'routes' => array(
                             'admin_content_template_choose',

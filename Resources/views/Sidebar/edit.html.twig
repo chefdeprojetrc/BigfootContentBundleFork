@@ -2,7 +2,9 @@
 
 {% block form %}
 
-    {% form_theme form bigfoot_theme_bundle ~ ':content:form/sidebar/blocks.html.twig' %}
+    {% form_theme form
+        bigfoot_theme_bundle ~ ':content:form/sidebar/blocks.html.twig'
+        bigfoot_theme_bundle ~ ':form_custom:inline.html.twig' %}
 
     <div id="templates">
         <div class="item-template w{{ form.content.template|length }} pull-center">

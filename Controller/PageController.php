@@ -67,7 +67,7 @@ class PageController extends CrudController
     {
         $globalActions = array();
 
-        if (method_exists($this, 'newAction')) {
+        if (method_exists($this, 'chooseAction')) {
             $globalActions['new'] = array(
                 'label'      => 'Add',
                 'route'      => 'admin_content_template_choose',
@@ -94,7 +94,7 @@ class PageController extends CrudController
      *
      * @Route("/new/{template}", name="admin_page_new")
      */
-    public function newAction(Request $request, $template)
+    public function chooseAction(Request $request, $template)
     {
         $pTemplate = $this->getParentTemplate($template);
         $templates = $this->getTemplates($pTemplate);
@@ -121,7 +121,10 @@ class PageController extends CrudController
 
                 $this->addSuccessFlash(
                     'Page successfully added!',
-                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'page'))
+                    array(
+                        'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'page')),
+                        'label' => 'Page successfully added!'
+                    )
                 );
 
                 return $this->redirect($this->generateUrl('admin_page_edit', array('id' => $page->getId())));
@@ -212,7 +215,10 @@ class PageController extends CrudController
 
                 $this->addSuccessFlash(
                     'Page successfully updated!',
-                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'page'))
+                    array(
+                        'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'page')),
+                        'label' => 'Page successfully updated!'
+                    )
                 );
 
                 return $this->redirect($this->generateUrl('admin_page_edit', array('id' => $page->getId())));

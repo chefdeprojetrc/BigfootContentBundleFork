@@ -118,7 +118,10 @@ class SidebarController extends CrudController
 
                 $this->addSuccessFlash(
                     'Sidebar successfully added!',
-                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar'))
+                    array(
+                        'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar')),
+                        'label' => 'Sidebar successfully added!',
+                    )
                 );
 
                 return $this->redirect($this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId())));
@@ -173,7 +176,10 @@ class SidebarController extends CrudController
 
                 $this->addSuccessFlash(
                     'Sidebar successfully updated!',
-                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar'))
+                    array(
+                        'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar')),
+                        'label' => 'Sidebar successfully updated!'
+                    )
                 );
 
                 return $this->redirect($this->generateUrl('admin_sidebar_edit', array('id' => $sidebar->getId())));
@@ -201,9 +207,11 @@ class SidebarController extends CrudController
         if (!$request->isXmlHttpRequest()) {
             $this->addSuccessFlash(
                 'Sidebar successfully deleted!',
-                $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar'))
+                array(
+                    'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'sidebar')),
+                    'label' => 'Sidebar successfully deleted!',
+                )
             );
-
 
             return $this->redirect($this->generateUrl($this->getRouteNameForAction('index')));
         }

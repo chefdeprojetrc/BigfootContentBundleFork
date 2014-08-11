@@ -154,7 +154,10 @@ class BlockController extends CrudController
 
                 $this->addSuccessFlash(
                     'Block successfully added!',
-                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'block'))
+                    array(
+                        'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'block')),
+                        'label' => 'Block successfully added!'
+                    )
                 );
 
                 return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
@@ -234,7 +237,10 @@ class BlockController extends CrudController
 
                 $this->addSuccessFlash(
                     'Block successfully updated!',
-                    $this->generateUrl('admin_content_template_choose', array('contentType' => 'block'))
+                    array(
+                        'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'block')),
+                        'label' => 'Block successfully updated!'
+                    )
                 );
 
                 return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
@@ -262,7 +268,10 @@ class BlockController extends CrudController
         if (!$request->isXmlHttpRequest()) {
             $this->addSuccessFlash(
                 'Block successfully deleted!',
-                $this->generateUrl('admin_content_template_choose', array('contentType' => 'block'))
+                array(
+                    'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'block')),
+                    'label' => 'Block successfully deleted!'
+                )
             );
 
 

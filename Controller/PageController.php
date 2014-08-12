@@ -246,7 +246,10 @@ class PageController extends CrudController
         if (!$request->isXmlHttpRequest()) {
             $this->addSuccessFlash(
                 'Page successfully deleted!',
-                $this->generateUrl('admin_content_template_choose', array('contentType' => 'page'))
+                array(
+                    'route' => $this->generateUrl('admin_content_template_choose', array('contentType' => 'page')),
+                    'label' => 'Page successfully deleted!'
+                )
             );
 
 

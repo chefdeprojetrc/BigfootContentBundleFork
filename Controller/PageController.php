@@ -33,6 +33,14 @@ class PageController extends CrudController
     /**
      * @return string
      */
+    protected function getNewUrl()
+    {
+        return '';
+    }
+
+    /**
+     * @return string
+     */
     protected function getEntity()
     {
         return 'BigfootContentBundle:Page';

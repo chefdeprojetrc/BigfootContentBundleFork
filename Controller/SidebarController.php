@@ -28,6 +28,11 @@ class SidebarController extends CrudController
         return 'admin_sidebar';
     }
 
+    protected function getNewUrl()
+    {
+        return '';
+    }
+
     /**
      * @return string
      */

@@ -7,7 +7,7 @@
         bigfoot_theme_bundle ~ ':form_custom:inline.html.twig' %}
 
     <div id="templates">
-        <div class="item-template w{{ form.content.template|length }} pull-center">
+        <div class="item-template w{{ form.content.template|length }} pull-center templates-container">
             <span class="group-title">{{ form.content.vars.label }}</span>
             {% for template in form.content.template %}
                 <div class="template-row">

@@ -12,4 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class PageRepository extends EntityRepository
 {
+    /**
+     * @param $slug
+     * @return Page|null
+     */
+    public function findOneByTranslated($params)
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder
+            ->andWhere('p.slug = :slug')
+            ->setParameters($params)
+        ;
+        $query = $queryBuilder->getQuery();
+        $query->setHint(
+            \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+
+        $results = $query->getResult();
+        return $results ? $results[0] : null;
+    }
 }

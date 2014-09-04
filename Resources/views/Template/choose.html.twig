@@ -5,9 +5,10 @@
     <h5>Choose your template</h5>
     <hr />
 
-    <div id="templates" class="js-masonry" data-masonry-options='{"itemSelector": ".item-template" }'>
+    <div id="templates" class="js-masonry" data-masonry-options='{"itemSelector": ".item-template"}'>
     {% for templates in form.vars.templates %}
         <div class="item-template w{{ templates.subTemplates|length }} templates-container">
+            <div class="item-templates-container">
             {%  if templates.label %}<span class="group-title">{{ templates.label }}</span>{% endif %}
             {% for template in form.template %}
                 {% if template.vars.value in templates.subTemplates|keys %}
@@ -21,6 +22,7 @@
                     </div>
                 {% endif %}
             {% endfor %}
+            </div>
         </div>
     {% endfor %}
     </div>

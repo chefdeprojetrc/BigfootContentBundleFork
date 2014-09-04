@@ -8,6 +8,7 @@
 
     <div id="templates">
         <div class="item-template w{{ form.content.template|length }} pull-center templates-container">
+            <div class="item-templates-container">
             <span class="group-title">{{ form.content.vars.label }}</span>
             {% for template in form.content.template %}
                 <div class="template-row">
@@ -19,6 +20,7 @@
                     </label>
                 </div>
             {% endfor %}
+            </div>
         </div>
     </div>
 

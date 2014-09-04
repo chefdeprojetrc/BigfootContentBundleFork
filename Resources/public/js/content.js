@@ -1,6 +1,4 @@
 $(function() {
-
-
     $('body').on('click', '.template-row input[type=radio]', function() {
         $(this).closest('.templates-container').find('i.icon-ok').hide();
         $(this).closest('.template-row').find('i.icon-ok').show();

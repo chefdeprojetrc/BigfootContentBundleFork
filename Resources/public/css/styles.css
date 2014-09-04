@@ -2,9 +2,13 @@ div#templates {margin-bottom: 15px}
 div#templates .group-title {display: block; text-align: center; height: 40px; line-height: 40px;border-bottom: 1px solid #000;margin-bottom: 10px;text-transform:uppercase;}
 div#templates .icon-ok { margin-top: -3px }
 
-div#templates .item-template { width: 20%;border: 1px solid #333; border-radius: 5px;margin: 2px 0 0 2px}
+div#templates .item-template { width: 20%;margin: 2px 0;padding:0 2px;}
 div#templates .item-template .template-row { width: 100%;display:inline-block;}
 
+div#templates .item-template .item-templates-container { border: 1px solid #333;border-radius: 5px; }
+
+div#templates .item-template.w1 { width: 20%; }
+div#templates .item-template.w1 .template-row { width: 100%;display:inline-block;}
 
 div#templates .item-template.w2 { width: 40%; }
 div#templates .item-template.w2 .template-row { width: 49%;display:inline-block;}

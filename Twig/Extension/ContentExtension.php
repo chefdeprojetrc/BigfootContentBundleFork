@@ -86,7 +86,7 @@ class ContentExtension extends Twig_Extension
     public function displayBlock($block, array $data = null)
     {
         if (is_string($block)) {
-            $block = $this->entityManager->getRepository('BigfootContentBundle:Block')->findOneBySlug($block);
+            $block = $this->entityManager->getRepository('BigfootContentBundle:Block')->findOneBy(array('slug' => $block, 'active' => true));
         }
 
         if (!$block) {

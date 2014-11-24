@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Twig_Extension;
 use Twig_Function_Method;
 use Twig_Environment;
-use BeSimple\I18nRoutingBundle\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Page;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
@@ -27,7 +27,7 @@ class ContentExtension extends Twig_Extension
     /**
      * Construct ContentExtension
      */
-    public function __construct(Twig_Environment $twig, Router $router, EntityManager $entityManager)
+    public function __construct(Twig_Environment $twig, RouterInterface $router, EntityManager $entityManager)
     {
         $this->twig          = $twig;
         $this->router        = $router;

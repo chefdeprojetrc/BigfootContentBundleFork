@@ -17,6 +17,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
 /**
  * Sidebar
  *
+ * @Gedmo\TranslationEntity(class="Bigfoot\Bundle\ContentBundle\Entity\SidebarTranslation")
  * @ORM\Table(name="bigfoot_content_sidebar")
  * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\SidebarRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -93,6 +94,15 @@ class Sidebar extends Content
     private $attributes;
 
     /**
+     * @ORM\OneToMany(
+     *   targetEntity="SidebarTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
+
+    /**
      * Construct Sidebar
      */
     public function __construct()
@@ -104,6 +114,7 @@ class Sidebar extends Content
         $this->pageSidebars4 = new ArrayCollection();
         $this->pageSidebars5 = new ArrayCollection();
         $this->attributes    = new ArrayCollection();
+        $this->translations  = new ArrayCollection();
     }
 
     /**
@@ -459,5 +470,24 @@ class Sidebar extends Content
         }
 
         return $toReturn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @param SidebarTranslation $t
+     */
+    public function addTranslation(SidebarTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
     }
 }

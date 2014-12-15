@@ -17,6 +17,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
 /**
  * Block
  *
+ * @Gedmo\TranslationEntity(class="Bigfoot\Bundle\ContentBundle\Entity\BlockTranslation")
  * @ORM\Table(name="bigfoot_content_block")
  * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\BlockRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -99,17 +100,27 @@ class Block extends Content
     private $attributes;
 
     /**
+     * @ORM\OneToMany(
+     *   targetEntity="BlockTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
+
+    /**
      * Construct Block
      */
     public function __construct()
     {
-        $this->pageBlocks  = new ArrayCollection();
-        $this->pageBlocks2 = new ArrayCollection();
-        $this->pageBlocks3 = new ArrayCollection();
-        $this->pageBlocks4 = new ArrayCollection();
-        $this->pageBlocks5 = new ArrayCollection();
-        $this->sidebars    = new ArrayCollection();
-        $this->attributes  = new ArrayCollection();
+        $this->pageBlocks   = new ArrayCollection();
+        $this->pageBlocks2  = new ArrayCollection();
+        $this->pageBlocks3  = new ArrayCollection();
+        $this->pageBlocks4  = new ArrayCollection();
+        $this->pageBlocks5  = new ArrayCollection();
+        $this->sidebars     = new ArrayCollection();
+        $this->attributes   = new ArrayCollection();
+        $this->translations = new ArrayCollection();
     }
 
     /**
@@ -436,5 +447,24 @@ class Block extends Content
         }
 
         return $toReturn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @param BlockTranslation $t
+     */
+    public function addTranslation(BlockTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
     }
 }

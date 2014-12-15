@@ -2,12 +2,14 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Attribute
  *
+ * @Gedmo\TranslationEntity(class="Bigfoot\Bundle\ContentBundle\Entity\AttributeTranslation")
  * @ORM\Table(name="bigfoot_content_attribute")
  * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\AttributeRepository")
  */
@@ -58,6 +60,23 @@ class Attribute
      * @Gedmo\Locale
      */
     private $locale;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="AttributeTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->translations = new ArrayCollection();
+    }
 
     /**
      * @return string
@@ -163,5 +182,24 @@ class Attribute
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @param AttributeTranslation $t
+     */
+    public function addTranslation(AttributeTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
     }
 }

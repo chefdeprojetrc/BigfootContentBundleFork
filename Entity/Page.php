@@ -21,6 +21,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 as PageSidebar5;
 /**
  * Page
  *
+ * @Gedmo\TranslationEntity(class="Bigfoot\Bundle\ContentBundle\Entity\PageTranslation")
  * @ORM\Table(name="bigfoot_content_page")
  * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\PageRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -133,6 +134,15 @@ class Page extends Content
     private $attributes;
 
     /**
+     * @ORM\OneToMany(
+     *   targetEntity="PageTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
+
+    /**
      * Construct Page
      */
     public function __construct()
@@ -148,6 +158,7 @@ class Page extends Content
         $this->sidebars4  = new ArrayCollection();
         $this->sidebars5  = new ArrayCollection();
         $this->attributes = new ArrayCollection();
+        $this->translations = new ArrayCollection();
     }
 
     /**
@@ -822,5 +833,24 @@ class Page extends Content
         }
 
         return $toReturn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @param PageTranslation $t
+     */
+    public function addTranslation(PageTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
     }
 }

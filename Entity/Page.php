@@ -62,6 +62,20 @@ class Page extends Content
      */
     private $uniqueId;
 
+    /*
+     * @Gedmo\Translatable
+     * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
+     */
+    protected $seoTitle;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Translatable
+     * @ORM\Column(name="seo_description", type="text", nullable=true)
+     */
+    protected $seoDescription;
+
     /**
      * @var ArrayCollection
      *
@@ -218,6 +232,44 @@ class Page extends Content
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * @param string $seoTitle
+     * @return $this
+     */
+    public function setSeoTitle($seoTitle)
+    {
+        $this->seoTitle = $seoTitle;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoTitle()
+    {
+        return $this->seoTitle;
+    }
+
+    /**
+     * @param string $seoDescription
+     * @return $this
+     */
+    public function setSeoDescription($seoDescription)
+    {
+        $this->seoDescription = $seoDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoDescription()
+    {
+        return $this->seoDescription;
     }
 
     /**

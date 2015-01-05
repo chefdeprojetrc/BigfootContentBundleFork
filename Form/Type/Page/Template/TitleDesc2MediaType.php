@@ -74,6 +74,8 @@ class TitleDesc2MediaType extends AbstractType
                     ),
                 )
             )
+            ->add('seoTitle', 'text', array('required' => false))
+            ->add('seoDescription', 'textarea', array('required' => false))
             ->add('description', 'bigfoot_richtext')
             ->add('description2', 'bigfoot_richtext')
             ->add('media', 'bigfoot_media')

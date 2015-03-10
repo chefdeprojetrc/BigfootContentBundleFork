@@ -47,7 +47,7 @@ $(function() {
 
         var newBlock = prototypeBlock.replace(/__name__/g, blockCount);
 
-        $('.block-accordion').append(newBlock);
+        containerBlock.find('.block-accordion').append(newBlock);
 
         $(".chosen-select").chosen();
 

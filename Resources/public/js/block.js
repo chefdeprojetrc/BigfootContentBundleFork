@@ -36,7 +36,7 @@ $(function() {
         var containerBlock = $(this)
             .closest('.collection-container')
                 .find('.widget-blocks');
-console.log(containerBlock);
+
         var
             prototypeBlock = containerBlock.attr('data-prototype'),
             blocks         = containerBlock.find('.admin_block_select');

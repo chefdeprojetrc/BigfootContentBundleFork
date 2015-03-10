@@ -36,7 +36,7 @@ $(function() {
         var containerBlock = $(this)
             .closest('.collection-container')
                 .find('.widget-blocks');
-
+console.log(containerBlock);
         var
             prototypeBlock = containerBlock.attr('data-prototype'),
             blocks         = containerBlock.find('.admin_block_select');
@@ -47,7 +47,7 @@ $(function() {
 
         var newBlock = prototypeBlock.replace(/__name__/g, blockCount);
 
-        $('.block-accordion').append(newBlock);
+        containerBlock.find('.block-accordion').append(newBlock);
 
         $(".chosen-select").chosen();
 

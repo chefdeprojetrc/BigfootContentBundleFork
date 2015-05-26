@@ -128,7 +128,7 @@ class Page extends Content
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyTomany(targetEntity="Attribute")
+     * @ORM\ManyToMany(targetEntity="Attribute")
      * @ORM\JoinTable(name="bigfoot_page_attribute")
      */
     private $attributes;

@@ -74,8 +74,21 @@ class TitleDescType extends AbstractType
                     ),
                 )
             )
+            ->add(
+                'uniqueId',
+                'text',
+                array(
+                    'required'  => false,
+                    'attr'      => array(
+                        'data-placement' => 'bottom',
+                        'data-popover'   => true,
+                        'data-content'   => 'This value is used to recognize the page',
+                        'data-title'     => 'Unique Id',
+                        'data-trigger'   => 'hover',
+                    ),
+                )
+            )
             ->add('description', 'bigfoot_richtext')
-            ->add('translation', 'translatable_entity')
             ->add('translation', 'translatable_entity');
     }
 

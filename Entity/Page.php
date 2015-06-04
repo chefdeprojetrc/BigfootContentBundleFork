@@ -56,6 +56,13 @@ class Page extends Content
     protected $slug;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="uniqueId", type="string", length=255, nullable=true)
+     */
+    private $uniqueId;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Bigfoot\Bundle\ContentBundle\Entity\Page\Block", mappedBy="page", cascade={"persist", "remove"})
@@ -852,5 +859,23 @@ class Page extends Content
             $this->translations[] = $t;
             $t->setObject($this);
         }
+    }
+
+    /**
+     * @param string $uniqueId
+     */
+    public function setUniqueId($uniqueId)
+    {
+        $this->uniqueId = $uniqueId;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUniqueId()
+    {
+        return $this->uniqueId;
     }
 }

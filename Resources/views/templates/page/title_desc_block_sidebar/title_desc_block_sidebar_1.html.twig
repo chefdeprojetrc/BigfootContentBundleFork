@@ -7,9 +7,11 @@
             <div class="richText">
                 {{ page.description|raw }}
             </div>
-            {% if page.sidebar is defined %}
+            {% if page.sidebars is defined %}
             <aside class="aside sidebarVertical right">
-                {{ display_sidebar(page.sidebar) }}
+            {% for pSidebar in page.sidebars %}
+                {{ display_sidebar(pSidebar) }}
+            {% endfor %}
             </aside>
             {% endif %}
         </div>

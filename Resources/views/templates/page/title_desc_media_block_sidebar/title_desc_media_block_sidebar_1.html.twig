@@ -15,7 +15,9 @@
             </aside>
         </div>
         <aside class="aside sidebarVertical right">
-            {{ display_sidebar(page.sidebar) }}
+        {% for pSidebar in page.sidebars %}
+            {{ display_sidebar(pSidebar) }}
+        {% endfor %}
         </aside>
     </article>
 {% endblock page_content %}

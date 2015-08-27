@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -299,17 +300,7 @@ class Page extends Content
      */
     public function getBlocks()
     {
-        $blocks = array();
-
-        foreach ($this->blocks as $key => $block) {
-            $blocks[$block->getPosition()] = $block;
-        }
-
-        ksort($blocks);
-
-        $blocks = new ArrayCollection($blocks);
-
-        return $blocks;
+        return $this->sortCollectionByPosition($this->blocks);
     }
 
     /**
@@ -357,17 +348,7 @@ class Page extends Content
      */
     public function getBlocks2()
     {
-        $blocks = array();
-
-        foreach ($this->blocks2 as $key => $block) {
-            $blocks[$block->getPosition()] = $block;
-        }
-
-        ksort($blocks);
-
-        $blocks = new ArrayCollection($blocks);
-
-        return $blocks;
+        return $this->sortCollectionByPosition($this->blocks2);
     }
 
     /**
@@ -415,17 +396,7 @@ class Page extends Content
      */
     public function getBlocks3()
     {
-        $blocks = array();
-
-        foreach ($this->blocks3 as $key => $block) {
-            $blocks[$block->getPosition()] = $block;
-        }
-
-        ksort($blocks);
-
-        $blocks = new ArrayCollection($blocks);
-
-        return $blocks;
+        return $this->sortCollectionByPosition($this->blocks3);
     }
 
     /**
@@ -472,17 +443,7 @@ class Page extends Content
      */
     public function getBlocks4()
     {
-        $blocks = array();
-
-        foreach ($this->blocks4 as $key => $block) {
-            $blocks[$block->getPosition()] = $block;
-        }
-
-        ksort($blocks);
-
-        $blocks = new ArrayCollection($blocks);
-
-        return $blocks;
+        return $this->sortCollectionByPosition($this->blocks4);
     }
 
     /**
@@ -529,17 +490,7 @@ class Page extends Content
      */
     public function getBlocks5()
     {
-        $blocks = array();
-
-        foreach ($this->blocks5 as $key => $block) {
-            $blocks[$block->getPosition()] = $block;
-        }
-
-        ksort($blocks);
-
-        $blocks = new ArrayCollection($blocks);
-
-        return $blocks;
+        return $this->sortCollectionByPosition($this->blocks5);
     }
 
     /**
@@ -876,5 +827,16 @@ class Page extends Content
         }
 
         return $toReturn;
+    }
+    
+    private function sortCollectionByPosition(Collection $items)
+    {
+        $iterator = $items->getIterator();
+
+        $iterator->uasort(function ($a, $b) {
+            return ($a->getPosition() < $b->getPosition()) ? -1 : 1;
+        });
+
+        return new ArrayCollection(iterator_to_array($iterator));
     }
 }

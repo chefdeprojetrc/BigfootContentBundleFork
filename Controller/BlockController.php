@@ -79,7 +79,7 @@ class BlockController extends CrudController
                 'label'      => 'Add',
                 'route'      => 'admin_content_template_choose',
                 'parameters' => array('contentType' => 'block'),
-                'icon'       => 'pencil',
+                'icon'       => 'icon-plus-sign',
             );
         }
 

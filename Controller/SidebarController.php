@@ -75,7 +75,7 @@ class SidebarController extends CrudController
                 'label'      => 'Add',
                 'route'      => 'admin_content_template_choose',
                 'parameters' => array('contentType' => 'sidebar'),
-                'icon'       => 'pencil',
+                'icon'       => 'icon-plus-sign',
             );
         }
 

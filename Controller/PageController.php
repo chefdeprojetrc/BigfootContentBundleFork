@@ -80,7 +80,7 @@ class PageController extends CrudController
                 'label'      => 'Add',
                 'route'      => 'admin_content_template_choose',
                 'parameters' => array('contentType' => 'page'),
-                'icon'       => 'pencil',
+                'icon'       => 'icon-plus-sign',
             );
         }
 

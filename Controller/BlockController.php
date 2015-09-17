@@ -170,7 +170,9 @@ class BlockController extends CrudController
 
                 return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
             } else {
-                return $this->renderAjax(false, 'Error during addition!', $this->renderForm($form, $action, $block)->getContent());
+                if ($request->isXmlHttpRequest()) {
+                    return $this->renderAjax(false, 'Error during addition!', $this->renderForm($form, $action, $block)->getContent());
+                }
             }
         }
 

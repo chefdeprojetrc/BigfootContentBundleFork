@@ -462,7 +462,7 @@ class Block extends Content
      */
     public function addTranslation(BlockTranslation $t)
     {
-        if (!$this->translations->contains($t)) {
+        if ($this->translations && !$this->translations->contains($t)) {
             $this->translations[] = $t;
             $t->setObject($this);
         }

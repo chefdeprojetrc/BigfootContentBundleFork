@@ -62,7 +62,9 @@ class Page extends Content
      */
     private $uniqueId;
 
-    /*
+    /**
+     * @var string
+     * 
      * @Gedmo\Translatable
      * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
      */

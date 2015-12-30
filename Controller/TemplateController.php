@@ -24,6 +24,9 @@ class TemplateController extends BaseController
      *
      * @Route("/choose/{contentType}", name="admin_content_template_choose")
      * @Template()
+     * @param Request $request
+     * @param null $contentType
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function chooseAction(Request $request, $contentType = null)
     {
@@ -44,7 +47,7 @@ class TemplateController extends BaseController
                 $template = $form['template']->getData();
 
                 if ($request->isXmlHttpRequest()) {
-                    return $this->renderAjax(true, 'Template selected!', $this->renderForm($contentType, $template)->getContent());
+                    return $this->renderAjax(true, 'Template selected!', $this->renderForm($contentType, $template, $request)->getContent());
                 }
 
                 return $this->redirect($this->generateUrl('admin_'.$contentType.'_new', array('template' => $template)));
@@ -99,7 +102,7 @@ class TemplateController extends BaseController
         return $templates[$parent];
     }
 
-    public function renderForm($contentType, $template)
+    public function renderForm($contentType, $template, $request)
     {
         $contentForm = $this->getContentForm($contentType, $template);
         $action      = $this->generateUrl('admin_'.$contentType.'_new', array('template' => $template));
@@ -113,7 +116,7 @@ class TemplateController extends BaseController
                 'form_action' => $action,
                 'form_submit' => 'Submit',
                 'entity'      => $contentForm['content'],
-                'layout'      => $this->getRequest()->query->get('layout') ?: '',
+                'layout'      => $request->query->get('layout') ?: '',
             )
         );
     }

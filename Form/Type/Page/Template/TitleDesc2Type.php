@@ -5,7 +5,7 @@ namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template;
 use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
 class TitleDesc2Type extends AbstractType
@@ -84,7 +84,7 @@ class TitleDesc2Type extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

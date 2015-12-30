@@ -5,7 +5,7 @@ namespace Bigfoot\Bundle\ContentBundle\Twig\Extension;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Doctrine\ORM\EntityManager;
 use Twig_Extension;
-use Twig_Function_Method;
+use Twig_SimpleFunction;
 use Twig_Environment;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -40,9 +40,9 @@ class ContentExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'display_page'    => new Twig_Function_Method($this, 'displayPage', array('is_safe' => array('html'))),
-            'display_sidebar' => new Twig_Function_Method($this, 'displaySidebar', array('is_safe' => array('html'))),
-            'display_block'   => new Twig_Function_Method($this, 'displayBlock', array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('display_page', array($this, 'displayPage'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('display_sidebar', array($this, 'displaySidebar'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('display_block', array($this, 'displayBlock'), array('is_safe' => array('html'))),
         );
     }
 

@@ -12,6 +12,7 @@ use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
 use Bigfoot\Bundle\CoreBundle\Util\StringManager;
 use Bigfoot\Bundle\ContentBundle\Entity\Page;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Block controller.
@@ -90,10 +91,12 @@ class BlockController extends CrudController
      * Lists Block entities.
      *
      * @Route("/", name="admin_block")
+     * @param Request $request
+     * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->doIndex();
+        return $this->doIndex($request);
     }
 
     /**
@@ -171,12 +174,12 @@ class BlockController extends CrudController
                 return $this->redirect($this->generateUrl('admin_block_edit', array('id' => $block->getId())));
             } else {
                 if ($request->isXmlHttpRequest()) {
-                    return $this->renderAjax(false, 'Error during addition!', $this->renderForm($form, $action, $block)->getContent());
+                    return $this->renderAjax(false, 'Error during addition!', $this->renderForm($request, $form, $action, $block)->getContent());
                 }
             }
         }
 
-        return $this->renderForm($form, $action, $block);
+        return $this->renderForm($request, $form, $action, $block);
     }
 
     /**
@@ -257,7 +260,7 @@ class BlockController extends CrudController
             }
         }
 
-        return $this->renderForm($form, $action, $block);
+        return $this->renderForm($request, $form, $action, $block);
     }
 
     /**

@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
 use Bigfoot\Bundle\CoreBundle\Util\StringManager;
 use Bigfoot\Bundle\CoreBundle\Event\FormEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Page controller.
@@ -91,10 +92,12 @@ class PageController extends CrudController
      * Lists Page entities.
      *
      * @Route("/", name="admin_page")
+     * @param Request $request
+     * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->doIndex();
+        return $this->doIndex($request);
     }
 
     /**
@@ -139,7 +142,7 @@ class PageController extends CrudController
             }
         }
 
-        return $this->renderForm($form, $action, $page);
+        return $this->renderForm($request, $form, $action, $page);
     }
 
     /**
@@ -233,7 +236,7 @@ class PageController extends CrudController
             }
         }
 
-        return $this->renderForm($form, $action, $page);
+        return $this->renderForm($request, $form, $action, $page);
     }
 
     /**

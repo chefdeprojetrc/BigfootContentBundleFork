@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
 use Bigfoot\Bundle\CoreBundle\Util\StringManager;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Sidebar controller.
@@ -86,10 +87,12 @@ class SidebarController extends CrudController
      * Lists Sidebar entities.
      *
      * @Route("/", name="admin_sidebar")
+     * @param Request $request
+     * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->doIndex();
+        return $this->doIndex($request);
     }
 
     /**
@@ -133,7 +136,7 @@ class SidebarController extends CrudController
             }
         }
 
-        return $this->renderForm($form, $action, $sidebar);
+        return $this->renderForm($request, $form, $action, $sidebar);
     }
 
     /**
@@ -191,7 +194,7 @@ class SidebarController extends CrudController
             }
         }
 
-        return $this->renderForm($form, $action, $sidebar);
+        return $this->renderForm($request, $form, $action, $sidebar);
     }
 
     /**

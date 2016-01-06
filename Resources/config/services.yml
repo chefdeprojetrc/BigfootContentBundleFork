@@ -108,7 +108,7 @@ services:
 
     # Page Template TitleDesc2 Type
     bigfoot_content.form.type.page_template_title_desc2:
-        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDes2cType
+        class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2Type
         tags:
             - { name: form.type, alias: admin_page_template_title_desc2 }
 

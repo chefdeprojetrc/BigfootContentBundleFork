@@ -47,7 +47,7 @@ class TemplateController extends BaseController
                 $template = $form['template']->getData();
 
                 if ($request->isXmlHttpRequest()) {
-                    return $this->renderAjax(true, 'Template selected!', $this->renderForm($contentType, $template, $request)->getContent());
+                    return $this->renderAjax(true, 'Template selected!', $this->renderForm($request, $contentType, $template, $request)->getContent());
                 }
 
                 return $this->redirect($this->generateUrl('admin_'.$contentType.'_new', array('template' => $template)));
@@ -102,7 +102,7 @@ class TemplateController extends BaseController
         return $templates[$parent];
     }
 
-    public function renderForm($contentType, $template, $request)
+    public function renderForm($request, $contentType, $template, $request)
     {
         $contentForm = $this->getContentForm($contentType, $template);
         $action      = $this->generateUrl('admin_'.$contentType.'_new', array('template' => $template));

@@ -3,7 +3,12 @@
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
@@ -19,7 +24,7 @@ class TitleDescType extends AbstractType
         $builder
             ->add(
                 'content',
-                'admin_content',
+                ContentType::class,
                 array(
                     'data'      => $options['data'],
                     'template'  => $options['template'],
@@ -28,27 +33,27 @@ class TitleDescType extends AbstractType
             )
             ->add(
                 'attributes',
-                'entity',
+                EntityType::class,
                 array(
-                    'class'     => 'BigfootContentBundle:Attribute',
-                    'query_builder' => function(EntityRepository $er) {
+                    'class'         => 'BigfootContentBundle:Attribute',
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->findByType(Attribute::TYPE_BLOCK);
                     },
-                    'required'  => false,
-                    'multiple'  => true,
-                    'attr'      => array(
+                    'required'      => false,
+                    'multiple'      => true,
+                    'attr'          => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
                         'data-content'   => 'Styles applied to this content element.',
                         'data-title'     => 'Style',
                         'data-trigger'   => 'hover',
                     ),
-                    'label' => 'Style',
+                    'label'         => 'Style',
                 )
             )
             ->add(
                 'title',
-                'text',
+                TextType::class,
                 array(
                     'attr' => array(
                         'data-placement' => 'bottom',
@@ -61,10 +66,10 @@ class TitleDescType extends AbstractType
             )
             ->add(
                 'slug',
-                'text',
+                TextType::class,
                 array(
-                    'required'  => false,
-                    'attr'      => array(
+                    'required' => false,
+                    'attr'     => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
                         'data-content'   => 'This value is used to generate urls. Should contain only lower case letters and the \'-\' sign.',
@@ -73,13 +78,13 @@ class TitleDescType extends AbstractType
                     ),
                 )
             )
-            ->add('description', 'bigfoot_richtext')
-            ->add('action'     , 'text', array('required' => false))
-            ->add('translation', 'translatable_entity');
+            ->add('description', BigfootRichtextType::class)
+            ->add('action', TextType::class, array('required' => false))
+            ->add('translation', TranslatedEntityType::class);
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

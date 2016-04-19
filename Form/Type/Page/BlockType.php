@@ -2,15 +2,13 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class BlockType extends AbstractType
 {
@@ -35,7 +33,7 @@ class BlockType extends AbstractType
         $builder
             ->add(
                 'block',
-                'entity',
+                EntityType::class,
                 array(
                     'class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block',
                 )
@@ -43,7 +41,7 @@ class BlockType extends AbstractType
             ->add('position')
             ->add(
                 'template',
-                'choice',
+                ChoiceType::class,
                 array(
                     'required' => true,
                     'expanded' => true,
@@ -78,7 +76,7 @@ class BlockType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

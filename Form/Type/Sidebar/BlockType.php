@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,6 +12,14 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
+use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
 
 class BlockType extends AbstractType
 {
@@ -35,7 +44,7 @@ class BlockType extends AbstractType
         $builder
             ->add(
                 'block',
-                'entity',
+                EntityType::class,
                 array(
                     'class'         => 'Bigfoot\Bundle\ContentBundle\Entity\Block',
                     'query_builder' => function (EntityRepository $er) {
@@ -46,7 +55,7 @@ class BlockType extends AbstractType
             ->add('position')
             ->add(
                 'template',
-                'choice',
+                ChoiceType::class,
                 array(
                     'required' => true,
                     'expanded' => true,
@@ -81,7 +90,7 @@ class BlockType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

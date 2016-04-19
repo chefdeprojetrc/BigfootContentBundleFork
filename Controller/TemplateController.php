@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\TemplateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -31,7 +32,7 @@ class TemplateController extends BaseController
     public function chooseAction(Request $request, $contentType = null)
     {
         $templates = $this->container->getParameter('bigfoot_content.templates.'.$contentType);
-        $form      = $this->createForm('admin_template', null, array('data' => $templates, 'contentType' => $contentType));
+        $form      = $this->createForm(TemplateType::class, null, array('data' => $templates, 'contentType' => $contentType));
         $content   = array(
             'form_method' => 'POST',
             'form_title'  => $this->getTranslator()->trans('%entity% creation', array('%entity%' => ucfirst($contentType))),

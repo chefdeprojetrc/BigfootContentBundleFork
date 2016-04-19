@@ -7,6 +7,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
+use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
 
 class MediaBlockType extends AbstractType
 {
@@ -19,7 +27,7 @@ class MediaBlockType extends AbstractType
         $builder
             ->add(
                 'content',
-                'admin_content',
+                ContentType::class,
                 array(
                     'data'      => $options['data'],
                     'template'  => $options['template'],
@@ -28,7 +36,7 @@ class MediaBlockType extends AbstractType
             )
             ->add(
                 'attributes',
-                'entity',
+                EntityType::class,
                 array(
                     'class'     => 'BigfootContentBundle:Attribute',
                     'query_builder' => function(EntityRepository $er) {
@@ -46,10 +54,10 @@ class MediaBlockType extends AbstractType
                     'label' => 'Style',
                 )
             )
-            ->add('media', 'bigfoot_media')
+            ->add('media', BigfootMediaType::class)
             ->add(
                 'blocks',
-                'collection',
+                CollectionType::class,
                 array(
                     'label'        => false,
                     'prototype'    => true,
@@ -65,11 +73,11 @@ class MediaBlockType extends AbstractType
                     )
                 )
             )
-            ->add('translation', 'translatable_entity');
+            ->add('translation', TranslatedEntityType::class);
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

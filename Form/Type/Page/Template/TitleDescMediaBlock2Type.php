@@ -7,6 +7,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
+use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
 
 class TitleDescMediaBlock2Type extends AbstractType
 {
@@ -19,7 +27,7 @@ class TitleDescMediaBlock2Type extends AbstractType
         $builder
             ->add(
                 'content',
-                'admin_content',
+                ContentType::class,
                 array(
                     'data'      => $options['data'],
                     'template'  => $options['template'],
@@ -28,7 +36,7 @@ class TitleDescMediaBlock2Type extends AbstractType
             )
             ->add(
                 'attributes',
-                'entity',
+                EntityType::class,
                 array(
                     'class'     => 'BigfootContentBundle:Attribute',
                     'query_builder' => function (EntityRepository $er) {
@@ -48,7 +56,7 @@ class TitleDescMediaBlock2Type extends AbstractType
             )
             ->add(
                 'title',
-                'text',
+                TextType::class,
                 array(
                     'attr' => array(
                         'data-placement' => 'bottom',
@@ -62,7 +70,7 @@ class TitleDescMediaBlock2Type extends AbstractType
             )
             ->add(
                 'slug',
-                'text',
+                TextType::class,
                 array(
                     'required'  => false,
                     'attr'      => array(
@@ -74,13 +82,13 @@ class TitleDescMediaBlock2Type extends AbstractType
                     ),
                 )
             )
-            ->add('seoTitle', 'text', array('required' => false))
-            ->add('seoDescription', 'textarea', array('required' => false))
-            ->add('description', 'bigfoot_richtext')
-            ->add('media', 'bigfoot_media')
+            ->add('seoTitle', TextType::class, array('required' => false))
+            ->add('seoDescription', TextareaType::class, array('required' => false))
+            ->add('description', BigfootRichtextType::class)
+            ->add('media', BigfootMediaType::class)
             ->add(
                 'blocks',
-                'collection',
+                CollectionType::class,
                 array(
                     'label'        => false,
                     'prototype'    => true,
@@ -98,7 +106,7 @@ class TitleDescMediaBlock2Type extends AbstractType
             )
             ->add(
                 'blocks2',
-                'collection',
+                CollectionType::class,
                 array(
                     'label'        => false,
                     'prototype'    => true,
@@ -114,11 +122,11 @@ class TitleDescMediaBlock2Type extends AbstractType
                     )
                 )
             )
-            ->add('translation', 'translatable_entity');
+            ->add('translation', TranslatedEntityType::class);
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

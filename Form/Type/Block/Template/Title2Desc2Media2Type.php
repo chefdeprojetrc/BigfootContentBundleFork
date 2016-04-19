@@ -3,7 +3,13 @@
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
+use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootDatepickerType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
+use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
@@ -19,7 +25,7 @@ class Title2Desc2Media2Type extends AbstractType
         $builder
             ->add(
                 'content',
-                'admin_content',
+                ContentType::class,
                 array(
                     'data'      => $options['data'],
                     'template'  => $options['template'],
@@ -28,7 +34,7 @@ class Title2Desc2Media2Type extends AbstractType
             )
             ->add(
                 'attributes',
-                'entity',
+                EntityType::class,
                 array(
                     'class'     => 'BigfootContentBundle:Attribute',
                     'query_builder' => function(EntityRepository $er) {
@@ -48,7 +54,7 @@ class Title2Desc2Media2Type extends AbstractType
             )
             ->add(
                 'title',
-                'text',
+                TextType::class,
                 array(
                     'attr' => array(
                         'data-placement' => 'bottom',
@@ -60,10 +66,10 @@ class Title2Desc2Media2Type extends AbstractType
                     )
                 )
             )
-            ->add('description', 'bigfoot_richtext')
+            ->add('description', BigfootDatepickerType::class)
             ->add(
                 'title2',
-                'text',
+                TextType::class,
                 array(
                     'attr' => array(
                         'data-placement' => 'bottom',
@@ -75,15 +81,15 @@ class Title2Desc2Media2Type extends AbstractType
                     )
                 )
             )
-            ->add('description2', 'bigfoot_richtext')
-            ->add('media', 'bigfoot_media')
-            ->add('media2', 'bigfoot_media')
-            ->add('action', 'text', array('required' => false))
-            ->add('translation', 'translatable_entity');
+            ->add('description2', BigfootDatepickerType::class)
+            ->add('media', BigfootMediaType::class)
+            ->add('media2', BigfootMediaType::class)
+            ->add('action', TextType::class, array('required' => false))
+            ->add('translation', TranslatedEntityType::class);
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

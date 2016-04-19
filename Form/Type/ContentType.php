@@ -2,17 +2,14 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Form\Type;
 
-use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
-use Bigfoot\Bundle\ContentBundle\Entity\Block;
 use Bigfoot\Bundle\ContentBundle\Entity\Page;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar;
-use Bigfoot\Bundle\ContentBundle\Model\Content;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Doctrine\ORM\EntityRepository;
 
 class ContentType extends AbstractType
 {
@@ -25,7 +22,7 @@ class ContentType extends AbstractType
         $builder
             ->add(
                 'template',
-                'choice',
+                ChoiceType::class,
                 array(
                     'required' => true,
                     'expanded' => true,
@@ -36,7 +33,7 @@ class ContentType extends AbstractType
             )
             ->add(
                 'name',
-                'text',
+                TextType::class,
                 array(
                     'attr' => array(
                         'data-placement' => 'bottom',
@@ -47,12 +44,12 @@ class ContentType extends AbstractType
                     )
                 )
             )
-            ->add('active', 'checkbox', array('required' => false))
+            ->add('active', CheckboxType::class, array('required' => false))
         ;
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

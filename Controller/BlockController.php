@@ -114,7 +114,7 @@ class BlockController extends CrudController
 
         $action = $this->generateUrl('admin_block_new', array('template' => $template));
         $form   = $this->createForm(
-            'admin_block_template_'.$pTemplate,
+            $block->getTypeClass(),
             $block,
             array(
                 'template'  => $template,
@@ -142,7 +142,7 @@ class BlockController extends CrudController
                     $contentEntity = new $contentEntity();
 
                     $contentForm   = $this->createForm(
-                        'admin_'.$contentType.'_template_'.$pTemplate,
+                        $contentEntity->getTypeClass(),
                         $contentEntity,
                         array(
                             'template'  => $qTemplate,
@@ -199,7 +199,7 @@ class BlockController extends CrudController
         $action    = $this->generateUrl('admin_block_edit', array('id' => $block->getId()));
 
         $form = $this->createForm(
-            'admin_block_template_'.$block->getParentTemplate(),
+            $block->getTypeClass(),
             $block,
             array(
                 'template'  => $block->getSlugTemplate(),
@@ -227,7 +227,7 @@ class BlockController extends CrudController
                     $contentEntity = new $contentEntity();
 
                     $contentForm   = $this->createForm(
-                        'admin_'.$contentType.'_template_'.$pTemplate,
+                        $contentEntity->getTypeClass(),
                         $contentEntity,
                         array(
                             'template'  => $qTemplate,

@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\BlockType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -32,5 +33,13 @@ class Block extends Sidebar
     public function getTemplate()
     {
         return 'Block';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return BlockType::class;
     }
 }

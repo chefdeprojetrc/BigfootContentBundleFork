@@ -114,7 +114,7 @@ class PageController extends CrudController
         $page->setTemplate($template);
         $action = $this->generateUrl('admin_page_new', array('template' => $template));
         $form   = $this->createForm(
-            'admin_page_template_'.$pTemplate,
+            $page->getTypeClass(),
             $page,
             array(
                 'template'  => $template,
@@ -161,7 +161,7 @@ class PageController extends CrudController
         $templates = $this->getTemplates($page->getParentTemplate());
         $action    = $this->generateUrl('admin_page_edit', array('id' => $page->getId()));
         $form      = $this->createForm(
-            'admin_page_template_'.$page->getParentTemplate(),
+            $page->getTypeClass(),
             $page,
             array(
                 'template'  => $page->getSlugTemplate(),
@@ -274,7 +274,6 @@ class PageController extends CrudController
     {
         $values = explode('_', $template);
         $end    = call_user_func('end', array_values($values));
-
         return str_replace('_'.$end, '', $template);
     }
 

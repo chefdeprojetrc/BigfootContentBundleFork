@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
+use Bigfoot\Bundle\ContentBundle\Form\Type\Page\SidebarType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -38,20 +39,20 @@ class TitleBlockType extends AbstractType
                 'attributes',
                 EntityType::class,
                 array(
-                    'class'     => 'BigfootContentBundle:Attribute',
-                    'query_builder' => function(EntityRepository $er) {
+                    'class'         => 'BigfootContentBundle:Attribute',
+                    'query_builder' => function (EntityRepository $er) {
                         return $er->findByType(Attribute::TYPE_SIDEBAR);
                     },
-                    'required'  => false,
-                    'multiple'  => true,
-                    'attr'      => array(
+                    'required'      => false,
+                    'multiple'      => true,
+                    'attr'          => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
                         'data-content'   => 'Styles applied to this content element.',
                         'data-title'     => 'Style',
                         'data-trigger'   => 'hover',
                     ),
-                    'label' => 'Style',
+                    'label'         => 'Style',
                 )
             )
             ->add(
@@ -72,16 +73,16 @@ class TitleBlockType extends AbstractType
                 'blocks',
                 CollectionType::class,
                 array(
-                    'label'        => false,
-                    'prototype'    => true,
-                    'allow_add'    => true,
-                    'allow_delete' => true,
-                    'type'         => 'admin_sidebar_block',
-                    'options'      => array(
+                    'label'         => false,
+                    'prototype'     => true,
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
+                    'entry_type'    => SidebarType::class,
+                    'entry_options' => array(
                         'sidebar'    => $options['data'],
                         'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block',
                     ),
-                    'attr' => array(
+                    'attr'          => array(
                         'class' => 'widget-blocks',
                     )
                 )

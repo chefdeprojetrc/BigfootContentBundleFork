@@ -2,10 +2,12 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Block\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\TitleDescMediaType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Block;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * TitleDescMedia
@@ -117,5 +119,13 @@ class TitleDescMedia extends Block
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return TitleDescMediaType::class;
     }
 }

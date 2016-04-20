@@ -46,7 +46,7 @@ class BlockType extends AbstractType
                     'required' => true,
                     'expanded' => true,
                     'multiple' => false,
-                    'choices'  => $this->toStringTemplates($this->templates)
+                    'choices'  => array_flip($this->toStringTemplates($this->templates))
                 )
             );
 

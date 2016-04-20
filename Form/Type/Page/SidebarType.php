@@ -50,7 +50,7 @@ class SidebarType extends AbstractType
                     'required' => true,
                     'expanded' => true,
                     'multiple' => false,
-                    'choices'  => $this->toStringTemplates($this->templates)
+                    'choices'  => array_flip($this->toStringTemplates($this->templates))
                 )
             );
 
@@ -70,7 +70,7 @@ class SidebarType extends AbstractType
 
         foreach ($templates as $key => $template) {
             foreach ($template['sub_templates'] as $subTemplates => $label) {
-                $nTemplates[$key.'/'.$subTemplates] = $label;
+                $nTemplates[$key . '/' . $subTemplates] = $label;
             }
         }
 
@@ -87,7 +87,8 @@ class SidebarType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar',
-                'page'    => ''
+                'page'       => '',
+                'sidebar'    => ''
             )
         );
     }

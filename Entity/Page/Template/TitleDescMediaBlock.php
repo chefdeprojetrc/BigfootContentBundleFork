@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Page\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescMediaBlockType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -86,5 +87,13 @@ class TitleDescMediaBlock extends Page
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return TitleDescMediaBlockType::class;
     }
 }

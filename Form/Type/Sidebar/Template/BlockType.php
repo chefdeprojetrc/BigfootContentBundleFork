@@ -8,13 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
-use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
 use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
 
 class BlockType extends AbstractType
 {
@@ -33,46 +29,46 @@ class BlockType extends AbstractType
                     'template'  => $options['template'],
                     'templates' => $options['templates']
                 )
+            );
+        $builder->add(
+            'attributes',
+            EntityType::class,
+            array(
+                'class'         => 'BigfootContentBundle:Attribute',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->findByType(Attribute::TYPE_SIDEBAR);
+                },
+                'required'      => false,
+                'multiple'      => true,
+                'attr'          => array(
+                    'data-placement' => 'bottom',
+                    'data-popover'   => true,
+                    'data-content'   => 'Styles applied to this content element.',
+                    'data-title'     => 'Style',
+                    'data-trigger'   => 'hover',
+                ),
+                'label'         => 'Style',
             )
-            ->add(
-                'attributes',
-                EntityType::class,
-                array(
-                    'class'     => 'BigfootContentBundle:Attribute',
-                    'query_builder' => function(EntityRepository $er) {
-                        return $er->findByType(Attribute::TYPE_SIDEBAR);
-                    },
-                    'required'  => false,
-                    'multiple'  => true,
-                    'attr'      => array(
-                        'data-placement' => 'bottom',
-                        'data-popover'   => true,
-                        'data-content'   => 'Styles applied to this content element.',
-                        'data-title'     => 'Style',
-                        'data-trigger'   => 'hover',
-                    ),
-                    'label' => 'Style',
+        );
+        $builder->add(
+            'blocks',
+            CollectionType::class,
+            array(
+                'label'         => false,
+                'prototype'     => true,
+                'allow_add'     => true,
+                'allow_delete'  => true,
+                'entry_type'    => \Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\BlockType::class,
+                'entry_options' => array(
+                    'sidebar'    => $options['data'],
+                    'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block',
+                ),
+                'attr'          => array(
+                    'class' => 'widget-blocks',
                 )
             )
-            ->add(
-                'blocks',
-                CollectionType::class,
-                array(
-                    'label'        => false,
-                    'prototype'    => true,
-                    'allow_add'    => true,
-                    'allow_delete' => true,
-                    'type'         => 'admin_sidebar_block',
-                    'options'      => array(
-                        'sidebar'    => $options['data'],
-                        'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block',
-                    ),
-                    'attr' => array(
-                        'class' => 'widget-blocks',
-                    )
-                )
-            )
-            ->add('translation', TranslatedEntityType::class);
+        );
+        $builder->add('translation', TranslatedEntityType::class);
     }
 
     /**
@@ -84,7 +80,8 @@ class BlockType extends AbstractType
             array(
                 'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Template\Block',
                 'template'   => '',
-                'templates'  => ''
+                'templates'  => '',
+                'sidebar'    => ''
             )
         );
     }

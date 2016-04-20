@@ -64,7 +64,7 @@ class Page extends Content
 
     /**
      * @var string
-     * 
+     *
      * @Gedmo\Translatable
      * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
      */
@@ -931,5 +931,13 @@ class Page extends Content
     public function getUniqueId()
     {
         return $this->uniqueId;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return null;
     }
 }

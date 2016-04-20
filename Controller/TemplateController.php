@@ -78,7 +78,7 @@ class TemplateController extends BaseController
         return array(
             'content' => $content,
             'form'    => $this->createForm(
-                'admin_'.$contentType.'_template_'.$pTemplate,
+                $content->getTypeClass(),
                 $content,
                 array(
                     'template'  => $template,

@@ -236,4 +236,10 @@ abstract class Content
 
         return $this;
     }
+
+    /**
+     * Returns the fully qualified name of the class of the form
+     * @return string
+     */
+    abstract public function getTypeClass();
 }

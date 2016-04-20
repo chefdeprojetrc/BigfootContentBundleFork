@@ -13,6 +13,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\Page\Block3 as PageBlock3;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block4 as PageBlock4;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Block5 as PageBlock5;
 use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Block
@@ -22,6 +23,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Block as SidebarBlock;
  * @ORM\Entity(repositoryClass="Bigfoot\Bundle\ContentBundle\Entity\BlockRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discriminator", type="string")
+ * @UniqueEntity("name")
  */
 class Block extends Content
 {
@@ -466,5 +468,13 @@ class Block extends Content
             $this->translations[] = $t;
             $t->setObject($this);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return null;
     }
 }

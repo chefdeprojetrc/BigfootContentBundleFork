@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Page\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDescBlockType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -63,5 +64,13 @@ class TitleDescBlock extends Page
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return TitleDescBlockType::class;
     }
 }

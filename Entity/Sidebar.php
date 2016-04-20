@@ -490,4 +490,12 @@ class Sidebar extends Content
             $t->setObject($this);
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return null;
+    }
 }

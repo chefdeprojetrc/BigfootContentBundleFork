@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleBlockType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -63,5 +64,13 @@ class TitleBlock extends Sidebar
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return TitleBlockType::class;
     }
 }

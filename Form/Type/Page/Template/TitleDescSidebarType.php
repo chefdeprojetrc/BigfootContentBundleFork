@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
+use Bigfoot\Bundle\ContentBundle\Form\Type\Page\SidebarType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -38,20 +39,20 @@ class TitleDescSidebarType extends AbstractType
                 'attributes',
                 EntityType::class,
                 array(
-                    'class'     => 'BigfootContentBundle:Attribute',
+                    'class'         => 'BigfootContentBundle:Attribute',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->findByType(Attribute::TYPE_PAGE);
                     },
-                    'required'  => false,
-                    'multiple'  => true,
-                    'attr'      => array(
+                    'required'      => false,
+                    'multiple'      => true,
+                    'attr'          => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
                         'data-content'   => 'Styles applied to this content element.',
                         'data-title'     => 'Style',
                         'data-trigger'   => 'hover',
                     ),
-                    'label' => 'Style',
+                    'label'         => 'Style',
                 )
             )
             ->add(
@@ -72,8 +73,8 @@ class TitleDescSidebarType extends AbstractType
                 'slug',
                 TextType::class,
                 array(
-                    'required'  => false,
-                    'attr'      => array(
+                    'required' => false,
+                    'attr'     => array(
                         'data-placement' => 'bottom',
                         'data-popover'   => true,
                         'data-content'   => 'This value is used to generate urls. Should contain only lower case letters and the \'-\' sign.',
@@ -89,14 +90,14 @@ class TitleDescSidebarType extends AbstractType
                 'sidebars',
                 CollectionType::class,
                 array(
-                    'prototype'    => true,
-                    'allow_add'    => true,
-                    'allow_delete' => true,
-                    'type'         => 'admin_page_sidebar',
-                    'options'      => array(
+                    'prototype'     => true,
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
+                    'entry_type'    => SidebarType::class,
+                    'entry_options' => array(
                         'page' => $options['data'],
                     ),
-                    'attr' => array(
+                    'attr'          => array(
                         'class' => 'widget-sidebars',
                     )
                 )

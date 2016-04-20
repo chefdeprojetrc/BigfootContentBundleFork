@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Block\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\TitleDescType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -94,5 +95,13 @@ class TitleDesc extends Block
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return TitleDescType::class;
     }
 }

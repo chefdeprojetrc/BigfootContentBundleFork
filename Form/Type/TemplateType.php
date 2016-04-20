@@ -9,14 +9,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
-use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
-use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
-use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
 
 class TemplateType extends AbstractType
 {
@@ -40,7 +32,7 @@ class TemplateType extends AbstractType
                     'expanded'    => true,
                     'multiple'    => false,
                     'label'       => false,
-                    'choices'     => $this->toStringTemplates($templates),
+                    'choices'     => ($this->toStringTemplates($templates)),
                     'constraints' => array(
                         new Assert\NotNull(),
                     )
@@ -73,7 +65,7 @@ class TemplateType extends AbstractType
 
         foreach ($templates as $key => $template) {
             foreach ($template['sub_templates'] as $subTemplates => $label) {
-                $nTemplates[$key][$subTemplates] = $label;
+                $nTemplates[$key][$label] = $subTemplates;
             }
         }
 

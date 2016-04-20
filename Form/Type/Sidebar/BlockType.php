@@ -3,23 +3,13 @@
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
-use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
-use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
-use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
 
 class BlockType extends AbstractType
 {
@@ -60,7 +50,7 @@ class BlockType extends AbstractType
                     'required' => true,
                     'expanded' => true,
                     'multiple' => false,
-                    'choices'  => $this->toStringTemplates($this->templates)
+                    'choices'  => array_flip($this->toStringTemplates($this->templates))
                 )
             );
 

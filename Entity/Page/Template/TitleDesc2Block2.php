@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Page\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2Block2Type;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -94,5 +95,13 @@ class TitleDesc2Block2 extends Page
     public function getDescription2()
     {
         return $this->description2;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return TitleDesc2Block2Type::class;
     }
 }

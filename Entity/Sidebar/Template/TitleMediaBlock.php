@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Sidebar\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\Template\TitleMediaBlockType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -86,5 +87,13 @@ class TitleMediaBlock extends Sidebar
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return TitleMediaBlockType::class;
     }
 }

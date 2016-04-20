@@ -4,7 +4,7 @@ namespace Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
 use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
-use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootDatepickerType;
+use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
 use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
 use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -66,7 +66,7 @@ class Title2Desc2Media2Type extends AbstractType
                     )
                 )
             )
-            ->add('description', BigfootDatepickerType::class)
+            ->add('description', BigfootRichtextType::class)
             ->add(
                 'title2',
                 TextType::class,
@@ -81,7 +81,7 @@ class Title2Desc2Media2Type extends AbstractType
                     )
                 )
             )
-            ->add('description2', BigfootDatepickerType::class)
+            ->add('description2', BigfootRichtextType::class)
             ->add('media', BigfootMediaType::class)
             ->add('media2', BigfootMediaType::class)
             ->add('action', TextType::class, array('required' => false))
@@ -97,7 +97,7 @@ class Title2Desc2Media2Type extends AbstractType
             array(
                 'data_class' => 'Bigfoot\Bundle\ContentBundle\Entity\Block\Template\Title2Desc2Media2',
                 'template'   => '',
-                'templates'  => ''
+                'templates'  => '',
             )
         );
     }

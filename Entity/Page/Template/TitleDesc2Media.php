@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Page\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template\TitleDesc2MediaType;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -117,5 +118,13 @@ class TitleDesc2Media extends Page
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return TitleDesc2MediaType::class;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Entity\Block\Template;
 
+use Bigfoot\Bundle\ContentBundle\Form\Type\Block\Template\Title2Desc2Media2Type;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -203,5 +204,13 @@ class Title2Desc2Media2 extends Block
     public function getMedia2()
     {
         return $this->media2;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypeClass()
+    {
+        return Title2Desc2Media2Type::class;
     }
 }

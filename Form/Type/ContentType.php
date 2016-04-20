@@ -28,7 +28,7 @@ class ContentType extends AbstractType
                     'expanded' => true,
                     'multiple' => false,
                     'data'     => $options['template'],
-                    'choices'  => $options['data']->toStringTemplates($options['templates'])
+                    'choices'  => array_flip($options['data']->toStringTemplates($options['templates']))
                 )
             )
             ->add(

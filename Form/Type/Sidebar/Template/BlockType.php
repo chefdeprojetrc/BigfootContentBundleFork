@@ -10,7 +10,6 @@ use Doctrine\ORM\EntityRepository;
 use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
 use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class BlockType extends AbstractType
 {
@@ -52,7 +51,7 @@ class BlockType extends AbstractType
         );
         $builder->add(
             'blocks',
-            CollectionType::class,
+            BlocksType::class,
             array(
                 'label'         => false,
                 'prototype'     => true,

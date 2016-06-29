@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
+use Bigfoot\Bundle\ContentBundle\Form\Type\BlocksType;
 use Bigfoot\Bundle\ContentBundle\Form\Type\Page\BlockType;
 use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
 use Symfony\Component\Form\AbstractType;
@@ -13,7 +14,6 @@ use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
 use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
 use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -90,7 +90,7 @@ class TitleDesc2MediaBlock2Type extends AbstractType
             ->add('media', BigfootMediaType::class)
             ->add(
                 'blocks',
-                CollectionType::class,
+                BlocksType::class,
                 array(
                     'prototype'     => true,
                     'allow_add'     => true,
@@ -107,7 +107,7 @@ class TitleDesc2MediaBlock2Type extends AbstractType
             )
             ->add(
                 'blocks2',
-                CollectionType::class,
+                BlocksType::class,
                 array(
                     'label'         => false,
                     'prototype'     => true,

@@ -3,8 +3,10 @@
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page\Template;
 
 use Bigfoot\Bundle\ContentBundle\Entity\Attribute;
+use Bigfoot\Bundle\ContentBundle\Form\Type\BlocksType;
 use Bigfoot\Bundle\ContentBundle\Form\Type\Page\BlockType;
 use Bigfoot\Bundle\ContentBundle\Form\Type\Page\SidebarType;
+use Bigfoot\Bundle\ContentBundle\Form\Type\SidebarsType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +15,6 @@ use Bigfoot\Bundle\ContentBundle\Form\Type\ContentType;
 use Bigfoot\Bundle\CoreBundle\Form\Type\BigfootRichtextType;
 use Bigfoot\Bundle\CoreBundle\Form\Type\TranslatedEntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Bigfoot\Bundle\MediaBundle\Form\Type\BigfootMediaType;
@@ -90,7 +91,7 @@ class TitleDescMediaBlockSidebarType extends AbstractType
             ->add('media', BigfootMediaType::class)
             ->add(
                 'blocks',
-                CollectionType::class,
+                BlocksType::class,
                 array(
                     'label'         => false,
                     'prototype'     => true,
@@ -108,7 +109,7 @@ class TitleDescMediaBlockSidebarType extends AbstractType
             )
             ->add(
                 'sidebars',
-                CollectionType::class,
+                SidebarsType::class,
                 array(
                     'label'         => false,
                     'prototype'     => true,

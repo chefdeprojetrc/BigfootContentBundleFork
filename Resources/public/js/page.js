@@ -36,9 +36,10 @@ $(function() {
             .find('li')
             .length;
 
+        prototypeSidebar = $(this).closest('.panel').find('.widget-sidebars').attr('data-prototype');
         var newSidebar = prototypeSidebar.replace(/__name__/g, sidebarCount);
 
-        $('.sidebar-accordion').append(newSidebar);
+        $(this).closest('.panel').find('.sidebar-accordion').append(newSidebar);
 
         $(".chosen-select").chosen();
 

@@ -1,12 +1,6 @@
 {% extends bigfoot_theme_bundle ~ ':crud:form' ~ app.request.get('layout') ~ '.html.twig' %}
 
 {% block form %}
-
-    {% form_theme form
-        bigfoot_theme_bundle ~ ':content:form/page/blocks.html.twig'
-        bigfoot_theme_bundle ~ ':content:form/page/sidebars.html.twig'
-        bigfoot_theme_bundle ~ ':form_custom:inline.html.twig' %}
-
     <div id="templates">
         <div class="item-template w{{ form.content.template|length }} pull-center templates-container">
             <div class="item-templates-container">
@@ -24,7 +18,6 @@
             </div>
         </div>
     </div>
-
     {{ form_rest(form) }}
 {% endblock %}
 

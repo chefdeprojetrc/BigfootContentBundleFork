@@ -24,11 +24,12 @@ class ContentType extends AbstractType
                 'template',
                 ChoiceType::class,
                 array(
-                    'required' => true,
-                    'expanded' => true,
-                    'multiple' => false,
-                    'data'     => $options['template'],
-                    'choices'  => array_flip($options['data']->toStringTemplates($options['templates']))
+                    'required'          => true,
+                    'expanded'          => true,
+                    'multiple'          => false,
+                    'data'              => $options['template'],
+                    'choices_as_values' => true,
+                    'choices'           => array_flip($options['data']->toStringTemplates($options['templates']))
                 )
             )
             ->add(
@@ -44,8 +45,7 @@ class ContentType extends AbstractType
                     )
                 )
             )
-            ->add('active', CheckboxType::class, array('required' => false))
-        ;
+            ->add('active', CheckboxType::class, array('required' => false));
     }
 
     /**
@@ -55,10 +55,10 @@ class ContentType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'inherit_data'  => true,
-                'template'      => '',
-                'templates'     => '',
-                'label'         => false,
+                'inherit_data' => true,
+                'template'     => '',
+                'templates'    => '',
+                'label'        => false,
             )
         );
     }

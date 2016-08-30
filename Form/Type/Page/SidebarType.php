@@ -47,10 +47,11 @@ class SidebarType extends AbstractType
                 'template',
                 ChoiceType::class,
                 array(
-                    'required' => true,
-                    'expanded' => true,
-                    'multiple' => false,
-                    'choices'  => array_flip($this->toStringTemplates($this->templates))
+                    'required'          => true,
+                    'expanded'          => true,
+                    'multiple'          => false,
+                    'choices_as_values' => true,
+                    'choices'           => array_flip($this->toStringTemplates($this->templates))
                 )
             );
 

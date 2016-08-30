@@ -43,16 +43,17 @@ class BlockType extends AbstractType
                 'template',
                 ChoiceType::class,
                 array(
-                    'required' => true,
-                    'expanded' => true,
-                    'multiple' => false,
-                    'choices'  => array_flip($this->toStringTemplates($this->templates))
+                    'required'          => true,
+                    'expanded'          => true,
+                    'multiple'          => false,
+                    'choices_as_values' => true,
+                    'choices'           => array_flip($this->toStringTemplates($this->templates))
                 )
             );
 
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
-            function(FormEvent $event) use ($options) {
+            function (FormEvent $event) use ($options) {
                 $form = $event->getForm();
                 $data = $event->getData();
                 $data->setPage($options['page']);
@@ -66,7 +67,7 @@ class BlockType extends AbstractType
 
         foreach ($templates as $key => $template) {
             foreach ($template['sub_templates'] as $subTemplates => $label) {
-                $nTemplates[$key.'/'.$subTemplates] = $label;
+                $nTemplates[$key . '/' . $subTemplates] = $label;
             }
         }
 

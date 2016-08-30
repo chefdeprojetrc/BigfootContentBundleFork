@@ -47,10 +47,11 @@ class BlockType extends AbstractType
                 'template',
                 ChoiceType::class,
                 array(
-                    'required' => true,
-                    'expanded' => true,
-                    'multiple' => false,
-                    'choices'  => array_flip($this->toStringTemplates($this->templates))
+                    'required'          => true,
+                    'expanded'          => true,
+                    'multiple'          => false,
+                    'choices_as_values' => true,
+                    'choices'           => array_flip($this->toStringTemplates($this->templates))
                 )
             );
 
@@ -70,7 +71,7 @@ class BlockType extends AbstractType
 
         foreach ($templates as $key => $template) {
             foreach ($template['sub_templates'] as $subTemplates => $label) {
-                $nTemplates[$key.'/'.$subTemplates] = $label;
+                $nTemplates[$key . '/' . $subTemplates] = $label;
             }
         }
 

@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class TemplateType extends AbstractType
 {
     private $templates;
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -28,12 +29,13 @@ class TemplateType extends AbstractType
                 'template',
                 ChoiceType::class,
                 array(
-                    'required'    => true,
-                    'expanded'    => true,
-                    'multiple'    => false,
-                    'label'       => false,
-                    'choices'     => ($this->toStringTemplates($templates)),
-                    'constraints' => array(
+                    'required'          => true,
+                    'expanded'          => true,
+                    'multiple'          => false,
+                    'label'             => false,
+                    'choices_as_values' => true,
+                    'choices'           => ($this->toStringTemplates($templates)),
+                    'constraints'       => array(
                         new Assert\NotNull(),
                     )
                 )
@@ -54,7 +56,7 @@ class TemplateType extends AbstractType
         $resolver->setDefaults(
             array(
                 'contentType' => '',
-                'label' => false,
+                'label'       => false,
             )
         );
     }
@@ -80,7 +82,7 @@ class TemplateType extends AbstractType
 
         foreach ($templates as $key => $template) {
             $nTemplates[$key] = array(
-                "label" => isset($template['label']) ? $template['label'] : '',
+                "label"        => isset($template['label']) ? $template['label'] : '',
                 "subTemplates" => array()
             );
             foreach ($template['sub_templates'] as $subTemplates => $label) {

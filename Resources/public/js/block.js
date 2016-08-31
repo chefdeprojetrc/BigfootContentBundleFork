@@ -41,11 +41,16 @@ $(function() {
             prototypeBlock = containerBlock.attr('data-prototype'),
             blocks         = containerBlock.find('.admin_block_select');
 
-        var blockCount = containerBlock
-            .find('li')
-            .length;
+        var $blockPosition = $(this).closest('.collection-container').find('.block-position');
+        var maxValue = 0;
+        $blockPosition.each(function () {
+            var id = parseInt($(this).attr('id').split('_')[2], 10);
+            if (id > maxValue) {
+                maxValue = id;
+            }
+        });
 
-        var newBlock = prototypeBlock.replace(/__name__/g, blockCount);
+        var newBlock = prototypeBlock.replace(/__name__/g, maxValue + 1);
 
         containerBlock.find('.block-accordion').append(newBlock);
 
@@ -187,6 +192,7 @@ $(function() {
                 $(this)
                     .closest('.b-accordion')
                         .find('.block-position')
+                            .attr('value', index2 + 1)
                             .val(index2 + 1);
             });
         });

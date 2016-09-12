@@ -132,34 +132,36 @@ $(function() {
 
     function handleTemplate(block)
     {
-        var val = block
-            .find('option:selected')
+        if (block.find('option:selected').length) {
+            var val = block
+                .find('option:selected')
                 .html()
                 .split('-');
 
-        var
-            template = val[val.length-1].trim(),
-            radios   = block
-                .closest('.block-row')
+            var
+                template = val[val.length-1].trim(),
+                radios   = block
+                    .closest('.block-row')
                     .find('input[type=radio]');
 
-        radios.each(function (index) {
-            var values = $(this)
-                .val()
-                .split('/');
+            radios.each(function (index) {
+                var values = $(this)
+                    .val()
+                    .split('/');
 
-            if (values[0] !== template) {
-                $(this)
-                    .parent()
-                    .addClass('is-hidden')
-                    .hide();
-            } else {
-                $(this)
-                    .parent()
-                    .addClass('is-shown')
-                    .show();
-            }
-        });
+                if (values[0] !== template) {
+                    $(this)
+                        .parent()
+                        .addClass('is-hidden')
+                        .hide();
+                } else {
+                    $(this)
+                        .parent()
+                        .addClass('is-shown')
+                        .show();
+                }
+            });
+        }
     }
 
     function handleBlockAccordion(blocks)

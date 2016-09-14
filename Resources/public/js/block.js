@@ -121,7 +121,8 @@ $(function() {
         event.preventDefault();
 
         var currentBlock = $(this)
-            .closest('li')
+            .closest('.block-form-widget')
+            .parent()
             .remove();
 
         orderBlocks();

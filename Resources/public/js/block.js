@@ -28,7 +28,15 @@ $(function() {
         handleBlockAccordion(blocks);
     });
 
+    $('.block-accordion > .form-group').each(function() {
+        filterShownTemplates($(this));
+    });
+
     orderBlocks();
+
+    $('body').on('change', '.admin_block_select', function (event) {
+        filterShownTemplates($(this).closest('.panel'));
+    });
 
     $('body').on('click', '.admin-add-block', function (event) {
         event.preventDefault();
@@ -84,6 +92,8 @@ $(function() {
         handleBlockAccordion(blocks);
 
         orderBlocks();
+
+        filterShownTemplates(containerBlock.find('.block-accordion > .form-group').last());
     });
 
     $('.admin-edit-block').unbind('click');
@@ -196,6 +206,19 @@ $(function() {
                     .attr('value', index2)
                     .val(index2);
             });
+        });
+    }
+
+    function filterShownTemplates($blockForm)
+    {
+        var blockType = $blockForm.find('.admin_block_select :selected').data('block-type');
+
+        $blockForm.find('.templates-container label').each(function() {
+            if ($(this).data('block-type') == blockType) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
         });
     }
 

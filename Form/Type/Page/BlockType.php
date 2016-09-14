@@ -2,16 +2,20 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Form\Type\Page;
 
+use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class BlockType extends AbstractType
 {
+    /** @var array */
     protected $templates;
 
     /**
@@ -49,7 +53,8 @@ class BlockType extends AbstractType
                     'choices_as_values' => true,
                     'choices'           => array_flip($this->toStringTemplates($this->templates))
                 )
-            );
+            )
+        ;
 
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
@@ -59,6 +64,33 @@ class BlockType extends AbstractType
                 $data->setPage($options['page']);
             }
         );
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['templates'] = $this->templates;
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        /** @var ChoiceView[] $choices */
+        $choices = $view->children['block']->vars['choices'];
+        foreach ($choices as $choice) {
+            if (null !== ($blockType = $this->getBlockTypeBlockClass(get_class($choice->data)))) {
+                $choice->attr = ['data-block-type' => $blockType];
+            }
+        }
+    }
+
+    private function getBlockTypeBlockClass($class)
+    {
+        foreach ($this->templates as $k => $v) {
+            if ($v['class'] == $class) {
+                return $k;
+            }
+        }
+
+        return null;
     }
 
     public function toStringTemplates($templates)

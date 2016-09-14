@@ -32,7 +32,7 @@ services:
     bigfoot_content.form.type.page_sidebar:
         class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\SidebarType
         arguments:
-            - %bigfoot_content.templates.sidebar%
+            - '%bigfoot_content.templates.sidebar%'
         tags:
             - { name: form.type, alias: admin_page_sidebar }
 
@@ -40,7 +40,7 @@ services:
     bigfoot_content.form.type.page_block:
         class: Bigfoot\Bundle\ContentBundle\Form\Type\Page\BlockType
         arguments:
-            - %bigfoot_content.templates.block%
+            - '%bigfoot_content.templates.block%'
         tags:
             - { name: form.type, alias: admin_page_block }
 
@@ -48,7 +48,7 @@ services:
     bigfoot_content.form.type.sidebar_block:
         class: Bigfoot\Bundle\ContentBundle\Form\Type\Sidebar\BlockType
         arguments:
-            - %bigfoot_content.templates.block%
+            - '%bigfoot_content.templates.block%'
         tags:
             - { name: form.type, alias: admin_sidebar_block }
 

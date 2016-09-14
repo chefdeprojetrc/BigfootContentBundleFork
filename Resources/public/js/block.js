@@ -188,14 +188,13 @@ $(function() {
         var containers = $('.widget-blocks');
 
         containers.each(function (index) {
-            var blocks  = $(this).find('.admin_block_select');
+            var blocks  = $(this).find('.block-accordion > .form-group');
 
             blocks.each(function (index2) {
                 $(this)
-                    .closest('.b-accordion')
-                        .find('.block-position')
-                            .attr('value', index2 + 1)
-                            .val(index2 + 1);
+                    .find('.block-position')
+                    .attr('value', index2)
+                    .val(index2);
             });
         });
     }

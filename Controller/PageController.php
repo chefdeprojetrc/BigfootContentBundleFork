@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
+use Bigfoot\Bundle\ContentBundle\Entity\Page;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -152,14 +153,15 @@ class PageController extends CrudController
      */
     public function editAction(Request $request, $id)
     {
+        /** @var Page $page */
         $page = $this->getRepository($this->getEntity())->find($id);
 
         if (!$page) {
             throw new NotFoundHttpException('Unable to find Page entity.');
         }
-
         $templates = $this->getTemplates($page->getParentTemplate());
         $action    = $this->generateUrl('admin_page_edit', array('id' => $page->getId()));
+
         $form      = $this->createForm(
             $page->getTypeClass(),
             $page,

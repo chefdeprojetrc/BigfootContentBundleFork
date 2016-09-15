@@ -42,10 +42,12 @@ class ContentType extends AbstractType
                         'data-content'   => 'This is the name of the content in the back office. It will not be displayed to the web user.',
                         'data-title'     => 'Name',
                         'data-trigger'   => 'hover',
-                    )
+                    ),
+                    'label' => 'bigfoot_content.page.type.name.label',
                 )
             )
-            ->add('active', CheckboxType::class, array('required' => false));
+            ->add('active', CheckboxType::class, array('required' => false,
+                                                       'label' => 'bigfoot_content.page.type.active.label',));
     }
 
     /**

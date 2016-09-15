@@ -17,6 +17,7 @@ use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar2 as PageSidebar2;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar3 as PageSidebar3;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar4 as PageSidebar4;
 use Bigfoot\Bundle\ContentBundle\Entity\Page\Sidebar5 as PageSidebar5;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Page
@@ -41,6 +42,7 @@ class Page extends Content
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @Gedmo\Translatable
      * @ORM\Column(name="title", type="string", length=255)
      */
@@ -49,6 +51,7 @@ class Page extends Content
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @Gedmo\Translatable
      * @Gedmo\Slug(fields={"title"}, updatable=false, unique=true)
      * @ORM\Column(name="slug", type="string", length=255, unique=true)

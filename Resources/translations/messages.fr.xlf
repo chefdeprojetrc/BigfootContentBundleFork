@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="1">
         <source>bigfoot_content.page.type.name.label</source>
-        <target>Nom de la page</target>
+        <target>Nom dans le BO</target>
       </trans-unit>
       <trans-unit id="2">
         <source>bigfoot_content.page.type.active.label</source>

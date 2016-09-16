@@ -37,7 +37,6 @@ class Block
     /**
      * @var string
      *
-     * @Gedmo\SortablePosition
      * @ORM\Column(name="position", type="smallint", nullable=true)
      */
     private $position;

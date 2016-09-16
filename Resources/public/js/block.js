@@ -52,12 +52,13 @@ $(function() {
         var $blockPosition = $(this).closest('.collection-container').find('.block-position');
         var maxValue = 0;
         $blockPosition.each(function () {
-            var id = parseInt($(this).attr('id').split('_')[2], 10);
+            var id = parseInt($(this).val());
+
             if (id > maxValue) {
                 maxValue = id;
             }
         });
-
+      
         var newBlock = prototypeBlock.replace(/__name__/g, maxValue + 1);
 
         containerBlock.find('.block-accordion').append(newBlock);

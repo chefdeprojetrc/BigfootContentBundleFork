@@ -10,9 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Bigfoot\Bundle\CoreBundle\Controller\CrudController;
-use Bigfoot\Bundle\CoreBundle\Util\StringManager;
 use Bigfoot\Bundle\CoreBundle\Event\FormEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -200,7 +198,7 @@ class PageController extends CrudController
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
-
+            
             if ($form->isValid()) {
                 for ($i = 1; $i <= 5; $i++) {
                     $j = ($i > 1) ? $i : '';

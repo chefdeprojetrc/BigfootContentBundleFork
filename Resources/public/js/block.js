@@ -50,7 +50,7 @@ $(function() {
             blocks         = containerBlock.find('.admin_block_select');
 
         var $blockPosition = $(this).closest('.collection-container').find('.block-position');
-        var maxValue = 0;
+        var maxValue = -1;
         $blockPosition.each(function () {
             var id = parseInt($(this).val());
 
@@ -58,7 +58,7 @@ $(function() {
                 maxValue = id;
             }
         });
-      
+
         var newBlock = prototypeBlock.replace(/__name__/g, maxValue + 1);
 
         containerBlock.find('.block-accordion').append(newBlock);

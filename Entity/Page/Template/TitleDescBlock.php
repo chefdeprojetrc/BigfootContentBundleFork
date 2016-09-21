@@ -73,4 +73,9 @@ class TitleDescBlock extends Page
     {
         return TitleDescBlockType::class;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Titre + Description + Block';
+    }
 }

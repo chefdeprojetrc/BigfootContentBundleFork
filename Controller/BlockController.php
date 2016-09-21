@@ -2,6 +2,7 @@
 
 namespace Bigfoot\Bundle\ContentBundle\Controller;
 
+use Bigfoot\Bundle\ContentBundle\Entity\Block;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -307,5 +308,42 @@ class BlockController extends CrudController
         $templates = $this->container->getParameter('bigfoot_content.templates.'.$contentType);
 
         return $templates[$parent];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFilters()
+    {
+        $blockMetadatas = $this->getEntityManager()->getClassMetadata(Block::class);
+        $discriminatorMap = $blockMetadatas->discriminatorMap;
+        foreach ($discriminatorMap as &$class) {
+            if (method_exists($class, 'getTemplateName')) {
+                $class = call_user_func([$class, 'getTemplateName']);
+            }
+        }
+
+        return [
+            'name' => [
+                'name'        => 'name',
+                'type'        => 'search',
+                'placeholder' => 'Nom de la page',
+                'options'     => [
+                    'entity'     => $this->getEntity(),
+                    'properties' => array('name')
+                ]
+            ],
+            'type'  => [
+                'name'        => 'type',
+                'type'        => 'repositoryMethod',
+                'placeholder' => 'Template',
+                'options'     => [
+                    'method'        => 'findByInstanceOf',
+                    'entity'        => $this->getEntity(),
+                    'properties'    => array('name'),
+                    'choicesMethod' => array_flip($discriminatorMap)
+                ]
+            ],
+        ];
     }
 }

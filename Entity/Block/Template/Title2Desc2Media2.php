@@ -213,4 +213,9 @@ class Title2Desc2Media2 extends Block
     {
         return Title2Desc2Media2Type::class;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Titre + 2 Descriptions + 2 Médias';
+    }
 }

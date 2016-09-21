@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * PageRepository
@@ -65,5 +66,12 @@ class PageRepository extends EntityRepository
         }
 
         return $query->getResult();
+    }
+
+    public function findByInstanceOf(QueryBuilder $queryBuilder, $data)
+    {
+        $queryBuilder
+            ->where('e INSTANCE OF :className')
+            ->setParameter(':className', $data);
     }
 }

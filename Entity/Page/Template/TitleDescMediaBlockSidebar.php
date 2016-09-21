@@ -96,4 +96,9 @@ class TitleDescMediaBlockSidebar extends Page
     {
         return TitleDescMediaBlockSidebarType::class;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Titre + Description + Media + Block + Sidebar';
+    }
 }

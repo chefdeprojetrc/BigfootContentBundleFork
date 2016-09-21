@@ -104,4 +104,9 @@ class TitleDesc2Block extends Page
     {
         return TitleDesc2BlockType::class;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Titre + 2 Descriptions + Blocks';
+    }
 }

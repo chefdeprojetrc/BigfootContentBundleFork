@@ -73,4 +73,9 @@ class TitleDesc extends Page
     {
         return TitleDescType::class;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Titre + Description';
+    }
 }

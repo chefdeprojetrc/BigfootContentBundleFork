@@ -477,4 +477,9 @@ class Block extends Content
     {
         return null;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Block';
+    }
 }

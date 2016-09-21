@@ -128,4 +128,9 @@ class TitleDescMedia extends Block
     {
         return TitleDescMediaType::class;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Titre + Description + Média';
+    }
 }

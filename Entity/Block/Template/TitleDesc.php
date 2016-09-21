@@ -104,4 +104,9 @@ class TitleDesc extends Block
     {
         return TitleDescType::class;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Titre + Description';
+    }
 }

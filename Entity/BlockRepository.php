@@ -3,6 +3,7 @@
 namespace Bigfoot\Bundle\ContentBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * BlockRepository
@@ -12,4 +13,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class BlockRepository extends EntityRepository
 {
+    public function findByInstanceOf(QueryBuilder $queryBuilder, $data)
+    {
+        $queryBuilder
+            ->where('e INSTANCE OF :className')
+            ->setParameter(':className', $data);
+    }
 }

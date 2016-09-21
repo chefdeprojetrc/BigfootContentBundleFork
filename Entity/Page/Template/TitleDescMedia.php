@@ -96,4 +96,9 @@ class TitleDescMedia extends Page
     {
         return TitleDescMediaType::class;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Titre + Description + Media';
+    }
 }

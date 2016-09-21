@@ -49,13 +49,13 @@ class PageController extends CrudController
     protected function getFields()
     {
         return array(
-            'id'   => array(
+            'id'       => array(
                 'label' => 'ID',
             ),
             'template' => array(
                 'label' => 'Template',
             ),
-            'name' => array(
+            'name'     => array(
                 'label' => 'Name',
             ),
         );
@@ -63,7 +63,7 @@ class PageController extends CrudController
 
     public function getFormTemplate()
     {
-        return $this->getEntity().':edit.html.twig';
+        return $this->getEntity() . ':edit.html.twig';
     }
 
     /**
@@ -160,7 +160,7 @@ class PageController extends CrudController
         $templates = $this->getTemplates($page->getParentTemplate());
         $action    = $this->generateUrl('admin_page_edit', array('id' => $page->getId()));
 
-        $form      = $this->createForm(
+        $form = $this->createForm(
             $page->getTypeClass(),
             $page,
             array(
@@ -183,30 +183,30 @@ class PageController extends CrudController
         for ($i = 1; $i <= 5; $i++) {
             $j = ($i > 1) ? $i : '';
 
-            foreach ($page->{'getBlocks'.$j}() as ${'block'.$j}) {
-                ${'dbBlocks'.$j}->add(${'block'.$j});
+            foreach ($page->{'getBlocks' . $j}() as ${'block' . $j}) {
+                ${'dbBlocks' . $j}->add(${'block' . $j});
             }
         }
 
         for ($i = 1; $i <= 5; $i++) {
             $j = ($i > 1) ? $i : '';
 
-            foreach ($page->{'getSidebars'.$j}() as ${'sidebar'.$j}) {
-                ${'dbSidebars'.$j}->add(${'sidebar'.$j});
+            foreach ($page->{'getSidebars' . $j}() as ${'sidebar' . $j}) {
+                ${'dbSidebars' . $j}->add(${'sidebar' . $j});
             }
         }
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
-            
+
             if ($form->isValid()) {
                 for ($i = 1; $i <= 5; $i++) {
                     $j = ($i > 1) ? $i : '';
 
-                    foreach (${'dbBlocks'.$j} as ${'block'.$j}) {
-                        if ($page->{'getBlocks'.$j}()->contains(${'block'.$j}) === false) {
-                            $page->{'getBlocks'.$j}()->removeElement(${'block'.$j});
-                            $this->getEntityManager()->remove(${'block'.$j});
+                    foreach (${'dbBlocks' . $j} as ${'block' . $j}) {
+                        if ($page->{'getBlocks' . $j}()->contains(${'block' . $j}) === false) {
+                            $page->{'getBlocks' . $j}()->removeElement(${'block' . $j});
+                            $this->getEntityManager()->remove(${'block' . $j});
                         }
                     }
                 }
@@ -214,10 +214,10 @@ class PageController extends CrudController
                 for ($i = 1; $i <= 5; $i++) {
                     $j = ($i > 1) ? $i : '';
 
-                    foreach (${'dbSidebars'.$j} as ${'sidebar'.$j}) {
-                        if ($page->{'getSidebars'.$j}()->contains(${'sidebar'.$j}) === false) {
-                            $page->{'getSidebars'.$j}()->removeElement(${'sidebar'.$j});
-                            $this->getEntityManager()->remove(${'sidebar'.$j});
+                    foreach (${'dbSidebars' . $j} as ${'sidebar' . $j}) {
+                        if ($page->{'getSidebars' . $j}()->contains(${'sidebar' . $j}) === false) {
+                            $page->{'getSidebars' . $j}()->removeElement(${'sidebar' . $j});
+                            $this->getEntityManager()->remove(${'sidebar' . $j});
                         }
                     }
                 }
@@ -274,7 +274,7 @@ class PageController extends CrudController
     {
         $values = explode('_', $template);
         $end    = call_user_func('end', array_values($values));
-        return str_replace('_'.$end, '', $template);
+        return str_replace('_' . $end, '', $template);
     }
 
     public function getTemplates($parent)
@@ -282,5 +282,42 @@ class PageController extends CrudController
         $templates = $this->container->getParameter('bigfoot_content.templates.page');
 
         return $templates[$parent];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFilters()
+    {
+        $pageMetadatas = $this->getEntityManager()->getClassMetadata(Page::class);
+        $discriminatorMap = $pageMetadatas->discriminatorMap;
+        foreach ($discriminatorMap as &$class) {
+            if (method_exists($class, 'getTemplateName')) {
+                $class = call_user_func([$class, 'getTemplateName']);
+            }
+        }
+
+        return [
+            'title' => [
+                'name'        => 'title',
+                'type'        => 'search',
+                'placeholder' => 'Nom de la page',
+                'options'     => [
+                    'entity'     => $this->getEntity(),
+                    'properties' => array('title')
+                ]
+            ],
+            'type'  => [
+                'name'        => 'type',
+                'type'        => 'repositoryMethod',
+                'placeholder' => 'Template',
+                'options'     => [
+                    'method'        => 'findByInstanceOf',
+                    'entity'        => $this->getEntity(),
+                    'properties'    => array('title'),
+                    'choicesMethod' => array_flip($discriminatorMap)
+                ]
+            ],
+        ];
     }
 }

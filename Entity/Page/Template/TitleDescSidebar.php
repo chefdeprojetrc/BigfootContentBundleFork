@@ -73,4 +73,9 @@ class TitleDescSidebar extends Page
     {
         return TitleDescSidebarType::class;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Titre + Description Sidebar';
+    }
 }

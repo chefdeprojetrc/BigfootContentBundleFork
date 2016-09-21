@@ -943,4 +943,9 @@ class Page extends Content
     {
         return null;
     }
+
+    public static function getTemplateName()
+    {
+        return 'Page';
+    }
 }

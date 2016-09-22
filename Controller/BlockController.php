@@ -64,7 +64,7 @@ class BlockController extends CrudController
 
     public function getFormTemplate()
     {
-        return $this->getEntity().':edit.html.twig';
+        return $this->getEntity() . ':edit.html.twig';
     }
 
     /**
@@ -134,7 +134,7 @@ class BlockController extends CrudController
                     $qTemplate   = $request->query->get('template');
 
                     if (is_numeric($qTemplate)) {
-                        $qTemplate = $this->getRepository('BigfootContentBundle:'.ucfirst($contentType))->find($qTemplate)->getSlugTemplate();
+                        $qTemplate = $this->getRepository('BigfootContentBundle:' . ucfirst($contentType))->find($qTemplate)->getSlugTemplate();
                     }
 
                     $pTemplate     = $this->getParentTemplate($qTemplate);
@@ -142,7 +142,7 @@ class BlockController extends CrudController
                     $contentEntity = $templates['class'];
                     $contentEntity = new $contentEntity();
 
-                    $contentForm   = $this->createForm(
+                    $contentForm = $this->createForm(
                         $contentEntity->getTypeClass(),
                         $contentEntity,
                         array(
@@ -151,12 +151,12 @@ class BlockController extends CrudController
                         )
                     );
 
-                    $prototype = $this->renderView('BigfootContentBundle:'.ucfirst($contentType).':Block/prototype.html.twig', array('form' => $contentForm->createView()));
+                    $prototype = $this->renderView('BigfootContentBundle:' . ucfirst($contentType) . ':Block/prototype.html.twig', array('form' => $contentForm->createView()));
 
                     $content = array(
                         'prototype' => $prototype,
                         'option'    => array(
-                            'label' => $block->getName().' - '.$block->getParentTemplate(),
+                            'label' => $block->getName() . ' - ' . $block->getParentTemplate(),
                             'value' => $block->getId()
                         )
                     );
@@ -219,7 +219,7 @@ class BlockController extends CrudController
                     $qTemplate   = $request->query->get('template');
 
                     if (is_numeric($qTemplate)) {
-                        $qTemplate = $this->getRepository('BigfootContentBundle:'.ucfirst($contentType))->find($qTemplate)->getSlugTemplate();
+                        $qTemplate = $this->getRepository('BigfootContentBundle:' . ucfirst($contentType))->find($qTemplate)->getSlugTemplate();
                     }
 
                     $pTemplate     = $this->getParentTemplate($qTemplate);
@@ -227,7 +227,7 @@ class BlockController extends CrudController
                     $contentEntity = $templates['class'];
                     $contentEntity = new $contentEntity();
 
-                    $contentForm   = $this->createForm(
+                    $contentForm = $this->createForm(
                         $contentEntity->getTypeClass(),
                         $contentEntity,
                         array(
@@ -236,13 +236,13 @@ class BlockController extends CrudController
                         )
                     );
 
-                    $prototype = $this->renderView('BigfootContentBundle:'.ucfirst($contentType).':Block/prototype.html.twig', array('form' => $contentForm->createView()));
+                    $prototype = $this->renderView('BigfootContentBundle:' . ucfirst($contentType) . ':Block/prototype.html.twig', array('form' => $contentForm->createView()));
 
                     $content = array(
                         'prototype' => $prototype,
                         'option'    => array(
                             'id'    => $block->getId(),
-                            'label' => $block->getName().' - '.$block->getParentTemplate(),
+                            'label' => $block->getName() . ' - ' . $block->getParentTemplate(),
                         )
                     );
 
@@ -300,12 +300,12 @@ class BlockController extends CrudController
         $values = explode('_', $template);
         $end    = call_user_func('end', array_values($values));
 
-        return str_replace('_'.$end, '', $template);
+        return str_replace('_' . $end, '', $template);
     }
 
     public function getTemplates($contentType, $parent)
     {
-        $templates = $this->container->getParameter('bigfoot_content.templates.'.$contentType);
+        $templates = $this->container->getParameter('bigfoot_content.templates.' . $contentType);
 
         return $templates[$parent];
     }
@@ -315,7 +315,7 @@ class BlockController extends CrudController
      */
     protected function getFilters()
     {
-        $blockMetadatas = $this->getEntityManager()->getClassMetadata(Block::class);
+        $blockMetadatas   = $this->getEntityManager()->getClassMetadata(Block::class);
         $discriminatorMap = $blockMetadatas->discriminatorMap;
         foreach ($discriminatorMap as &$class) {
             if (method_exists($class, 'getTemplateName')) {
@@ -333,15 +333,15 @@ class BlockController extends CrudController
                     'properties' => array('name')
                 ]
             ],
-            'type'  => [
+            'type' => [
                 'name'        => 'type',
                 'type'        => 'repositoryMethod',
                 'placeholder' => 'Template',
                 'options'     => [
-                    'method'        => 'findByInstanceOf',
-                    'entity'        => $this->getEntity(),
-                    'properties'    => array('name'),
-                    'choicesMethod' => array_flip($discriminatorMap)
+                    'method'     => 'findByInstanceOf',
+                    'entity'     => $this->getEntity(),
+                    'properties' => array('name'),
+                    'choices'    => array_flip($discriminatorMap)
                 ]
             ],
         ];

@@ -289,7 +289,7 @@ class PageController extends CrudController
      */
     protected function getFilters()
     {
-        $pageMetadatas = $this->getEntityManager()->getClassMetadata(Page::class);
+        $pageMetadatas    = $this->getEntityManager()->getClassMetadata(Page::class);
         $discriminatorMap = $pageMetadatas->discriminatorMap;
         foreach ($discriminatorMap as &$class) {
             if (method_exists($class, 'getTemplateName')) {
@@ -312,10 +312,10 @@ class PageController extends CrudController
                 'type'        => 'repositoryMethod',
                 'placeholder' => 'Template',
                 'options'     => [
-                    'method'        => 'findByInstanceOf',
-                    'entity'        => $this->getEntity(),
-                    'properties'    => array('title'),
-                    'choicesMethod' => array_flip($discriminatorMap)
+                    'method'     => 'findByInstanceOf',
+                    'entity'     => $this->getEntity(),
+                    'properties' => array('title'),
+                    'choices'    => array_flip($discriminatorMap)
                 ]
             ],
         ];

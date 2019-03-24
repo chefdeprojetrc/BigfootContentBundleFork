@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "bigfoot/core-bundle": "~4.0"
+        "bigfoot/core-bundle": "dev-fix/sf3.4-compatibillity"
     },
     "autoload": {
         "psr-0": { "Bigfoot\\Bundle\\ContentBundle": "" }
